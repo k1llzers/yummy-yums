@@ -1,0 +1,36 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:latest"
+    container_name: "yummy-yams-postgres"
+    ports:
+      - 5433:5432
+    volumes:
+      - data:/yummy-yams/postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: yummy_yams
+
+  mongodb:
+    image: "mongo:latest"
+    container_name: "yummy-yams-mongodb"
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/yummy-yams/mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=1111
+
+  redis:
+    image: "redis:latest"
+    restart: always
+    container_name: "yummy-yams-redis"
+    ports:
+      - 6379:6379
+    volumes:
+      - data:/yummy-yams/redis
+
+volumes:
+  data:

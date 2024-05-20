@@ -33,19 +33,19 @@ build/
 .vscode/
 
 
-frontend/yummy-yams/node_modules
-frontend/yummy-yams/.pnp
-frontend/yummy-yams/.pnp.js
-frontend/yummy-yams/coverage
-frontend/yummy-yams/build
-frontend/yummy-yams/.DS_Store
-frontend/yummy-yams/.env.local
-frontend/yummy-yams/.env.development.local
-frontend/yummy-yams/.env.test.local
-frontend/yummy-yams/.env.production.local
-frontend/yummy-yams/npm-debug.log*
-frontend/yummy-yams/yarn-debug.log*
-frontend/yummy-yams/yarn-error.log*
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+frontend/coverage
+frontend/build
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 /.mvn/wrapper/maven-wrapper.jar
 /.mvn/wrapper/maven-wrapper.properties
 /mvnw

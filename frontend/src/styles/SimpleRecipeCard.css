@@ -1,0 +1,62 @@
+.simple-recipe-card {
+    width: 60%;
+    background-color: #F9FAEE;
+    border-radius: 30px;
+    border: none;
+    min-width: 250px;
+}
+
+.simple-card-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 30px;
+}
+
+.simple-card-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.simple-card-title {
+    margin: 0 0 0 50px;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.7rem;
+    color: #3D6827;
+}
+
+.simple-recipe-likes {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.5rem;
+}
+
+.simple-recipe-name {
+    display: flex;
+    align-items: center;
+}
+
+.simple-likes-item {
+    margin-right: 10px;
+}
+
+@media (max-width: 1150px) {
+    .simple-card-title {
+        font-size: 1.5rem;
+        width: 80%;
+    }
+
+    .simple-card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .simple-recipe-name {
+        flex-direction: column;
+    }
+
+    .simple-card-title {
+        margin: 10px 0 15px 0;
+    }
+}

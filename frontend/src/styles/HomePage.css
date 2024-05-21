@@ -1,0 +1,58 @@
+.home-logo {
+    font-family: "Sassy Frass", cursive;
+    font-size: 150px;
+    color: #3D6827;
+}
+
+.main-container {
+    height: 100vh;
+    background-color: #F9FAEE;
+    margin: 0;
+    padding: 0;
+}
+
+.inner-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+    min-width: 340px;
+}
+
+.home-description {
+    width: 50%;
+    font-family: "Gentium Plus", serif;
+    color: #5d804c;
+    font-size: 20px;
+}
+
+.home-button {
+    border-radius: 35px;
+    background-color: #3D6827;
+    color: #F9FAEE;
+    border: none;
+    font-family: "Gentium Plus", serif;
+    margin: 40px 10px 0 10px;
+    padding: 10px 30px;
+    font-size: 25px;
+}
+
+.home-button:hover {
+    background-color: #29461b;
+}
+
+@media (max-width: 750px) {
+    .home-logo {
+        font-size: 70px;
+    }
+
+    .home-description {
+        font-size: 15px;
+    }
+
+    .home-button {
+        font-size: 15px;
+    }
+}

@@ -42,4 +42,8 @@ public class UserEntity implements GettableById<Integer> {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    public String getPib() {
+        return this.surname + " " + this.name;
+    }
 }

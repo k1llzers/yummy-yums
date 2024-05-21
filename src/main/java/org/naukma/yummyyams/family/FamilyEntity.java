@@ -30,6 +30,9 @@ public class FamilyEntity implements GettableById<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToMany
     @JoinTable(name = "family_user",
             joinColumns = @JoinColumn(name = "family_id"),

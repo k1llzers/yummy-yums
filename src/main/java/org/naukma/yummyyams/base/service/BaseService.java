@@ -3,10 +3,13 @@ package org.naukma.yummyyams.base.service;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.GettableById;
 import org.naukma.yummyyams.base.Mapper;
+import org.naukma.yummyyams.security.exception.IdNotNullException;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public abstract class BaseService<E extends GettableById<I>, V extends GettableById<I>, I> implements Service<E, V, I> {
     @Autowired
@@ -16,7 +19,7 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
 
     @Override
     @Transactional
-    public I save(V view) {
+    public I create(V view) {
         E entity = mapper.mergeCreate(view);
         preCreate(entity, view);
         return repository.save(entity).getId();
@@ -25,6 +28,7 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
     @Override
     @Transactional
     public Boolean update(V view) {
+        if (view.getId() == null) throw new IdNotNullException();
         E entity = getById(view.getId());
         mapper.mergeUpdate(entity, view);
         preUpdate(entity, view);
@@ -41,10 +45,17 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
     }
 
     @Override
+    @Transactional
     public E getById(I id) {
         return repository.findById(id).orElseThrow(
                 () -> new NoSuchEntityException(getEntityNotFoundException())
         );
+    }
+
+    @Override
+    @Transactional
+    public List<E> getAllEntities() {
+        return repository.findAll();
     }
 
     public <T> T getResponseDto(I id) {

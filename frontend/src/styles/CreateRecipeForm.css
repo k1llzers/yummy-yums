@@ -1,0 +1,23 @@
+.create-recipe-dialog {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-recipe-button {
+    border-radius: 35px;
+    background-color: #E2F0D2;
+    color: #3D6827;
+    border: none;
+    font-family: "Gentium Plus", serif;
+    margin: 30px 10px 0 10px;
+    padding: 10px 30px;
+    font-size: 20px;
+    transition: ease 0.5s;
+}
+
+.create-recipe-button:hover{
+    background-color: #a2af91;
+}

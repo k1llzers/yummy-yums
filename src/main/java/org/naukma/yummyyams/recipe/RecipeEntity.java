@@ -38,6 +38,9 @@ public class RecipeEntity implements GettableById<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "description")
     private String description;
 
@@ -53,6 +56,10 @@ public class RecipeEntity implements GettableById<Integer> {
 
     @OneToMany(mappedBy = "id")
     private List<CommentEntity> comments;
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id", referencedColumnName = "id")
+    private UserEntity author;
 
     @ManyToMany
     @JoinTable(name = "recipe_like",

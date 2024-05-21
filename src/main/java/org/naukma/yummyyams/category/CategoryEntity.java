@@ -5,16 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.naukma.yummyyams.base.GettableById;
-import org.naukma.yummyyams.recipe.RecipeEntity;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +24,6 @@ public class CategoryEntity implements GettableById<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "id")
-    private List<RecipeEntity> recipes;
+    @Column(name = "name", nullable = false)
+    private String name;
 }

@@ -44,7 +44,7 @@ public class RecipeEntity implements GettableById<Integer> {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "instruction", nullable = false)
+    @Column(name = "instruction")
     private String instruction;
 
     @ElementCollection
@@ -54,7 +54,7 @@ public class RecipeEntity implements GettableById<Integer> {
     @Column(name = "count")
     private Map<String, String> productToCountMap;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "recipe")
     private List<CommentEntity> comments;
 
     @ManyToOne
@@ -69,7 +69,7 @@ public class RecipeEntity implements GettableById<Integer> {
     private List<UserEntity> likes;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private CategoryEntity category;
 
     @Column(name = "approve")

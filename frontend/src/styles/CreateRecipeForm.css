@@ -1,7 +1,7 @@
 .create-recipe-dialog {
     display: flex;
     flex-direction: column;
-    padding: 30px;
+    padding: 35px;
     justify-content: center;
     align-items: center;
 }
@@ -21,3 +21,28 @@
 .create-recipe-button:hover{
     background-color: #a2af91;
 }
+
+.recipe-photo-upload {
+    font-family: "Gentium Plus", serif;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    color: #747474;
+    margin-bottom: 30px;
+}
+
+.recipe-photo-upload:focus {
+    border-color: #3D6827;;
+    box-shadow: none;
+    color: #3D6827;
+}
+
+.photo-upload-label {
+    font-family: "Gentium Plus", serif;
+    font-size: 1.2rem;
+    color: #747474;
+    text-align: start;
+    width: 100%;
+    margin-top: 16px;
+}
+
+

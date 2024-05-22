@@ -28,7 +28,6 @@ const StyledTextField = styled(TextField)({
         fontSize: '1.2rem',
     },
     margin: '0 0 30px 0',
-    width: '90%',
 });
 
 export default StyledTextField;

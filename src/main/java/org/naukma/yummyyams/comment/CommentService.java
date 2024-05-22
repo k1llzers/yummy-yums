@@ -13,4 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class CommentService extends BaseService<CommentEntity, CommentCreateUpdateDto, Integer> {
+    @Override
+    protected void preCreate(CommentEntity entity, CommentCreateUpdateDto view) {
+        if (view.getReplyToId() != null)
+            entity.setReplyTo(getById(view.getReplyToId()));
+    }
 }

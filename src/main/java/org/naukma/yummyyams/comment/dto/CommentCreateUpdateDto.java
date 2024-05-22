@@ -12,8 +12,8 @@ import org.naukma.yummyyams.base.GettableById;
 @Builder
 public class CommentCreateUpdateDto implements GettableById<Integer> {
     private Integer id;
-    private Integer recipeId;
-    private Integer userEmail;
-    private Integer replyToId;
     private String comment;
+    private Integer recipeId;
+    private Integer userId;
+    private Integer replyToId;
 }

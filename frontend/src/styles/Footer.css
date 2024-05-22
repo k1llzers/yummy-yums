@@ -1,0 +1,57 @@
+.logo-footer {
+    font-family: "Sassy Frass", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.main-footer{
+
+}
+.subtitle{
+    font-size: 25px;
+    font-family: "Forum", "cursive";
+    color: rgb(61, 104, 39);
+    margin-right: 70px;
+    margin-top: 20px;
+    white-space: nowrap;
+}
+.dropdown-button-custom{
+    margin: 5px 0 2px 0;
+
+    background-color: #E2F0D2;
+}
+#bg-vertical-dropdown-1,#bg-vertical-dropdown-2,#bg-vertical-dropdown-3
+{
+    background-color: #E2F0D2;
+    font-size: 20px;
+    font-family: "Forum", "cursive";
+    color: rgb(61, 104, 39);
+    border: none;
+    margin-right: 15px;
+}
+.dropdown-menu{
+    font-size: 12px;
+    margin-top: -29px;
+    margin-left: 158px;
+    background-color: rgba(249, 250, 238, 1);
+    border: solid 1px rgb(61, 104, 39);
+    color: rgb(61, 104, 39);
+    padding: 0 3px;
+}
+.dropdown-item{
+    color: rgb(61, 104, 39);
+    padding: 2px 2px;
+}
+.dropdown-item.active{
+    background-color: rgba(249, 250, 238, 1);
+    color: rgb(61, 104, 39);
+}
+.dropdown-item.hover{
+    background-color: rgba(249, 250, 238, 1);
+    color: rgb(61, 104, 39);
+}
+@media (max-width: 530px) {
+    .dropdown-menu {
+        margin-left: 0;
+        margin-top: -25px;
+    }
+}

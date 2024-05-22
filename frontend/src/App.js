@@ -1,10 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
-import SimpleRecipeCard from "./components/SimpleRecipeCard";
-import RecipeCard from "./components/RecipeCard";
-import HomePage from "./pages/HomePage";
-import CreateRecipeForm from "./components/CreateRecipeForm";
 
 function App() {
   return (
@@ -23,12 +19,7 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      {/*  <NavBar/>*/}
-      {/*  <SimpleRecipeCard/>*/}
-      {/*  <RecipeCard/>*/}
-        <CreateRecipeForm open={true}/>
-        <HomePage/>
-
+      <NavBar/>
     </div>
 
   );

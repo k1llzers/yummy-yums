@@ -2,6 +2,9 @@ package org.naukma.yummyyams;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class YummyYamsApplication {
@@ -10,4 +13,8 @@ public class YummyYamsApplication {
         SpringApplication.run(YummyYamsApplication.class, args);
     }
 
+    @Bean
+    public PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

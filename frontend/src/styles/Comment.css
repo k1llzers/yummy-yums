@@ -1,0 +1,118 @@
+.comment-card {
+    width: 40%;
+}
+
+.comment-container {
+    display: flex;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.comment-author-img {
+    width: 3.5rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin: 10px 10px 10px 0;
+}
+
+.comment-main-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-author-name {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: start;
+    margin-bottom: 10px;
+}
+
+.comment-text {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1rem;
+    margin: 0;
+    text-align: start;
+}
+
+.comment-reply-button {
+    border: none;
+    background-color: transparent;
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1rem;
+    font-weight: bold;
+    float: right;
+    border-radius: 20px;
+    transition: ease 0.5s;
+    padding: 5px 10px;
+}
+
+.comment-reply-button:hover {
+    background-color: #E2F0D2;
+}
+
+.MuiAccordion-gutters{
+    background-color: transparent;
+    border: none;
+}
+
+.comment-card .MuiInputBase-input {
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1rem;
+}
+
+.comment-card .MuiFormLabel-root {
+    font-family: 'Gentium Plus', serif;
+    font-size: 1rem;
+}
+
+.comment-card .MuiTextField-root {
+    margin: 0 0 0 3.5rem;
+    width: 50%;
+}
+
+.comment-reply-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 845px) {
+    .comment-author-img {
+        width: 1.8rem;
+        margin: 5px 5px 5px 0;
+    }
+
+    .comment-author-name {
+        font-size: 1rem;
+    }
+
+    .comment-text {
+        font-size: 0.8rem;
+    }
+
+    .comment-card {
+        width: 60%;
+    }
+
+    .comment-reply-button {
+        font-size: 0.9rem;
+    }
+
+    .comment-card .MuiTextField-root {
+        margin: 0 0 0 1.8rem;
+    }
+
+    .comment-card .MuiInputBase-input {
+        font-size: 0.8rem;
+    }
+
+    .comment-card .MuiFormLabel-root {
+        font-size: 0.8rem;
+    }
+
+}

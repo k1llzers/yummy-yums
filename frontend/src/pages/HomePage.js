@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 const HomePage = () => {
     return (
         <>
-            <div className="main-container">
+            <div className="home-main-container">
                 <NavBar/>
-                <div className="inner-container">
+                <div className="home-inner-container">
                     <p className="home-logo">Yummy Yums</p>
                     <p className="home-description">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius arcu felis, sodales accumsan neque aliquam quis.

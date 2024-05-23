@@ -16,7 +16,6 @@
 }
 .dropdown-button-custom{
     margin: 5px 0 2px 0;
-
     background-color: #E2F0D2;
 }
 #bg-vertical-dropdown-1,#bg-vertical-dropdown-2,#bg-vertical-dropdown-3
@@ -36,6 +35,13 @@
     border: solid 1px rgb(61, 104, 39);
     color: rgb(61, 104, 39);
     padding: 0 3px;
+}
+.dropdown-item:active{
+    background-color: rgba(249, 250, 238, 1);
+    color: rgb(61, 104, 39);
+}
+.dropdown-item:hover{
+    color: rgb(61, 104, 39);
 }
 .dropdown-item{
     color: rgb(61, 104, 39);

@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
-import HomePage from "./pages/HomePage";
+import AccountPage from "./pages/AccountPage";
+import RecipePage from "./pages/RecipePage";
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      {/*<NavBar/>*/}
-        <HomePage/>
+      {/*<AccountPage/>*/}
+        <RecipePage/>
+        {/*<AccountPage/>*/}
     </div>
 
   );

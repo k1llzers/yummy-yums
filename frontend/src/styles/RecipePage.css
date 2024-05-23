@@ -1,0 +1,208 @@
+.recipe-main-container {
+    width: 100%;
+    background-color: #F9FAEE;
+}
+
+.recipe-inner-container {
+    width: 100%;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-author-info {
+    width: 16%;
+    border: solid 1px #3D6827;
+    margin-bottom: 50px;
+    border-radius: 20px 0 20px 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    align-items: center;
+    min-width: 200px;
+}
+
+.recipe-author-image {
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+}
+
+.recipe-text-info-item {
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.recipe-name-label {
+    font-family: "Gentium Plus", serif;
+    font-weight: bold;
+    font-size: 2.3rem;
+    color: #3D6827;
+    margin: 0 0 20px 0;
+}
+
+.recipe-page-description {
+    font-family: "Gentium Plus", serif;
+    font-size: 1.2rem;
+    color: #3D6827;
+    width: 70%;
+    margin: 0;
+}
+
+.recipe-page-img-left {
+    position: relative;
+    width: 110%;
+    left: -30%;
+    height: 90%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    min-width: 290px;
+    grid-area: 1 / 1 / 3 / 2;
+}
+
+.recipe-page-img-right {
+    position: relative;
+    width: 110%;
+    right: -20%;
+    height: 90%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    min-width: 290px;
+    grid-area: 2 / 3 / 4 / 4;
+
+}
+
+.name-and-description-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-area: 2 / 2 / 3 / 3;
+    height: 100%;
+}
+
+.recipe-page-main-info-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 100px 400px 100px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.recipe-page-ingredients {
+    grid-area: 3 / 1 / 4 / 3;
+    text-align: start;
+}
+
+.recipe-page-ingredients {
+    margin-left: 100px;
+    margin-top: 20px;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.5rem;
+    color: #3D6827;
+}
+
+.recipe-page-ingredients-label {
+    font-weight: bold;
+}
+
+.recipe-page-add-products-label {
+    padding: 10px;
+    border-radius: 20px;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.5rem;
+    color: #3D6827;
+    background-color: #E2F0D2;
+    text-align: center;
+    width: 80%;
+}
+
+.MuiDialogContent-root {
+    border: solid 1px #3D6827;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MuiDialogContent-root .MuiTableHead-root .MuiTableCell-root {
+    font-weight: bold;
+}
+
+.MuiDialogContent-root .MuiTableCell-root {
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.1rem;
+    background-color: #F9FAEE;
+}
+
+.MuiDialogContent-root .MuiTableContainer-root {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    transition: ease 0.5s;
+    box-shadow: none;
+}
+
+.MuiDialogContent-root .MuiButton-root {
+    border-radius: 20px;
+    color: #3D6827;
+}
+
+.MuiDialogContent-root .MuiButton-root:hover {
+    background-color: #E2F0D2;
+}
+
+.MuiDialogContent-root .MuiFormControl-root {
+    font-family: "Gentium Plus", serif;
+    width: 50%;
+    margin-bottom: 30px;
+}
+
+.MuiDialogContent-root .MuiInputLabel-root {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 18px;
+}
+
+.MuiDialogContent-root .MuiInputBase-root  {
+    font-family: "Gentium Plus", serif;
+    color: #5b5e59;
+    font-size: 18px;
+}
+
+.MuiDialogContent-root .MuiInput-underline:before {
+    color: #3D6827;
+}
+
+.MuiDialogContent-root .MuiInput-underline:after {
+    color: #3D6827;
+}
+
+.MuiDialogContent-root .MuiMenuItem-root {
+    font-family: "Gentium Plus", serif;
+}
+
+.MuiDialogContent-root .Mui-focused .MuiInput-underline:before {
+    border-bottom-color: #3D6827;
+}
+
+.MuiDialogContent-root .Mui-focused .MuiInputLabel-root {
+    color: #3D6827;
+}
+
+.MuiDialogContent-root .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.MuiDialogContent-root .MuiInputLabel-root.Mui-focused {
+    color: #3D6827;
+}
+
+.MuiMenuItem-root {
+    font-family: "Gentium Plus", serif !important;
+    color: #3D6827 !important;
+}

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.naukma.yummyyams.user.dto.UserShortResponse;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class CommentResponseDto {
     private Integer id;
     private String comment;
-    private Integer recipeId;
-    private Integer userId;
+    private UserShortResponse user;
     private CommentResponseDto reply;
 }

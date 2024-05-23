@@ -74,7 +74,7 @@ const Footer  = () =>{
                     </div>
 
                     <div className={'footer-bottom'}>
-                        <p className={'text-xs-left'} style={{fontFamily: "Forum", color: "#3D6827", textAlign:'left'}}>
+                        <p className={'text-xs-left'} style={{fontFamily: "Forum", color: "#3D6827", textAlign:'left', marginBottom:0}}>
                             &copy;{new Date().getFullYear()} Yummy Yums - All Rights Reserved
                         </p>
                     </div>

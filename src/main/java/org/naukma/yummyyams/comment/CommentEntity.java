@@ -36,7 +36,7 @@ public class CommentEntity implements GettableById<Integer> {
     @JoinColumn(name = "recipe_id", nullable = false)
     private RecipeEntity recipe;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 

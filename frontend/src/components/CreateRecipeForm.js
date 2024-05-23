@@ -1,38 +1,89 @@
+import TextField from "@mui/material/TextField";
 import '../styles/CreateRecipeForm.css'
 import Dialog from '@mui/material/Dialog';
 import {DialogContent} from "@mui/material";
-import StyledTextField from "../styled components/StyledTextField";
-
-
-
+import Form from 'react-bootstrap/Form';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CreateRecipeForm = ({open}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
-            <DialogContent>
+            <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
+                <IconButton
+                    aria-label="close"
+                    sx={{
+                        position: 'absolute',
+                        right: 25,
+                        top: 15,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon fontSize="large"/>
+                </IconButton>
                 <div className="create-recipe-dialog">
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть назву рецепту"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть інгредієнти"
+                        label="Введіть інгредієнт"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
+                        fullWidth
+                        id="standard-basic"
+                        label="Введіть кількість інгредієнта (шт/мл/г)"
+                        variant="standard"
+                        multiline
+                    />
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center">Назва інгредієнту</TableCell>
+                                    <TableCell align="center">Кількість</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody sx={{backgroundColor: '#F9FAEE'}}>
+                                <TableRow
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell align="center">Помідори</TableCell>
+                                    <TableCell align="center">2 шт</TableCell>
+                                </TableRow>
+                                <TableRow
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell align="center">Сіль</TableCell>
+                                    <TableCell align="center">200 г</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <p className="photo-upload-label">Додайте фото готової страви</p>
+                    <Form.Control className="recipe-photo-upload" type="file" size="md" accept="image/*" />
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть короткий опис"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть детальні інструкції з приготування"

@@ -3,80 +3,11 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Image from 'react-bootstrap/Image';
 import PlaceIcon from '@mui/icons-material/Place';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import AddProductsPopup from "../components/AddProductsPopup";
+import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
-import AddIcon from '@mui/icons-material/Add';
-import {Button, DialogContent, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
 
 const RecipePage = () => {
-
-
-    const AddProductsPopup = ({open}) => {
-        return (
-            <Dialog open={open} maxWidth="md" fullWidth>
-                <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
-                    <p className="recipe-page-add-products-label">Додайте продукт до власного списку</p>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Оберіть список продуктів</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                        >
-                            <MenuItem value={10}>Лялялял</MenuItem>
-                            <MenuItem value={20}>Лялялял</MenuItem>
-                            <MenuItem value={30}>Лялялял</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TableContainer component={Paper}>
-                        <IconButton
-                            aria-label="close"
-                            sx={{
-                                position: 'absolute',
-                                right: 25,
-                                top: 15,
-                                color: (theme) => theme.palette.grey[500],
-                            }}
-                        >
-                            <CloseIcon fontSize="large"/>
-                        </IconButton>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Назва продукту</TableCell>
-                                    <TableCell align="center">Кількість</TableCell>
-                                    <TableCell align="center">Магазин</TableCell>
-                                    <TableCell align="center">Адреса</TableCell>
-                                    <TableCell align="center">Ціна</TableCell>
-                                    <TableCell align="center"></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell align="center">Помідори</TableCell>
-                                    <TableCell align="center">1 шт</TableCell>
-                                    <TableCell align="center">Сільпо</TableCell>
-                                    <TableCell align="center">Закревського 95а</TableCell>
-                                    <TableCell align="center">20 грн</TableCell>
-                                    <TableCell align="center">
-                                        <Button><AddIcon/></Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </DialogContent>
-            </Dialog>
-        )
-    }
 
     return (
         <>
@@ -97,10 +28,39 @@ const RecipePage = () => {
                         </div>
                         <Image className="recipe-page-img-left" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
                         <Image className="recipe-page-img-right" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
-                        <p className="recipe-page-ingredients"><span className="recipe-page-ingredients-label">Інгредієнти: </span>сіль, помідори, огірки, вода</p>
+                        <div className="recipe-page-ingredients">
+                            <span className="recipe-page-ingredients-label">Інгредієнти: </span>
+                            <button className="recipe-page-ingredient-item">Помідори 5шт</button>
+                            <button className="recipe-page-ingredient-item">Сіль 100г</button>
+                            <button className="recipe-page-ingredient-item">Вода 200мл</button>
+                            <button className="recipe-page-ingredient-item">Помідори 5шт</button>
+                            <button className="recipe-page-ingredient-item">Сіль 100г</button>
+                            <button className="recipe-page-ingredient-item">Вода 200мл</button>
+                            <button className="recipe-page-ingredient-item">Помідори 5шт</button>
+                            <button className="recipe-page-ingredient-item">Сіль 100г</button>
+                            <button className="recipe-page-ingredient-item">Вода 200мл</button>
+                        </div>
                     </div>
-                    <div className="recipe-page-add-products-container">
-                        <AddProductsPopup open={true}/>
+                    <div className="recipe-page-instructions-container">
+                        <p className="recipe-page-instructions-label">Покрокова інструкція</p>
+                        <p className="recipe-page-instructions">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum neque eget erat vehicula dictum. Vestibulum nisi justo, finibus in congue non, scelerisque nec tellus. Nullam eget ultrices dolor, sed luctus dolor. Duis facilisis, dolor et faucibus aliquam, sapien nisl hendrerit sem, sit amet egestas diam odio sit amet mi. Duis sit amet dignissim mi, a bibendum tortor. Integer tincidunt iaculis leo. Integer sodales ultrices nunc gravida elementum. Aliquam dui tellus, condimentum ultrices mauris in, porttitor vehicula neque. Etiam volutpat est nec libero maximus, a dignissim nisl laoreet. Curabitur rutrum lectus felis, sit amet mattis odio ultricies ut. Etiam nec maximus sem. Nam felis mi, cursus sit amet purus ac, fringilla congue lorem.
+                        </p>
+                        {/*<AddProductsPopup open={true}/>*/}
+                    </div>
+                    <div className="recipe-page-comments-container">
+                        <p className="recipe-page-comments-label">Коментарі</p>
+                        <div className="add-comment-container">
+                            <TextField
+                                fullWidth
+                                id="standard-basic"
+                                label="Текст вашого коментаря"
+                                variant="standard"
+                                multiline
+                            />
+                            <button className="recipe-page-add-comment-button">Надіслати</button>
+                        </div>
+                        <Comment/>
                     </div>
                 </div>
                 <Footer/>

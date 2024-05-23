@@ -1,6 +1,7 @@
 .recipe-main-container {
     width: 100%;
     background-color: #F9FAEE;
+    overflow: hidden;
 }
 
 .recipe-inner-container {
@@ -9,7 +10,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    overflow: hidden;
 }
 
 .recipe-author-info {
@@ -60,7 +61,6 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 20px;
-    min-width: 290px;
     grid-area: 1 / 1 / 3 / 2;
 }
 
@@ -72,9 +72,8 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 20px;
-    min-width: 290px;
     grid-area: 2 / 3 / 4 / 4;
-
+    max-height: 450px;
 }
 
 .name-and-description-container {
@@ -88,7 +87,7 @@
 .recipe-page-main-info-container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 100px 400px 100px;
+    grid-template-rows: 100px 400px auto;
     overflow: hidden;
     width: 100%;
 }
@@ -104,6 +103,7 @@
     font-family: "Gentium Plus", serif;
     font-size: 1.5rem;
     color: #3D6827;
+    max-width: 980px;
 }
 
 .recipe-page-ingredients-label {
@@ -165,33 +165,13 @@
 .MuiDialogContent-root .MuiInputLabel-root {
     font-family: "Gentium Plus", serif;
     color: #3D6827;
-    font-size: 18px;
+    font-size: 1.2rem;
 }
 
 .MuiDialogContent-root .MuiInputBase-root  {
     font-family: "Gentium Plus", serif;
     color: #5b5e59;
-    font-size: 18px;
-}
-
-.MuiDialogContent-root .MuiInput-underline:before {
-    color: #3D6827;
-}
-
-.MuiDialogContent-root .MuiInput-underline:after {
-    color: #3D6827;
-}
-
-.MuiDialogContent-root .MuiMenuItem-root {
-    font-family: "Gentium Plus", serif;
-}
-
-.MuiDialogContent-root .Mui-focused .MuiInput-underline:before {
-    border-bottom-color: #3D6827;
-}
-
-.MuiDialogContent-root .Mui-focused .MuiInputLabel-root {
-    color: #3D6827;
+    font-size: 1.2rem;
 }
 
 .MuiDialogContent-root .MuiInput-underline:after {
@@ -205,4 +185,233 @@
 .MuiMenuItem-root {
     font-family: "Gentium Plus", serif !important;
     color: #3D6827 !important;
+}
+
+.MuiMenuItem-root.Mui-selected {
+    background-color: #E2F0D2 !important;
+}
+
+.MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827 !important;
+}
+
+.recipe-page-ingredient-item {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border: solid 1px #3D6827;
+    background-color: transparent;
+    margin: 0 5px 10px 0;
+    transition: ease 0.5s;
+}
+
+.recipe-page-ingredient-item:hover {
+    background-color: #E2F0D2;
+}
+
+.recipe-page-instructions-container {
+    width: 50%;
+    margin-left: 50px;
+    margin-top: 70px;
+    float: right;
+}
+
+.recipe-page-instructions-label {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: start;
+}
+
+.recipe-page-instructions {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.2rem;
+    text-align: start;
+}
+
+.recipe-page-comments-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.recipe-page-comments-label {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: start;
+}
+
+.recipe-page-comments-container .MuiFormLabel-root.Mui-focused {
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+
+.recipe-page-comments-container .MuiInput-underline:before {
+    border-bottom-color: #E0E3E7;
+}
+
+.recipe-page-comments-container .MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827;
+}
+
+.recipe-page-comments-container .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom-color: #3D6827;
+}
+
+.recipe-page-comments-container .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.recipe-page-comments-container .MuiInputBase-input {
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.recipe-page-comments-container .MuiFormLabel-root {
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.recipe-page-comments-container .MuiTextField-root {
+    margin: 0 30px 30px 0;
+    width: 40%;
+}
+
+.add-comment-container {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-page-add-comment-button {
+    border: none;
+    background-color: transparent;
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.2rem;
+    font-weight: bold;
+    float: right;
+    border-radius: 20px;
+    transition: ease 0.5s;
+    padding: 5px 10px;
+}
+
+.recipe-page-add-comment-button:hover {
+    background-color: #E2F0D2;
+}
+
+@media (max-width: 765px) {
+    .recipe-page-add-products-label {
+        font-size: 1rem;
+    }
+
+    .MuiDialogContent-root .MuiFormControl-root {
+        width: 90%;
+    }
+
+    .MuiDialogContent-root .MuiTableCell-root {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media (max-width: 1150px) {
+    .recipe-name-label {
+        font-size: 1.7rem;
+    }
+
+    .recipe-page-description {
+        font-size: 1rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 845px) {
+    .recipe-page-main-info-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .recipe-page-img-left {
+        display: none;
+    }
+
+    .recipe-page-img-right {
+        top: 0;
+        right: 0;
+        grid-area: 2 / 1 / 3 / 2;
+        width: 90%;
+        margin: auto;
+    }
+
+    .name-and-description-container {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+
+    .recipe-page-ingredients {
+        margin: 0;
+        grid-area: 3 / 1 / 4 / 2;
+        padding: 20px;
+    }
+
+    .recipe-page-description {
+        padding: 0 20px 20px 20px;
+    }
+
+    .recipe-page-ingredients-label {
+        font-size: 1.2rem;
+    }
+
+    .recipe-page-ingredient-item {
+        font-size: 1rem;
+    }
+
+    .recipe-page-instructions-container {
+        width: 100%;
+        margin: 0;
+        padding: 0 20px;
+    }
+
+    .recipe-page-instructions-label {
+        font-size: 1.2rem;
+    }
+
+    .recipe-page-instructions {
+        font-size: 1rem;
+    }
+
+    .recipe-page-comments-container {
+        margin: 0;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .recipe-page-comments-label {
+        font-size: 1.2rem;
+    }
+
+    .MuiDialogContent-root .MuiInputLabel-root, .recipe-page-comments-container .MuiFormLabel-root {
+        font-size: 1rem;
+    }
+
+    .recipe-page-add-comment-button {
+        font-size: 0.9rem;
+    }
+
+    .add-comment-container {
+        justify-content: space-between;
+    }
+
+    .recipe-page-comments-container .MuiTextField-root {
+        width: 70%;
+    }
 }

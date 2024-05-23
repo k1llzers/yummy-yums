@@ -4,14 +4,14 @@
     color: #3D6827;
 }
 
-.main-container {
+.home-main-container {
     height: 100vh;
     background-color: #F9FAEE;
     margin: 0;
     padding: 0;
 }
 
-.inner-container {
+.home-inner-container {
     width: 100%;
     display: flex;
     align-items: center;

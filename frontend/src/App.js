@@ -2,6 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
 import HomePage from "./pages/HomePage";
+import CreateRecipeForm from "./components/CreateRecipeForm";
+import RecipePage from "./pages/RecipePage";
+import SimpleRecipeCard from "./components/SimpleRecipeCard";
+import RecipeCard from "./components/RecipeCard";
 
 function App() {
   return (
@@ -21,7 +25,12 @@ function App() {
       {/*  </a>*/}
       {/*</header>*/}
       {/*<NavBar/>*/}
-        <HomePage/>
+      {/*  <HomePage/>*/}
+      {/*  <CreateRecipeForm open={true}/>*/}
+        <RecipePage/>
+      {/*  <NavBar/>*/}
+      {/*  <SimpleRecipeCard/>*/}
+      {/*  <RecipeCard/>*/}
     </div>
 
   );

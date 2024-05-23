@@ -1,7 +1,7 @@
+import TextField from "@mui/material/TextField";
 import '../styles/CreateRecipeForm.css'
 import Dialog from '@mui/material/Dialog';
 import {DialogContent} from "@mui/material";
-import StyledTextField from "../styled components/StyledTextField";
 import Form from 'react-bootstrap/Form';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -29,61 +29,61 @@ const CreateRecipeForm = ({open}) => {
                     <CloseIcon fontSize="large"/>
                 </IconButton>
                 <div className="create-recipe-dialog">
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть назву рецепту"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть інгредієнт"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть кількість інгредієнта (шт/мл/г)"
                         variant="standard"
                         multiline
                     />
-                    <TableContainer component={Paper} sx={{width: '50%', marginBottom: "30px"}}>
+                    <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
-                            <TableHead sx={{backgroundColor: '#E2F0D2', color: '#3D6827'}}>
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell sx={{color: "#3D6827", fontFamily: "Gentium Plus", fontSize: "1.1rem"}} align="center">Назва інгредієнту</TableCell>
-                                    <TableCell sx={{color: "#3D6827", fontFamily: "Gentium Plus", fontSize: "1.1rem"}} align="center">Кількість</TableCell>
+                                    <TableCell align="center">Назва інгредієнту</TableCell>
+                                    <TableCell align="center">Кількість</TableCell>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
+                            <TableBody sx={{backgroundColor: '#F9FAEE'}}>
                                 <TableRow
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell sx={{fontFamily: "Gentium Plus", fontSize: "1rem"}} align="center">Помідори</TableCell>
-                                    <TableCell sx={{fontFamily: "Gentium Plus", fontSize: "1rem"}} align="center">2 шт</TableCell>
+                                    <TableCell align="center">Помідори</TableCell>
+                                    <TableCell align="center">2 шт</TableCell>
                                 </TableRow>
                                 <TableRow
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell sx={{fontFamily: "Gentium Plus", fontSize: "1rem"}} align="center">Сіль</TableCell>
-                                    <TableCell sx={{fontFamily: "Gentium Plus", fontSize: "1rem"}} align="center">200 г</TableCell>
+                                    <TableCell align="center">Сіль</TableCell>
+                                    <TableCell align="center">200 г</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                     <p className="photo-upload-label">Додайте фото готової страви</p>
                     <Form.Control className="recipe-photo-upload" type="file" size="md" accept="image/*" />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть короткий опис"
                         variant="standard"
                         multiline
                     />
-                    <StyledTextField
+                    <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть детальні інструкції з приготування"

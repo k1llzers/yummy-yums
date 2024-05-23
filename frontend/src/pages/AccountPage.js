@@ -1,4 +1,3 @@
-
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import Card from "react-bootstrap/Card";
@@ -10,8 +9,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import SimpleRecipeCard from "../components/SimpleRecipeCard";
+import LikedRecipeCard from "../components/LikedRecipeCard";
 
-const AccountPage = () =>{
+const AccountPage = () => {
     return (
         <div className={'main-container'}>
             <NavBar/>
@@ -35,7 +35,8 @@ const AccountPage = () =>{
                                             <p className="account-info">
                                                 <DescriptionIcon style={{height: '30px'}}/> 37 рецептів
                                             </p>
-                                            <p className="account-info info-likes"><FavoriteBorderIcon  style={{height: '30px'}}/> 468 лайків</p>
+                                            <p className="account-info info-likes"><FavoriteBorderIcon
+                                                style={{height: '30px'}}/> 468 лайків</p>
                                         </div>
                                         <div className="recipe-likes">
                                             <button className={'edit-button'}>Редагувати профіль</button>
@@ -48,15 +49,15 @@ const AccountPage = () =>{
                 </div>
                 <div className={'family-info-container'}>
 
-                        <Select placeholder={'Моя сімʼя'}
-                        >
-                            <MenuItem value={1}>Я (1)</MenuItem>
-                            <MenuItem value={2}>Мама і Тато (2)</MenuItem>
-                            <MenuItem value={3}>Сімʼя з трьох (3)</MenuItem>
-                            <MenuItem value={4}>Сімʼя з чотирьох (4)</MenuItem>
-                            <MenuItem value={5}>Сімʼя з п'яти (5)</MenuItem>
-                            <MenuItem value={10}>Велика родина (10)</MenuItem>
-                        </Select>
+                    <Select placeholder={'Моя сімʼя'}
+                    >
+                        <MenuItem value={1}>Я (1)</MenuItem>
+                        <MenuItem value={2}>Мама і Тато (2)</MenuItem>
+                        <MenuItem value={3}>Сімʼя з трьох (3)</MenuItem>
+                        <MenuItem value={4}>Сімʼя з чотирьох (4)</MenuItem>
+                        <MenuItem value={5}>Сімʼя з п'яти (5)</MenuItem>
+                        <MenuItem value={10}>Велика родина (10)</MenuItem>
+                    </Select>
                 </div>
             </div>
             <div className={'bottom-container'}>
@@ -66,21 +67,39 @@ const AccountPage = () =>{
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
-                            <SimpleRecipeCard />
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
                         </div>
 
                     </Tab>
                     <Tab eventKey="likes-recipes" title="Вподобані">
-                        Tab content for Profile
+                        <div className={'liked-recipe-card'}>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                            <LikedRecipeCard/>
+                        </div>
                     </Tab>
                     <Tab eventKey="product-list" title="Список продуктів">
                         Tab content for Contact
@@ -93,7 +112,7 @@ const AccountPage = () =>{
             <Footer/>
         </div>
 
-)
-    ;
+    )
+        ;
 }
 export default AccountPage;

@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
+import AccountPage from "./pages/AccountPage";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      <NavBar/>
+      <AccountPage/>
+
     </div>
 
   );

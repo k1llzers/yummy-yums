@@ -92,7 +92,8 @@
 }
 .nav-tabs .nav-link, .nav-tabs{
     border: none;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-family: "Gentium Plus", serif;
 }
 .nav-tabs .nav-link.active{
     background-color: rgba(127, 165, 105, 0.34);
@@ -105,12 +106,15 @@
 }
 .tab-content{
     background-color: #C1D7AE;
-    height: fit-content;
+    height: auto;
+
 }
-.own-recipes-container{
+
+.own-recipes-container, .liked-recipe-card{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap:3% 0;
     justify-items: center;
     padding: 20px 10px;
+
 }

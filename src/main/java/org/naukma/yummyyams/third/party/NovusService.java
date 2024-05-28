@@ -19,17 +19,17 @@ import java.util.Set;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SilpoService implements ScrapeService {
+public class NovusService implements ScrapeService {
     public Set<ProductDto> getProducts() {
         Set<ProductDto> responseDTOS = new HashSet<>();
-        WebDriver driver = initDriver("https://shop.silpo.ua/category/ryba-4430?utm_source=silpo&utm_medium=site_button&utm_campaign=categories");
-        log.info("Start scrap from: " + "https://shop.silpo.ua/category/ryba-4430?utm_source=silpo&utm_medium=site_button&utm_campaign=categories");
-        log.info("count of pages: " + getCountOfPages(driver));
+        WebDriver driver = initDriver("https://novus.online/category/riba");
+        log.info("Start scrap from: " + "https://novus.online/category/riba");
         int page = 1;
         boolean moreProductsPresent = true;
         do {
             log.info("get from page: " + page);
             Elements productsElements = getElementsOfProducts(driver);
+            log.info("find " + productsElements.size() + " products on page");
             for (Element elem : productsElements) {
                 try {
                     responseDTOS.add(getProductFromElem(elem));
@@ -41,7 +41,7 @@ public class SilpoService implements ScrapeService {
             page++;
         } while (goToNextPage(driver) && moreProductsPresent);
         driver.quit();
-        log.info(responseDTOS.size() + " products scraped from fish silpo");
+        log.info(responseDTOS.size() + " products scraped from fish novus");
         return responseDTOS;
     }
 
@@ -51,28 +51,16 @@ public class SilpoService implements ScrapeService {
         return driver;
     }
 
-    private int getCountOfPages(WebDriver driver) {
-        try {
-            WebElement paginationElement = driver.findElement(By.className("pagination__items"));
-            String htmlCode = paginationElement.getAttribute("innerHTML");
-            Document parse = Jsoup.parse(htmlCode);
-            return Integer.parseInt(parse.getElementsByTag("a").getLast().text());
-        } catch (Exception ex) {
-            log.warn("Waiting for loading pages");
-            return getCountOfPages(driver);
-        }
-    }
-
     private Elements getElementsOfProducts(WebDriver driver) {
         WebElement productsList = getProductList(driver);
         String htmlCode = productsList.getAttribute("innerHTML");
         Document parse = Jsoup.parse(htmlCode);
-        return parse.getElementsByClass("products-list__item");
+        return parse.getElementsByClass("catalog-products__item");
     }
 
     private WebElement getProductList(WebDriver driver) {
         try {
-            return driver.findElement(By.className("products-list"));
+            return driver.findElement(By.className("catalog-products__products"));
         } catch (Exception ex) {
             try {
                 Thread.sleep(200);
@@ -88,7 +76,12 @@ public class SilpoService implements ScrapeService {
         String title = getProductTitle(element);
         String price = getProductPrice(element);
         String weight = getProductWeight(element);
-        String img = getProductImage(element);
+        if (weight.equals("за кг"))
+            weight = "1кг";
+        if (weight.contains("за"))
+            weight = weight.replace("за", "");
+        weight = weight.replace(" ", "");
+        String img = "https://novus.online/" + getProductImage(element);
         return ProductDto.builder()
                 .name(title)
                 .price(price)
@@ -98,25 +91,23 @@ public class SilpoService implements ScrapeService {
     }
 
     private String getProductTitle(Element element) {
-        Elements titleElem = element.getElementsByClass("product-card__title");
+        Elements titleElem = element.getElementsByClass("base-card__label");
         if (titleElem.isEmpty())
             throw new NoTitleException();
         return titleElem.getFirst().text();
     }
 
     private String getProductPrice(Element element) {
-        return element.getElementsByClass("product-card-price").getFirst()
-                .getElementsByTag("div").get(1).text();
+        return element.getElementsByClass("product-card-price__current").getFirst().text();
     }
 
     private String getProductWeight(Element element) {
-        return element.getElementsByClass("ft-typo-14-semibold xl:ft-typo-16-semibold").getFirst()
-                .getElementsByTag("span").getFirst().text();
+        return element.getElementsByClass("base-card__capacity").getFirst().text();
     }
 
     private String getProductImage(Element element) {
         try {
-            return element.getElementsByTag("img").getFirst().attribute("src").getValue();
+            return element.getElementsByClass("base-image__img").getFirst().attribute("src").getValue();
         } catch (Exception ex) {
             log.error("failed getting image on elem: " + element);
         }
@@ -125,7 +116,7 @@ public class SilpoService implements ScrapeService {
 
     private boolean goToNextPage(WebDriver driver) {
         try {
-            WebElement nextButton = driver.findElement(By.className("pagination-item--next-page"));
+            WebElement nextButton = driver.findElement(By.className("base-pagination-pages__arrow_right"));
             nextButton.click();
             Thread.sleep(2000);
             return true;

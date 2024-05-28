@@ -14,9 +14,21 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProductController {
     private final SilpoService silpoService;
+    private final AtbService atbService;
+    private final NovusService novusService;
 
-    @GetMapping
-    public ResponseEntity<Set<ProductDto>> getProducts() throws IOException {
+    @GetMapping("/silpo")
+    public ResponseEntity<Set<ProductDto>> getProductsSilpo() throws IOException {
         return ResponseEntity.ok(silpoService.getProducts());
+    }
+
+    @GetMapping("/atb")
+    public ResponseEntity<Set<ProductDto>> getProductsAtb() throws IOException {
+        return ResponseEntity.ok(atbService.getProducts());
+    }
+
+    @GetMapping("/novus")
+    public ResponseEntity<Set<ProductDto>> getProductsNovus() throws IOException {
+        return ResponseEntity.ok(novusService.getProducts());
     }
 }

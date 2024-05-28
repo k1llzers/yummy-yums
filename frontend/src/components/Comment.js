@@ -18,7 +18,7 @@ const Comment = () => {
                     sx={{margin: 0}}
                     fullWidth
                     id="standard-basic"
-                    label="Текст вашої відповіді"
+                    label="Ваша відповідь"
                     variant="standard"
                     multiline
                 />

@@ -6,6 +6,8 @@ import PlaceIcon from '@mui/icons-material/Place';
 import AddProductsPopup from "../components/AddProductsPopup";
 import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const RecipePage = () => {
 
@@ -24,6 +26,10 @@ const RecipePage = () => {
                                 </div>
                             </div>
                             <p className="recipe-name-label">Прекрасний неймовірний салат</p>
+                            <div className="recipe-likes-info">
+                                <span>25 </span>
+                                <button className="recipe-page-like-button"><FavoriteBorderIcon fontSize="medium"/></button>
+                            </div>
                             <p className="recipe-page-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum fermentum faucibus. Phasellus feugiat ligula ligula, sed convallis felis tristique ut. Vestibulum a semper neque, a viverra lectus.</p>
                         </div>
                         <Image className="recipe-page-img-left" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
@@ -54,7 +60,7 @@ const RecipePage = () => {
                             <TextField
                                 fullWidth
                                 id="standard-basic"
-                                label="Текст вашого коментаря"
+                                label="Ваш коментар"
                                 variant="standard"
                                 multiline
                             />

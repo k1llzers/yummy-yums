@@ -1,0 +1,65 @@
+.friend-card .card-body{
+    background-color: #C1D7AE;
+    display: flex;
+    justify-content: center;
+    padding: 2% 0 0 0;
+}
+.friend-card{
+    border: none;
+}
+.friend-card-container{
+    width: 90%;
+    background-color: #F9FAEE;
+    border-radius: 30px;
+    border: solid 1px #3D6827;
+    min-width: 250px;
+}
+.friend-request-info{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:3% 0;
+    justify-items: left;
+    justify-content: space-around;
+    padding: 20px 10px;
+}
+.friend-card-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin-right: 0.4em;
+}
+.friend-request-card{
+    padding-bottom: 2%;
+}
+.single-account, .request-info{
+    font-family: "Gentium Plus", serif;
+    font-size: 1.5rem;
+    color: #3D6827;
+}
+
+.request-card-text-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 1.5em;
+}
+.request-info-title{
+    margin: 0 5px 0 calc(30px + 0.4em);
+    font-family: "Gentium Plus", serif;
+    font-size: 1.4rem;
+    color: #3D6827;
+    font-weight: bold;
+}
+.friends-request-button{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    padding: 0 0 20px 0;
+}
+.friends-request-button button{
+    width: 60%;
+    border-radius: 20px;
+    background-color: #E2F0D2;
+    border: solid 2px #C1D7AE;
+}

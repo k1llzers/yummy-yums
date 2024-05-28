@@ -3,13 +3,22 @@ import NavBar from "../components/NavBar";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
-import {Select, MenuItem} from "@mui/material";
+import {Select, MenuItem, Button, InputLabel} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import SimpleRecipeCard from "../components/SimpleRecipeCard";
 import LikedRecipeCard from "../components/LikedRecipeCard";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import AddIcon from "@mui/icons-material/Add";
+import FriendRequestCard from "../components/FriendRequestCard";
 
 const AccountPage = () => {
     return (
@@ -102,10 +111,75 @@ const AccountPage = () => {
                         </div>
                     </Tab>
                     <Tab eventKey="product-list" title="Список продуктів">
-                        Tab content for Contact
+                        <div className={'own-product-list'}>
+                            <div className={'searching-container'}>
+                                <div className={'input-table-container'}>
+
+                                </div>
+                                <div className={'table-container'}>
+                                    <TableContainer component={Paper}>
+                                        <Table sx={{minWidth: 650}} aria-label="simple table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell align="center">Назва продукту</TableCell>
+                                                    <TableCell align="center">Кількість</TableCell>
+                                                    <TableCell align="center">Магазин</TableCell>
+                                                    <TableCell align="center">Адреса</TableCell>
+                                                    <TableCell align="center">Ціна</TableCell>
+                                                    <TableCell align="center"></TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="center">Помідори</TableCell>
+                                                    <TableCell align="center">1 шт</TableCell>
+                                                    <TableCell align="center">Сільпо</TableCell>
+                                                    <TableCell align="center">Закревського 95а</TableCell>
+                                                    <TableCell align="center">20 грн</TableCell>
+                                                    <TableCell align="center">
+                                                        <Button><AddIcon/></Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </div>
+                            </div>
+                            <div className={'product-list-container'}>
+                                <div className={'main-product-list-container'}>
+                                    <p>Мій список</p>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value=""
+                                               id="flexCheckDefault"/>
+                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                            Default checkbox
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value=""
+                                               id="flexCheckChecked" checked/>
+                                        <label className="form-check-label" htmlFor="flexCheckChecked">
+                                            Checked checkbox
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value=""
+                                               id="flexCheckDisabled" disabled/>
+                                        <label className="form-check-label" htmlFor="flexCheckDisabled">
+                                            Disabled checkbox
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </Tab>
                     <Tab eventKey="friend-requests" title="Запити">
-                        Tab content for Contact
+                        <div className={'friend-request-card'}>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                        </div>
                     </Tab>
                 </Tabs>
             </div>

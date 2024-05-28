@@ -118,3 +118,46 @@
     padding: 20px 10px;
 
 }
+.MuiTableHead-root .MuiTableCell-root {
+    font-weight: bold;
+}
+
+.MuiTableCell-root {
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.2rem;
+    background-color: #C1D7AE;
+    /*background-color: #F9FAEE;*/
+}
+
+.MuiTableContainer-root {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    transition: ease 0.5s;
+    box-shadow: none;
+}
+.MuiButton-root {
+    border-radius: 20px;
+    color: #3D6827;
+}
+
+.MuiButton-root:hover {
+    background-color: #E2F0D2;
+}
+.own-product-list{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-around;
+    min-height: 250px;
+}
+.friend-request-card{
+    min-height: 250px;
+}
+.main-product-list-container{
+    background-color: #F9FAEE;
+    height: 100%;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin-top: 1.2em;
+}

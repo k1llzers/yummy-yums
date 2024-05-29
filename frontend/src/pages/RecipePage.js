@@ -7,7 +7,6 @@ import AddProductsPopup from "../components/AddProductsPopup";
 import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const RecipePage = () => {
 
@@ -52,7 +51,7 @@ const RecipePage = () => {
                         <p className="recipe-page-instructions">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum neque eget erat vehicula dictum. Vestibulum nisi justo, finibus in congue non, scelerisque nec tellus. Nullam eget ultrices dolor, sed luctus dolor. Duis facilisis, dolor et faucibus aliquam, sapien nisl hendrerit sem, sit amet egestas diam odio sit amet mi. Duis sit amet dignissim mi, a bibendum tortor. Integer tincidunt iaculis leo. Integer sodales ultrices nunc gravida elementum. Aliquam dui tellus, condimentum ultrices mauris in, porttitor vehicula neque. Etiam volutpat est nec libero maximus, a dignissim nisl laoreet. Curabitur rutrum lectus felis, sit amet mattis odio ultricies ut. Etiam nec maximus sem. Nam felis mi, cursus sit amet purus ac, fringilla congue lorem.
                         </p>
-                        <AddProductsPopup open={true}/>
+                        {/*<AddProductsPopup open={true}/>*/}
                     </div>
                     <div className="recipe-page-comments-container">
                         <p className="recipe-page-comments-label">Коментарі</p>

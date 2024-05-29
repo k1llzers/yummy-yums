@@ -5,6 +5,7 @@ import RecipePage from "./pages/RecipePage";
 import AllRecipesPage from "./pages/AllRecipesPage";
 import CreateRecipeForm from "./components/CreateRecipeForm";
 import SignUpForm from "./pages/SignUpForm";
+import LogInForm from "./pages/LogInForm";
 
 function App() {
   return (
@@ -23,11 +24,12 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      {/*<AccountPage/>*/}
-        <RecipePage/>
-        {/*<AllRecipesPage/>*/}
-        {/*<CreateRecipeForm open={true}/>*/}
-        {/*<SignUpForm open={true}/>*/}
+      <AccountPage/>
+      {/*  <RecipePage/>*/}
+      {/*  <LogInForm open={true}/>*/}
+      {/*  <AllRecipesPage/>*/}
+      {/*  <CreateRecipeForm open={true}/>*/}
+      {/*  <SignUpForm open={true}/>*/}
     </div>
 
   );

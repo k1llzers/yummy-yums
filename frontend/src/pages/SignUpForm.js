@@ -41,7 +41,6 @@ const SignUpForm = ({open}) => {
                         id="standard-basic"
                         label="Введіть ваш email"
                         variant="standard"
-                        type="password"
                     />
                     <p className="photo-upload-label">Додайте ваше фото</p>
                     <Form.Control className="sign-up-photo-upload" type="file" size="md" accept="image/*" />

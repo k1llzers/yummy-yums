@@ -1,6 +1,12 @@
 
 import './App.css';
 import AccountPage from "./pages/AccountPage";
+import RecipePage from "./pages/RecipePage";
+import AllRecipesPage from "./pages/AllRecipesPage";
+import CreateRecipeForm from "./components/CreateRecipeForm";
+import SignUpForm from "./pages/SignUpForm";
+import LogInForm from "./pages/LogInForm";
+import EditProfilePopup from "./components/EditProfilePopup";
 
 function App() {
   return (
@@ -21,8 +27,11 @@ function App() {
       {/*</header>*/}
       {/*<AccountPage/>*/}
       {/*  <RecipePage/>*/}
-        <AccountPage/>
-        {/*<CreateRecipeForm open={true}/>*/}
+      {/*  <EditProfilePopup open={true}/>*/}
+      {/*  <LogInForm open={true}/>*/}
+      {/*  <AllRecipesPage/>*/}
+        <CreateRecipeForm open={true}/>
+      {/*  <SignUpForm open={true}/>*/}
     </div>
 
   );

@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import '../styles/CreateRecipeForm.css'
 import Dialog from '@mui/material/Dialog';
-import {DialogContent} from "@mui/material";
+import {Button, DialogContent} from "@mui/material";
 import Form from 'react-bootstrap/Form';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -50,12 +50,16 @@ const CreateRecipeForm = ({open}) => {
                         variant="standard"
                         multiline
                     />
+                    <button className="add-ingredient-button">
+                        Додати інгредієнт
+                    </button>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="center">Назва інгредієнту</TableCell>
                                     <TableCell align="center">Кількість</TableCell>
+                                    <TableCell align="center"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody sx={{backgroundColor: '#F9FAEE'}}>
@@ -64,12 +68,18 @@ const CreateRecipeForm = ({open}) => {
                                 >
                                     <TableCell align="center">Помідори</TableCell>
                                     <TableCell align="center">2 шт</TableCell>
+                                    <TableCell align="center">
+                                        <Button><CloseIcon/></Button>
+                                    </TableCell>
                                 </TableRow>
                                 <TableRow
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="center">Сіль</TableCell>
                                     <TableCell align="center">200 г</TableCell>
+                                    <TableCell align="center">
+                                        <Button><CloseIcon/></Button>
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>

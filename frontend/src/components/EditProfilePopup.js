@@ -4,9 +4,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import Form from "react-bootstrap/Form";
 import Dialog from "@mui/material/Dialog";
-import '../styles/SignUpForm.css'
+import '../styles/EditProfilePopup.css'
 
-const SignUpForm = ({open}) => {
+const EditProfilePopup = ({open}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
@@ -21,45 +21,45 @@ const SignUpForm = ({open}) => {
                 >
                     <CloseIcon fontSize="large"/>
                 </IconButton>
-                <div className="sign-up-dialog">
+                <div className="edit-profile-dialog">
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть ваше ім'я"
+                        label="Редагуйте ім'я"
                         variant="standard"
                         multiline
                     />
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть ваше прізвище"
+                        label="Редагуйте прізвище"
                         variant="standard"
                         multiline
                     />
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть ваш email"
+                        label="Редагуйте email"
                         variant="standard"
                     />
-                    <p className="photo-upload-label">Додайте ваше фото</p>
-                    <Form.Control className="sign-up-photo-upload" type="file" size="md" accept="image/*" />
+                    <p className="edit-photo-upload-label">Додайте нове фото</p>
+                    <Form.Control className="edit-photo-upload" type="file" size="md" accept="image/*" />
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть пароль"
+                        label="Редагуйте пароль"
                         variant="standard"
                         type="password"
                     />
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Повторіть ваш пароль"
+                        label="Повторіть пароль"
                         variant="standard"
                         type="password"
                     />
-                    <button className="sign-up-button">
-                        Зареєструватись
+                    <button className="edit-button">
+                        Редагувати
                     </button>
                 </div>
             </DialogContent>
@@ -67,4 +67,4 @@ const SignUpForm = ({open}) => {
     )
 }
 
-export default SignUpForm;
+export default EditProfilePopup;

@@ -1,0 +1,101 @@
+.login-dialog {
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-button {
+    border-radius: 35px;
+    background-color: #E2F0D2;
+    color: #3D6827;
+    border: none;
+    font-family: "Gentium Plus", serif;
+    margin: 30px 10px 0 10px;
+    padding: 10px 30px;
+    font-size: 20px;
+    transition: ease 0.5s;
+}
+
+.login-button:hover{
+    background-color: rgba(127, 165, 105, 0.34);
+}
+
+.login-buttons-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.login-dialog .MuiFormLabel-root.Mui-focused {
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+
+.login-dialog .MuiInput-underline:before {
+    border-bottom-color: #E0E3E7;
+}
+
+.login-dialog .MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827;
+}
+
+.login-dialog .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom-color: #3D6827;
+}
+
+.login-dialog .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.login-dialog .MuiInputBase-input {
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.login-dialog .MuiFormLabel-root {
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.login-dialog .MuiTextField-root {
+    margin: 0 0 30px 0;
+}
+
+@media (max-width: 730px) {
+
+    .login-button {
+        font-size: 0.8rem;
+        width: 70%;
+    }
+
+    .login-dialog .recipe-photo-upload {
+        font-size: 0.8rem;
+    }
+
+    .login-dialog .MuiDialog-paperFullWidth {
+        width: 90vw;
+        margin: 0;
+    }
+
+    .login-dialog .MuiFormLabel-root {
+        font-size: 0.8rem;
+    }
+
+    .login-dialog .photo-upload-label {
+        font-size: 0.8rem;
+        margin-left: 40px;
+    }
+
+    .login-dialog {
+        padding: 10px;
+    }
+
+    .login-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

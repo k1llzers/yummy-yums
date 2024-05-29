@@ -22,8 +22,8 @@ function App() {
       {/*  </a>*/}
       {/*</header>*/}
       {/*<AccountPage/>*/}
-
-        <AccountPage/>
+        <RecipePage/>
+        {/*<AccountPage/>*/}
     </div>
 
   );

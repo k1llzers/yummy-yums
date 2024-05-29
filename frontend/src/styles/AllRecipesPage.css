@@ -1,0 +1,133 @@
+.all-recipes-main-container {
+    width: 100%;
+    background-color: #F9FAEE;
+}
+
+.all-recipes-inner-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.all-recipes-filters-container {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 100px;
+}
+
+.all-recipes-filters-container .MuiFormControl-root {
+    font-family: "Gentium Plus", serif;
+    width: 20%;
+}
+
+.all-recipes-filters-container .MuiInputLabel-root {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.1rem;
+}
+
+.all-recipes-filters-container .MuiInputBase-root  {
+    font-family: "Gentium Plus", serif;
+    color: #5b5e59;
+    font-size: 1.1rem;
+}
+
+.all-recipes-filters-container .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.all-recipes-filters-container .MuiInputLabel-root.Mui-focused {
+    color: #3D6827;
+}
+
+.all-recipes-filters-container .MuiMenuItem-root {
+    font-family: "Gentium Plus", serif !important;
+    color: #3D6827 !important;
+}
+
+.all-recipes-filters-container .MuiMenuItem-root.Mui-selected {
+    background-color: #E2F0D2 !important;
+}
+
+.all-recipes-filters-container .MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827 !important;
+}
+
+.all-recipes-products-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-recipes-products-container label.Mui-focused {
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+}
+
+.all-recipes-products-container .MuiInputBase-root  {
+    font-family: "Gentium Plus", serif;
+    color: #5b5e59;
+    font-size: 1.1rem;
+}
+
+.all-recipes-products-container label {
+    font-family: "Gentium Plus", serif;
+    font-size: 1.1rem;
+}
+
+.all-recipes-products-container .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.all-recipes-products-container .MuiOutlinedInput-root fieldset {
+    border-color: #3D6827;
+}
+
+.all-recipes-products-container .MuiOutlinedInput-root:hover fieldset {
+    border-color: #3D6827;
+}
+
+.all-recipes-products-container .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #3D6827;
+}
+
+.MuiAutocomplete-option {
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+}
+
+.all-recipes-products-container .MuiAutocomplete-root {
+    width: 50%;
+}
+
+.MuiAutocomplete-option[data-focus="true"] {
+    background-color: #E2F0D2 !important;
+}
+
+.MuiAutocomplete-option[aria-selected="true"] {
+    background-color: #E2F0D2 !important;
+}
+
+.all-recipes-cards-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 850px) {
+    .all-recipes-products-container .MuiAutocomplete-root {
+        width: 80%;
+    }
+
+    .all-recipes-filters-container {
+        padding: 0;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .all-recipes-filters-container .MuiFormControl-root {
+        width: 90%;
+    }
+}

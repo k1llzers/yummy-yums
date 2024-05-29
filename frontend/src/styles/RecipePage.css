@@ -170,19 +170,19 @@
     background-color: #E2F0D2;
 }
 
-.MuiDialogContent-root .MuiFormControl-root {
+.recipe-main-container .MuiDialogContent-root .MuiFormControl-root {
     font-family: "Gentium Plus", serif;
     width: 50%;
     margin-bottom: 30px;
 }
 
-.MuiDialogContent-root .MuiInputLabel-root {
+.recipe-main-container .MuiDialogContent-root .MuiInputLabel-root {
     font-family: "Gentium Plus", serif;
     color: #3D6827;
     font-size: 1.2rem;
 }
 
-.MuiDialogContent-root .MuiInputBase-root  {
+.recipe-main-container .MuiDialogContent-root .MuiInputBase-root  {
     font-family: "Gentium Plus", serif;
     color: #5b5e59;
     font-size: 1.2rem;

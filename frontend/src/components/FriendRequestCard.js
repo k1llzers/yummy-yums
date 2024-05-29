@@ -1,7 +1,8 @@
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import '../styles/FriendRequestCard.css'
+import VerifiedIcon from '@mui/icons-material/Verified';
+import CancelIcon from '@mui/icons-material/Cancel';
 const FriendRequestCard = () =>{
     return(
         <Card body className="friend-card">
@@ -40,9 +41,9 @@ const FriendRequestCard = () =>{
                         </div>
                     </div>
                     <div className="friends-request-button">
-                        <button className="friend-card-accept-button">Прийняти <FavoriteBorderIcon fontSize="large"/>
+                        <button className="friend-card-accept-button">Прийняти <VerifiedIcon/>
                         </button>
-                        <button className="friend-card-reject-button">Відхилити <FavoriteBorderIcon fontSize="large"/>
+                        <button className="friend-card-reject-button">Відхилити <CancelIcon/>
                         </button>
                     </div>
                 </div>

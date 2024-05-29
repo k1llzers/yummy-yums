@@ -19,11 +19,14 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import FriendRequestCard from "../components/FriendRequestCard";
+import AddProductsPopup from "../components/AddProductsPopup";
+import CreateRecipeForm from "../components/CreateRecipeForm";
 
 const AccountPage = () => {
     return (
         <div className={'main-container'}>
             <NavBar/>
+            {/*<CreateRecipeForm open={true}/>*/}
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card">

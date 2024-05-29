@@ -11,7 +11,7 @@
     width: 90%;
     background-color: #F9FAEE;
     border-radius: 30px;
-    border: solid 1px #3D6827;
+    border: solid 2px #3D6827;
     min-width: 250px;
 }
 .friend-request-info{
@@ -60,6 +60,17 @@
 .friends-request-button button{
     width: 60%;
     border-radius: 20px;
-    background-color: #E2F0D2;
+    /*background-color: #F9FAEE;*/
     border: solid 2px #C1D7AE;
+    /*color: #3D6827;*/
+    background-color: #E2F0D2;
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+    /*margin: 30px 10px 0 10px;*/
+    padding: 10px 30px;
+    font-size: 1.6rem;
+    transition: ease 0.5s;
+}
+.friends-request-button button:hover, .friends-request-button button:active {
+    background-color: rgba(127, 165, 105, 0.34);
 }

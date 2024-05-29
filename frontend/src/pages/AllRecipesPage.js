@@ -41,7 +41,7 @@ const AllRecipesPage = () => {
                         />
                     </Search>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Оберіть категорію рецептів</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label">Категорія рецептів</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"

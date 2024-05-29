@@ -20,6 +20,7 @@
 .all-recipes-filters-container .MuiFormControl-root {
     font-family: "Gentium Plus", serif;
     width: 20%;
+    margin-bottom: 30px;
 }
 
 .all-recipes-filters-container .MuiInputLabel-root {

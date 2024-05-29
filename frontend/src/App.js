@@ -1,6 +1,10 @@
 
 import './App.css';
 import AccountPage from "./pages/AccountPage";
+import RecipePage from "./pages/RecipePage";
+import AllRecipesPage from "./pages/AllRecipesPage";
+import CreateRecipeForm from "./components/CreateRecipeForm";
+import SignUpForm from "./pages/SignUpForm";
 
 function App() {
   return (
@@ -19,10 +23,11 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      {/*<AccountPage/>*/}
+      <AccountPage/>
       {/*  <RecipePage/>*/}
-        <AccountPage/>
+        {/*<AllRecipesPage/>*/}
         {/*<CreateRecipeForm open={true}/>*/}
+        {/*<SignUpForm open={true}/>*/}
     </div>
 
   );

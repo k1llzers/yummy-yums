@@ -3,6 +3,9 @@ import './App.css';
 import NavBar from './components/NavBar';
 import AccountPage from "./pages/AccountPage";
 import RecipePage from "./pages/RecipePage";
+import AllRecipesPage from "./pages/AllRecipesPage";
+import CreateRecipeForm from "./components/CreateRecipeForm";
+import SignUpForm from "./pages/SignUpForm";
 
 function App() {
   return (
@@ -22,8 +25,11 @@ function App() {
       {/*  </a>*/}
       {/*</header>*/}
       {/*<AccountPage/>*/}
-        <RecipePage/>
+      {/*  <RecipePage/>*/}
         {/*<AccountPage/>*/}
+        <AllRecipesPage/>
+        {/*<CreateRecipeForm open={true}/>*/}
+        {/*<SignUpForm open={true}/>*/}
     </div>
 
   );

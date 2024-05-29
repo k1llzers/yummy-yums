@@ -19,11 +19,11 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import FriendRequestCard from "../components/FriendRequestCard";
+import TextField from "@mui/material/TextField";
 const AccountPage = () => {
     return (
         <div className={'main-container'}>
             <NavBar/>
-            {/*<CreateRecipeForm open={true}/>*/}
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card">
@@ -114,7 +114,13 @@ const AccountPage = () => {
                         <div className={'own-product-list'}>
                             <div className={'searching-container'}>
                                 <div className={'input-table-container'}>
-
+                                    <TextField
+                                        fullWidth
+                                        id="standard-basic"
+                                        label="Введіть назву продукту"
+                                        variant="standard"
+                                        multiline
+                                    />
                                 </div>
                                 <div className={'table-container'}>
                                     <TableContainer component={Paper}>

@@ -6,13 +6,16 @@
 }
 .friend-card{
     border: none;
+    width: 95%;
+}
+.single-account{
+
 }
 .friend-card-container{
-    width: 90%;
+    width: 100%;
     background-color: #F9FAEE;
     border-radius: 30px;
     border: solid 2px #3D6827;
-    min-width: 250px;
 }
 .friend-request-info{
     display: grid;
@@ -23,9 +26,9 @@
     padding: 20px 10px;
 }
 .friend-card-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
+    width: 1.7vw;
+    height: 1.7vw;
+    border-radius: 0.6vw;
     margin-right: 0.4em;
 }
 .friend-request-card{
@@ -33,7 +36,7 @@
 }
 .single-account, .request-info{
     font-family: "Gentium Plus", serif;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     color: #3D6827;
 }
 
@@ -43,11 +46,13 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin-left: 1.5em;
+    margin-right:1.5em;
+    width: auto;
 }
 .request-info-title{
     margin: 0 5px 0 calc(30px + 0.4em);
     font-family: "Gentium Plus", serif;
-    font-size: 1.4rem;
+    font-size: 1.5vw;
     color: #3D6827;
     font-weight: bold;
 }
@@ -58,19 +63,71 @@
     padding: 0 0 20px 0;
 }
 .friends-request-button button{
-    width: 60%;
+    width: 70%;
     border-radius: 20px;
-    /*background-color: #F9FAEE;*/
     border: solid 2px #C1D7AE;
-    /*color: #3D6827;*/
     background-color: #E2F0D2;
     color: #3D6827;
     font-family: "Gentium Plus", serif;
-    /*margin: 30px 10px 0 10px;*/
     padding: 10px 30px;
-    font-size: 1.6rem;
+    font-size: 1.5vw;
     transition: ease 0.5s;
 }
 .friends-request-button button:hover, .friends-request-button button:active {
     background-color: rgba(127, 165, 105, 0.34);
+}
+.request-info{
+    margin: 0 5px 0 calc(30px + 0.4em);
+}
+.single-account{
+    white-space: nowrap;
+    font-size: 1.6vw;
+}
+@media (max-width: 1090px) {
+    .friend-card-image {
+        width: 2.5vw;
+        height: 2.5vw;
+        border-radius: 0.8vw;
+    }
+    .friend-card{
+
+        width: 80%;
+    }
+    .single-account, .request-info{
+        font-size: 2.3vw;
+    }
+    .request-info-title, .request-info{
+        margin: 0 5px 0 calc(15px + 0.6em);
+        font-size: 2.3vw;
+    }
+    .friends-request-button button{
+        padding: 3px 5px;
+        font-size: 2.2vw;
+    }
+}
+@media (max-width: 660px) {
+    .friend-request-info, .friends-request-button{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .friend-card-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+    }
+    .friend-card{
+
+        width: 95%;
+    }
+    .single-account, .request-info{
+        font-size: 1.4em;
+    }
+    .request-info-title, .request-info{
+        margin: 0 5px 0 calc(25px + 0.6em);
+        font-size: 1.3em;
+    }
+    .friends-request-button button{
+        padding: 3px 5px;
+        margin-top: 10px;
+        font-size: 1.5em;
+    }
 }

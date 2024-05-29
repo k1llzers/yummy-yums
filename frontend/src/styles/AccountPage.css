@@ -110,13 +110,39 @@
 
 }
 
-.own-recipes-container, .liked-recipe-card{
+.own-recipes-container, .liked-recipe-card, .friend-request-card{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap:3% 0;
     justify-items: center;
     padding: 20px 10px;
 
+}
+.input-table-container .MuiInputBase-input {
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+
+}
+.input-table-container .MuiFormLabel-root.Mui-focused {
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+
+
+.input-table-container .MuiInput-underline:before {
+    color: #5b5e59;
+}
+.input-table-container .MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827;
+}
+
+.input-table-container.MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom-color: #3D6827;
+}
+
+.input-table-container .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
 }
 .MuiTableHead-root .MuiTableCell-root {
     font-weight: bold;
@@ -160,4 +186,9 @@
     border-radius: 30px;
     padding: 10px 20px;
     margin-top: 1.2em;
+}
+@media (max-width: 1090px) {
+    .friend-request-card{
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

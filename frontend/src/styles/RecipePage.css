@@ -156,9 +156,10 @@
 
 .MuiDialogContent-root .MuiTableContainer-root {
     margin-bottom: 30px;
+    margin-top: 30px;
     border-radius: 10px;
-    transition: ease 0.5s;
     box-shadow: none;
+    width: 90%;
 }
 
 .MuiDialogContent-root .MuiButton-root {
@@ -172,7 +173,7 @@
 
 .recipe-main-container .MuiDialogContent-root .MuiFormControl-root {
     font-family: "Gentium Plus", serif;
-    width: 50%;
+    width: 70%;
     margin-bottom: 30px;
 }
 
@@ -325,6 +326,13 @@
     background-color: #E2F0D2;
 }
 
+.popup-product-photo {
+    border-radius: 20px;
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+}
+
 @media (max-width: 765px) {
     .recipe-page-add-products-label {
         font-size: 1rem;
@@ -336,6 +344,11 @@
 
     .MuiDialogContent-root .MuiTableCell-root {
         font-size: 0.9rem;
+    }
+
+    .popup-product-photo {
+        height: 40px;
+        width: 40px;
     }
 
 }

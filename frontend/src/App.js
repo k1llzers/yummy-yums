@@ -23,8 +23,8 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      <AccountPage/>
-      {/*  <RecipePage/>*/}
+      {/*<AccountPage/>*/}
+        <RecipePage/>
         {/*<AllRecipesPage/>*/}
         {/*<CreateRecipeForm open={true}/>*/}
         {/*<SignUpForm open={true}/>*/}

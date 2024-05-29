@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const LikedRecipeCard = ()=>{
     return (
-        <Card body className="recipe-card">
+        <Card body className="recipe-card-liked">
             <Card.Body style={{padding: "0px 5px"}}>
                 <div className="card-container">
                     <div className="recipe-name">

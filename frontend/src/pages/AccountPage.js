@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
-import {Select, MenuItem, Button, InputLabel} from "@mui/material";
+import {Select, MenuItem, Button} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Tab from 'react-bootstrap/Tab';
@@ -19,9 +19,6 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import FriendRequestCard from "../components/FriendRequestCard";
-import AddProductsPopup from "../components/AddProductsPopup";
-import CreateRecipeForm from "../components/CreateRecipeForm";
-
 const AccountPage = () => {
     return (
         <div className={'main-container'}>
@@ -33,7 +30,7 @@ const AccountPage = () => {
                         <Card.Body style={{padding: "0px 5px"}}>
                             <div className="card-container">
                                 <div className="account-name">
-                                    <Image className="card-image"
+                                    <Image className="account-card-image"
                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSouz4bFZt20u2XHT4zM-7vP4OV_lZ1nT0JlQ&s"/>
                                     <div className="account-card-text-info">
                                         <p className="account-title">Григорій Сковорода </p>

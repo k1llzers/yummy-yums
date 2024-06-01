@@ -25,12 +25,12 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      {/*<AccountPage/>*/}
+      <AccountPage/>
       {/*  <RecipePage/>*/}
       {/*  <EditProfilePopup open={true}/>*/}
       {/*  <LogInForm open={true}/>*/}
       {/*  <AllRecipesPage/>*/}
-        <CreateRecipeForm open={true}/>
+      {/*  <CreateRecipeForm open={true}/>*/}
       {/*  <SignUpForm open={true}/>*/}
     </div>
 

@@ -1,0 +1,212 @@
+.edit-family-dialog {
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.edit-family-form-button {
+    border-radius: 35px;
+    background-color: #E2F0D2;
+    color: #3D6827;
+    border: none;
+    font-family: "Gentium Plus", serif;
+    margin: 30px 10px 0 10px;
+    padding: 10px 30px;
+    font-size: 20px;
+    transition: ease 0.5s;
+}
+
+.edit-family-form-button:hover {
+    background-color: rgba(127, 165, 105, 0.34);
+}
+
+.edit-family-dialog .MuiFormLabel-root.Mui-focused {
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+
+.edit-family-dialog .MuiInput-underline:before {
+    border-bottom-color: #E0E3E7;
+}
+
+.edit-family-dialog .MuiInput-underline:hover:before {
+    border-bottom-color: #3D6827;
+}
+
+.edit-family-dialog .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom-color: #3D6827;
+}
+
+.edit-family-dialog .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+
+.edit-family-dialog .MuiInputBase-input {
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.edit-family-dialog .MuiFormLabel-root {
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+}
+
+.edit-family-dialog .MuiTextField-root {
+    margin: 0 0 20px 0;
+}
+
+.family-page-members {
+    grid-area: 3 / 1 / 4 / 3;
+    text-align: center;
+    font-family: "Gentium Plus", serif;
+    font-size: 1.5rem;
+    color: #3D6827;
+    max-width: 820px;
+    padding-top: 10px;
+}
+
+.family-page-members-item {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border: solid 1px #3D6827;
+    background-color: transparent;
+    margin: 0 5px 10px 0;
+    transition: ease 0.5s;
+}
+
+.family-page-members-item:hover {
+    background-color: #E2F0D2;
+}
+
+.single-family-member-account{
+    font-family: "Gentium Plus", serif;
+    white-space: nowrap;
+    font-size: 1.5vw;
+    color: #3D6827;
+}
+.family-member-card-image {
+    width: 1.7vw;
+    height: 1.7vw;
+    border-radius: 0.6vw;
+    margin-right: 0.4em;
+}
+.members-label{
+    color: #5b5e59;
+    font-family: 'Gentium Plus', serif;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.add-new-members-container .css-xjtm2a{
+    margin: 10px 20px;
+}
+#family-member-list{
+    border: solid 1px #3D6827 ;
+    border-radius: 20px;
+}
+.add-new-members-container{
+    border: solid 1px #3D6827 ;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+.add-new-members-container .edit-family-form-button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 35%;
+}
+#save-new-family-button{
+    width: 35%;
+}
+.edit-family-bottom-buttons{
+    text-align: center;
+}
+#add-members-label{
+    width: 100%;
+    display: flex;
+}
+#new-member-id{
+    margin-top: 0;
+}
+#save-new-family-container{
+    width: 100%;
+}
+@media (max-width: 1090px) {
+    .single-family-member-account{
+        font-size: 1.8vw;
+    }
+    .family-member-card-image {
+        width: 2.5vw;
+        height: 2.5vw;
+        border-radius: 0.8vw;
+    }
+}
+
+@media (max-width: 845px) {
+    .family-page-members {
+        margin: 0;
+        grid-area: 3 / 1 / 4 / 2;
+        padding: 20px;
+    }
+    .single-family-member-account{
+        font-size: 1.9vw;
+    }
+    .family-page-members-item {
+        font-size: 1rem;
+    }
+    .add-new-members-container .edit-family-form-button{
+        margin-top: 0;
+        width: 40%;
+    }
+    #save-new-family-button{
+        width: 40%;
+    }
+}
+
+@media (max-width: 730px) {
+
+    .edit-family-form-button {
+        font-size: 1.1rem;
+    }
+
+    .edit-family-dialog .MuiDialog-paperFullWidth {
+        width: 90vw;
+        margin: 0;
+    }
+
+    .edit-family-dialog .MuiFormLabel-root {
+        font-size: 0.8rem;
+    }
+
+    .edit-family-dialog {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 660px) {
+    .single-family-member-account {
+        font-size: 1.1em;
+    }
+    .family-member-card-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+    }
+    .add-new-members-container .css-xjtm2a{
+        margin: 10px 10%;
+        width: 80%;
+    }
+    .add-new-members-container .edit-family-form-button{
+        width: 50%;
+    }
+    #save-new-family-button{
+        width: 50%;
+    }
+}

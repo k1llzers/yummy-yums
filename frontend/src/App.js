@@ -9,6 +9,8 @@ import LogInForm from "./pages/LogInForm";
 import EditProfilePopup from "./components/EditProfilePopup";
 import Routes from "./routes";
 import AuthProvider from "./provider/authProvider";
+import EditFamilyPopup from "./components/EditFamilyPopup";
+import CreateFamilyPopup from "./styles/CreateFamilyPopup";
 
 function App() {
   return (

@@ -12,12 +12,12 @@ import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import Image from "react-bootstrap/Image";
 
-const AddProductsPopup = ({open}) => {
+const AddProductsPopup = ({open, setOpen}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <p className="recipe-page-add-products-label">Додайте продукт до власного списку</p>
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 220 }}>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 220, width: '50%' }}>
                     <InputLabel id="demo-simple-select-standard-label">Оберіть список продуктів</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
@@ -31,6 +31,7 @@ const AddProductsPopup = ({open}) => {
                 <TableContainer component={Paper}>
                     <IconButton
                         aria-label="close"
+                        onClick={() => setOpen(false)}
                         sx={{
                             position: 'absolute',
                             right: 25,
@@ -58,7 +59,11 @@ const AddProductsPopup = ({open}) => {
                                 </TableCell>
                                 <TableCell align="center">Банан</TableCell>
                                 <TableCell align="center">1 шт</TableCell>
-                                <TableCell align="center">Сільпо</TableCell>
+                                <TableCell align="center">
+                                    <Image
+                                        src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
+                                        className={'shop-image'}></Image>
+                                </TableCell>
                                 <TableCell align="center">20 грн</TableCell>
                                 <TableCell align="center">
                                     <Button><AddIcon/></Button>
@@ -70,7 +75,11 @@ const AddProductsPopup = ({open}) => {
                                 </TableCell>
                                 <TableCell align="center">Помідор</TableCell>
                                 <TableCell align="center">1 шт</TableCell>
-                                <TableCell align="center">Сільпо</TableCell>
+                                <TableCell align="center">
+                                    <Image
+                                        src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
+                                        className={'shop-image'}></Image>
+                                </TableCell>
                                 <TableCell align="center">20 грн</TableCell>
                                 <TableCell align="center">
                                     <Button><AddIcon/></Button>

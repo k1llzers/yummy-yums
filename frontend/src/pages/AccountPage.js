@@ -27,12 +27,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import StyledInputBase from "../styled components/StyledInputBase";
 import Search from "../styled components/Search";
 import EditFamilyPopup from "../components/EditFamilyPopup";
+import EditProfilePopup from "../components/EditProfilePopup";
+import {useState} from "react";
 
 const AccountPage = () => {
+    const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
     return (
-
         <div className={'main-container'}>
-            <NavBar/>
+            <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card">
@@ -57,7 +59,12 @@ const AccountPage = () => {
                                                 style={{height: '30px'}}/> 468 лайків</p>
                                         </div>
                                         <div className="recipe-likes">
-                                            <button className={'account-edit-button'}>Редагувати профіль</button>
+                                            <button
+                                                className={'account-edit-button'}
+                                                onClick={() => setOpenEditProfilePopup(true)}
+                                            >
+                                                Редагувати профіль
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

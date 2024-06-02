@@ -11,9 +11,9 @@ const RecipeCard = () => {
                     <div className="recipe-name">
                         <Image className="card-image" src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505" />
                         <div className="recipe-card-text-info">
-                            <p className="card-title">Прекрасний неймовірний салат </p>
+                            <a className="card-title-a" href='/recipe'><p className="card-title">Прекрасний неймовірний салат </p></a>
                             <p className="recipe-info">
-                                <span className="info-title">Інгредієнти: </span>
+                            <span className="info-title">Інгредієнти: </span>
                                 помідори, огірки, сіль
                             </p>
                             <p className="recipe-info">

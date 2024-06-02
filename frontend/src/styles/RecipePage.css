@@ -43,6 +43,7 @@
     font-size: 2.3rem;
     color: #3D6827;
     margin: 0 0 10px 0;
+    text-align: center;
 }
 
 .recipe-likes-info {
@@ -65,6 +66,7 @@
     color: #3D6827;
     width: 70%;
     margin: 0;
+    text-align: center;
 }
 
 .recipe-page-img-left {
@@ -173,11 +175,11 @@
 
 .recipe-main-container .MuiDialogContent-root .MuiFormControl-root {
     font-family: "Gentium Plus", serif;
-    width: 70%;
+    width: 80%;
     margin-bottom: 30px;
 }
 
-.recipe-main-container .MuiDialogContent-root .MuiInputLabel-root {
+.MuiDialogContent-root .MuiInputLabel-root {
     font-family: "Gentium Plus", serif;
     color: #3D6827;
     font-size: 1.2rem;

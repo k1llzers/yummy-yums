@@ -6,11 +6,12 @@ import Form from "react-bootstrap/Form";
 import Dialog from "@mui/material/Dialog";
 import '../styles/EditProfilePopup.css'
 
-const EditProfilePopup = ({open}) => {
+const EditProfilePopup = ({open, setOpen}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
+                    onClick={() => setOpen(false)}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -59,7 +60,7 @@ const EditProfilePopup = ({open}) => {
                         type="password"
                     />
                     <button className="edit-button">
-                        Редагувати
+                        Редагувати профіль
                     </button>
                 </div>
             </DialogContent>

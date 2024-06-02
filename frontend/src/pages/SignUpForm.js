@@ -6,11 +6,12 @@ import Form from "react-bootstrap/Form";
 import Dialog from "@mui/material/Dialog";
 import '../styles/SignUpForm.css'
 
-const SignUpForm = ({open}) => {
+const SignUpForm = ({open, setOpen}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
+                    onClick={() => setOpen(false)}
                     aria-label="close"
                     sx={{
                         position: 'absolute',

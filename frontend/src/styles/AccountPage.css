@@ -201,6 +201,7 @@
 .input-table-container .MuiFormLabel-root.Mui-focused, .input-table-container .MuiFormLabel-root, .input-table-container .MuiInput-underline {
     color: #3D6827;
     font-size: 1.2rem;
+    font-family: "Gentium Plus", serif;
 }
 .input-table-container .MuiInput-underline:after {
     border-bottom-color: #3D6827;
@@ -245,6 +246,9 @@
 .form-check-input {
     margin-right: 0.5em;
 }
+.all-family-info-container{
+    text-align: center;
+}
 
 .proposal-table-container .MuiTableContainer-root, .main-product-list-container .MuiTableContainer-root {
     margin: 30px 0;
@@ -286,6 +290,7 @@
     border-radius: 30px;
     padding: 10px 0;
     margin: 16% 0;
+    text-align: center;
 }
 @media (max-width: 1400px) {
     .own-product-list {

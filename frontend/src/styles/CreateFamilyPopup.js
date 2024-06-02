@@ -3,7 +3,6 @@ import {DialogContent} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
-import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
 import Search from "../styled components/Search";
 import SearchIconWrapper from "../styled components/SearchIconWrapper";

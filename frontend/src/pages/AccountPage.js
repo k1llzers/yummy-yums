@@ -33,6 +33,7 @@ import {useState} from "react";
 const AccountPage = () => {
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
     return (
+
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
@@ -73,7 +74,7 @@ const AccountPage = () => {
                     </Card>
                 </div>
                 <div className={'family-info-container'}>
-                    <div>
+                    <div className={'all-family-info-container'}>
                         <select className="form-select form-select-family" aria-label="Default select example">
                             <option selected>Оберіть сімʼю</option>
                             <option value="1">Цікава сімейка</option>
@@ -134,14 +135,14 @@ const AccountPage = () => {
                     <Tab eventKey="product-list" title="Список продуктів">
                         <div className={'own-product-list'}>
                             <div className={'searching-container'}>
-                                    <div className={'input-table-container'}>
-                                        <TextField
-                                            fullWidth
-                                            id="standard-basic"
-                                            label="Введіть назву продукту"
-                                            variant="standard"
-                                        />
-                                    </div>
+                                <div className={'input-table-container'}>
+                                    <TextField
+                                        fullWidth
+                                        id="standard-basic"
+                                        label="Введіть назву продукту"
+                                        variant="standard"
+                                    />
+                                </div>
                                 <div className={'proposal-table-container'}>
                                     <TableContainer component={Paper}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -261,7 +262,7 @@ const AccountPage = () => {
                                     <TableContainer component={Paper}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
                                             <TableHead>
-                                                <TableRow sx={{'& td, & th': { width: 140 }}}>
+                                                <TableRow sx={{'& td, & th': {width: 140}}}>
                                                     <TableCell align="center">Назва</TableCell>
                                                     <TableCell align="center">К-сть</TableCell>
                                                     <TableCell align="center">Магазин</TableCell>

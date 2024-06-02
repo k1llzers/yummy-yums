@@ -23,7 +23,7 @@ const Footer  = () =>{
 
                         <div className={'col-md-4 col-sm-6'}>
                             <h4 className={'subtitle'}><NavigationIcon></NavigationIcon>Навігація</h4>
-                            <Nav className="me-auto" style={{justifyContent:'center'}}>
+                            <Nav className="me-auto" style={{marginLeft:'8px'}}>
                                 <ul className={'list-unstyled'} style={{textAlign:'left'}}>
                                     <li>
                                         <Nav.Link href="#home" style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Рецепти</Nav.Link>
@@ -39,7 +39,7 @@ const Footer  = () =>{
                         </div>
                         <div className={'col-md-4 col-sm-6'}>
                             <h4 className={'subtitle'}><ContactsIcon></ContactsIcon> Розробники</h4>
-                            <ButtonGroup vertical>
+                            <ButtonGroup vertical style={{marginLeft:'18px'}}>
                                 <DropdownButton
                                     as={ListGroup}
                                     title="Семицький О.І."

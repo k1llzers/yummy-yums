@@ -7,6 +7,8 @@ import CreateRecipeForm from "./components/CreateRecipeForm";
 import SignUpForm from "./pages/SignUpForm";
 import LogInForm from "./pages/LogInForm";
 import EditProfilePopup from "./components/EditProfilePopup";
+import EditFamilyPopup from "./components/EditFamilyPopup";
+import CreateFamilyPopup from "./styles/CreateFamilyPopup";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
       <AccountPage/>
       {/*  <RecipePage/>*/}
       {/*  <EditProfilePopup open={true}/>*/}
+      {/*  <EditFamilyPopup open={true}/>*/}
+      {/*  <CreateFamilyPopup open={true}/>*/}
       {/*  <LogInForm open={true}/>*/}
       {/*  <AllRecipesPage/>*/}
       {/*  <CreateRecipeForm open={true}/>*/}

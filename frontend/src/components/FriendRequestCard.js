@@ -16,7 +16,7 @@ const FriendRequestCard = () =>{
                                 Григорій Сковорода
                             </div>
                             <p className={'request-info-title'}>Назва сімʼї:</p>
-                            <p className={'request-info'}>люта дрістальня</p>
+                            <p className={'request-info'}>цікава сімейка</p>
                         </div>
                         <div className="request-card-text-info">
                             <p className="request-info-title">Склад сімʼї:</p>
@@ -28,7 +28,7 @@ const FriendRequestCard = () =>{
                             <div className={'single-account'}>
                                 <Image className="friend-card-image"
                                        src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Окунь Петрович
+                                Артемій Петрович
                             </div>
                             <div className={'single-account'}>
                                 <Image className="friend-card-image"

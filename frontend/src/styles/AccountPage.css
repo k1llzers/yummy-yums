@@ -39,7 +39,6 @@
 }
 
 .account-card-image {
-
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -90,7 +89,58 @@
     /*border: solid 1px rgb(61, 104, 39);*/
     color: rgb(61, 104, 39);
 }
-
+.form-select-family{
+    border-bottom: solid 1px #3D6827 ;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    background-color: rgba(249, 250, 238, 1);
+    color: #3D6827;
+    padding: 1% 36px 1% 12px;
+    font-size: 1.3rem;
+    font-family: "Forum", "cursive";
+}
+.form-select-family option{
+    font-size: 1.2rem;
+    font-family: "Forum", "cursive";
+    background-color: rgba(249, 250, 238, 1)
+}
+.form-select-family:focus, .form-select-family:active{
+    box-shadow: none;
+    border-bottom: solid 2px #3D6827 ;
+}
+.selected-family-info{
+    margin: 10px 10px;
+    padding:10px 10px;
+    border: solid 1px #3D6827 ;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: left;
+}
+.family-info-container{
+    display: flex;
+}
+.edit-family-buttons{
+    color: #3D6827;
+    margin-top: 10px;
+    margin-left: 2px;
+}
+.create-family-button{
+    width: 91%;
+    border-radius: 12px;
+    border: solid 1px #3D6827;
+    background-color: rgba(249, 250, 238, 1);
+    color: #3D6827;
+    font-family: "Gentium Plus", serif;
+    padding: 5px 5px;
+    font-size: 1.3em;
+    transition: ease 0.5s;
+}
+.create-family-button:hover{
+    background-color: rgba(127, 165, 105, 0.34);
+}
 .nav-item {
     margin-top: 50px;
     margin-right: 7px;
@@ -144,43 +194,28 @@
     justify-content: space-around;
     min-height: 250px;
 }
-
-/*.input-table-container .MuiInputBase-input {*/
-/*    color: #5b5e59;*/
-/*    font-family: 'Gentium Plus', serif;*/
-/*    font-size: 1.2rem;*/
-
-/*}*/
-/*.input-table-container .MuiFormLabel-root.Mui-focused {*/
-/*    color: #3D6827;*/
-/*    font-size: 1.2rem;*/
-/*}*/
-
-
-/*.input-table-container .MuiInput-underline:before {*/
-/*    color: #5b5e59;*/
-/*}*/
-/*.input-table-container .MuiInput-underline:hover:before {*/
-/*    border-bottom-color: #3D6827;*/
-/*}*/
-
-/*.input-table-container.MuiInput-underline:hover:not(.Mui-disabled):before {*/
-/*    border-bottom-color: #3D6827;*/
-/*}*/
-
-/*.input-table-container .MuiInput-underline:after {*/
-/*    border-bottom-color: #3D6827;*/
-/*}*/
-
-.searching-container {
-    width: 60%;
+.input-table-container{
+    margin-top: 20px;
 }
-
+.input-table-container .MuiFormLabel-root.Mui-focused, .input-table-container .MuiFormLabel-root, .input-table-container .MuiInput-underline {
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+.input-table-container .MuiInput-underline:after {
+    border-bottom-color: #3D6827;
+}
+/*.proposal-table-container{*/
+/*    max-width: 700px;*/
+/*}*/
+/*.proposal-table-container .MuiTable-root{*/
+/*    min-width: 687px;*/
+/*}*/
 .proposal-table-container .MuiTableCell-root{
     color: #3D6827;
     font-family: "Gentium Plus", serif;
     font-size: 1.2rem;
     background-color: #E2F0D2;
+
 }
 .proposal-table-container .MuiTableHead-root .MuiTableCell-root,
 .main-product-list-container .MuiTableHead-root .MuiTableCell-root,
@@ -203,13 +238,15 @@
 .main-product-list-container .MuiPaper-root{
     margin-top: 10px;
 }
-
+/*.product-list-container{*/
+/*    width: 42%;*/
+/*}*/
 .form-check-input {
     margin-right: 0.5em;
 }
 
 .proposal-table-container .MuiTableContainer-root, .main-product-list-container .MuiTableContainer-root {
-    margin-bottom: 30px;
+    margin: 30px 0;
     border-radius: 20px;
     transition: ease 0.5s;
     box-shadow: none;
@@ -239,6 +276,7 @@
 
 .friend-request-card {
     min-height: 250px;
+    padding-top: 7px;
 }
 
 .main-product-list-container {
@@ -246,11 +284,40 @@
     /*height: 100%;*/
     border-radius: 30px;
     padding: 10px 0;
-    margin-top: 1.2em;
+    margin: 16% 0;
+}
+@media (max-width: 1400px) {
+    .own-product-list {
+        flex-direction: column;
+        width: 80%;
+        margin-left: 10%;
+        /*align-items: center;*/
+        /*justify-items: center;*/
+    }
+    .main-product-list-container{
+        margin: 5% 0;
+    }
 }
 
 @media (max-width: 1090px) {
     .friend-request-card {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+@media (max-width: 620px) {
+    .nav-tabs .nav-link, .account-info, .account-edit-button {
+        font-size: 1.2rem;
+    }
+    .account-card-image{
+        width: 100px;
+        height: 100px;
+    }
+    .account-title{
+        font-size: 1.3rem;
+    }
+}
+@media (max-width: 450px) {
+    .own-recipes-container, .liked-recipe-card{
         grid-template-columns: repeat(1, 1fr);
     }
 }

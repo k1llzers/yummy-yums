@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
-import {Select, MenuItem, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Tab from 'react-bootstrap/Tab';
@@ -19,11 +19,18 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from '@mui/icons-material/Remove';
+import EditIcon from '@mui/icons-material/Edit';
 import FriendRequestCard from "../components/FriendRequestCard";
 import TextField from "@mui/material/TextField";
+import SearchIconWrapper from "../styled components/SearchIconWrapper";
+import SearchIcon from "@mui/icons-material/Search";
+import StyledInputBase from "../styled components/StyledInputBase";
+import Search from "../styled components/Search";
+import EditFamilyPopup from "../components/EditFamilyPopup";
 
 const AccountPage = () => {
     return (
+
         <div className={'main-container'}>
             <NavBar/>
             <div className={"top-container"}>
@@ -59,16 +66,38 @@ const AccountPage = () => {
                     </Card>
                 </div>
                 <div className={'family-info-container'}>
+                    <div>
+                        <select className="form-select form-select-family" aria-label="Default select example">
+                            <option selected>Оберіть сімʼю</option>
+                            <option value="1">Цікава сімейка</option>
+                            <option value="2">Дівчатка</option>
+                            <option value="3">Три недопрограміста</option>
+                        </select>
+                        <div className={'selected-family-info'}>
+                            <div className={'single-account'}>
+                                <Image className="friend-card-image"
+                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                Анатолій Журба
+                            </div>
+                            <div className={'single-account'}>
+                                <Image className="friend-card-image"
+                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                Артемій Петрович
+                            </div>
+                            <div className={'single-account'}>
+                                <Image className="friend-card-image"
+                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                Галина Антонівна
+                            </div>
 
-                    {/*<Select placeholder={'Моя сімʼя'}*/}
-                    {/*>*/}
-                    {/*    <MenuItem value={1}>Я (1)</MenuItem>*/}
-                    {/*    <MenuItem value={2}>Мама і Тато (2)</MenuItem>*/}
-                    {/*    <MenuItem value={3}>Сімʼя з трьох (3)</MenuItem>*/}
-                    {/*    <MenuItem value={4}>Сімʼя з чотирьох (4)</MenuItem>*/}
-                    {/*    <MenuItem value={5}>Сімʼя з п'яти (5)</MenuItem>*/}
-                    {/*    <MenuItem value={10}>Велика родина (10)</MenuItem>*/}
-                    {/*</Select>*/}
+                        </div>
+                            <button className="create-family-button">
+                                Створити сімʼю
+                            </button>
+                    </div>
+                    <div className={'edit-family-buttons'}>
+                        <EditIcon/>
+                    </div>
                 </div>
             </div>
             <div className={'bottom-container'}>
@@ -84,17 +113,6 @@ const AccountPage = () => {
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
                         </div>
 
                     </Tab>
@@ -104,26 +122,19 @@ const AccountPage = () => {
                             <LikedRecipeCard/>
                             <LikedRecipeCard/>
                             <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
                         </div>
                     </Tab>
                     <Tab eventKey="product-list" title="Список продуктів">
                         <div className={'own-product-list'}>
                             <div className={'searching-container'}>
-                                {/*    <div className={'input-table-container'}>*/}
-                                {/*        <TextField*/}
-                                {/*            fullWidth*/}
-                                {/*            id="standard-basic"*/}
-                                {/*            label="Введіть назву продукту"*/}
-                                {/*            variant="standard"*/}
-                                {/*            multiline*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
+                                    <div className={'input-table-container'}>
+                                        <TextField
+                                            fullWidth
+                                            id="standard-basic"
+                                            label="Введіть назву продукту"
+                                            variant="standard"
+                                        />
+                                    </div>
                                 <div className={'proposal-table-container'}>
                                     <TableContainer component={Paper}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -194,6 +205,44 @@ const AccountPage = () => {
                                                         <Button className={'add-to-list-button'}><AddIcon/></Button>
                                                     </TableCell>
                                                 </TableRow>
+                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="center">Помідори</TableCell>
+                                                    <TableCell align="center">
+                                                        <div className={'control-product-number'}>
+                                                            <Button
+                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
+                                                            1 шт
+                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <Image
+                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
+                                                            className={'shop-image'}></Image></TableCell>
+                                                    <TableCell align="center">20 грн</TableCell>
+                                                    <TableCell align="center">
+                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="center">Помідори</TableCell>
+                                                    <TableCell align="center">
+                                                        <div className={'control-product-number'}>
+                                                            <Button
+                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
+                                                            1 шт
+                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <Image
+                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
+                                                            className={'shop-image'}></Image></TableCell>
+                                                    <TableCell align="center">20 грн</TableCell>
+                                                    <TableCell align="center">
+                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
+                                                    </TableCell>
+                                                </TableRow>
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -205,7 +254,7 @@ const AccountPage = () => {
                                     <TableContainer component={Paper}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
                                             <TableHead>
-                                                <TableRow>
+                                                <TableRow sx={{'& td, & th': { width: 140 }}}>
                                                     <TableCell align="center">Назва</TableCell>
                                                     <TableCell align="center">К-сть</TableCell>
                                                     <TableCell align="center">Магазин</TableCell>
@@ -255,6 +304,42 @@ const AccountPage = () => {
                                                     <TableCell align="center">
                                                         <input className="form-check-input" type="checkbox" value=""
                                                                id="flexCheckDefault3"/>
+                                                        Помідори
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        1 шт
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <Image
+                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
+                                                            className={'shop-image'}></Image></TableCell>
+                                                    <TableCell align="center">20 грн</TableCell>
+                                                    <TableCell align="center">
+                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="center">
+                                                        <input className="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckDefault4"/>
+                                                        Помідори
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        1 шт
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <Image
+                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
+                                                            className={'shop-image'}></Image></TableCell>
+                                                    <TableCell align="center">20 грн</TableCell>
+                                                    <TableCell align="center">
+                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="center">
+                                                        <input className="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckDefault5"/>
                                                         Помідори
                                                     </TableCell>
                                                     <TableCell align="center">

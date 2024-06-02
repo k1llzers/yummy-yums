@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import '../styles/CreateRecipeForm.css'
 import Dialog from '@mui/material/Dialog';
-import {Button, DialogContent} from "@mui/material";
+import {Button, DialogContent, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import Form from 'react-bootstrap/Form';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,11 +13,12 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-const CreateRecipeForm = ({open}) => {
+const CreateRecipeForm = ({open, setOpen}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
+                    onClick={() => setOpen(false)}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -36,6 +37,17 @@ const CreateRecipeForm = ({open}) => {
                         variant="standard"
                         multiline
                     />
+                    <FormControl variant="standard" sx={{ m: 1, width: '100%', marginBottom: '30px'}}>
+                        <InputLabel id="demo-simple-select-standard-label">Оберіть категорію рецепта</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                        >
+                            <MenuItem value={10}>Лялялял</MenuItem>
+                            <MenuItem value={20}>Лялялял</MenuItem>
+                            <MenuItem value={30}>Лялялял</MenuItem>
+                        </Select>
+                    </FormControl>
                     <TextField
                         fullWidth
                         id="standard-basic"

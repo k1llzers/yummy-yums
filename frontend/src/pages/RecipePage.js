@@ -7,13 +7,17 @@ import AddProductsPopup from "../components/AddProductsPopup";
 import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import {useState} from "react";
 
 const RecipePage = () => {
+
+    const [openAddProductsPopup, setOpenProductsPopup] = useState(false);
 
     return (
         <>
             <div className="recipe-main-container">
-                <NavBar/>
+                {/*<NavBar/>*/}
+                <AddProductsPopup open={openAddProductsPopup} setOpen={setOpenProductsPopup}/>
                 <div className="recipe-inner-container">
                     <div className="recipe-page-main-info-container">
                         <div className="name-and-description-container">
@@ -35,7 +39,7 @@ const RecipePage = () => {
                         <Image className="recipe-page-img-right" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
                         <div className="recipe-page-ingredients">
                             <span className="recipe-page-ingredients-label">Інгредієнти: </span>
-                            <button className="recipe-page-ingredient-item">Помідори 5шт</button>
+                            <button onClick={() => setOpenProductsPopup(true)} className="recipe-page-ingredient-item">Помідори 5шт</button>
                             <button className="recipe-page-ingredient-item">Сіль 100г</button>
                             <button className="recipe-page-ingredient-item">Вода 200мл</button>
                             <button className="recipe-page-ingredient-item">Помідори 5шт</button>
@@ -51,7 +55,6 @@ const RecipePage = () => {
                         <p className="recipe-page-instructions">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum neque eget erat vehicula dictum. Vestibulum nisi justo, finibus in congue non, scelerisque nec tellus. Nullam eget ultrices dolor, sed luctus dolor. Duis facilisis, dolor et faucibus aliquam, sapien nisl hendrerit sem, sit amet egestas diam odio sit amet mi. Duis sit amet dignissim mi, a bibendum tortor. Integer tincidunt iaculis leo. Integer sodales ultrices nunc gravida elementum. Aliquam dui tellus, condimentum ultrices mauris in, porttitor vehicula neque. Etiam volutpat est nec libero maximus, a dignissim nisl laoreet. Curabitur rutrum lectus felis, sit amet mattis odio ultricies ut. Etiam nec maximus sem. Nam felis mi, cursus sit amet purus ac, fringilla congue lorem.
                         </p>
-                        {/*<AddProductsPopup open={true}/>*/}
                     </div>
                     <div className="recipe-page-comments-container">
                         <p className="recipe-page-comments-label">Коментарі</p>

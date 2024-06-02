@@ -5,11 +5,12 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import '../styles/LogInForm.css'
 
-const LogInForm = ({open}) => {
+const LogInForm = ({openLogin, setOpenLogin, setOpenSignup}) => {
     return (
-        <Dialog open={open} maxWidth="md" fullWidth>
+        <Dialog open={openLogin} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
+                    onClick={() => setOpenLogin(false)}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -24,7 +25,7 @@ const LogInForm = ({open}) => {
                     <TextField
                         fullWidth
                         id="standard-basic"
-                        label="Введіть ваш email"
+                        label="Введіть email"
                         variant="standard"
                     />
                     <TextField
@@ -38,7 +39,7 @@ const LogInForm = ({open}) => {
                         <button className="login-button">
                             Увійти
                         </button>
-                        <button className="login-button">
+                        <button className="login-button" onClick={() => {setOpenLogin(false); setOpenSignup(true)}}>
                             Зареєструватись
                         </button>
                     </div>

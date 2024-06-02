@@ -21,11 +21,15 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from '@mui/icons-material/Remove';
 import FriendRequestCard from "../components/FriendRequestCard";
 import TextField from "@mui/material/TextField";
+import EditProfilePopup from "../components/EditProfilePopup";
+import {useState} from "react";
 
 const AccountPage = () => {
+    const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
     return (
         <div className={'main-container'}>
-            <NavBar/>
+            {/*<NavBar/>*/}
+            <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card">
@@ -50,7 +54,12 @@ const AccountPage = () => {
                                                 style={{height: '30px'}}/> 468 лайків</p>
                                         </div>
                                         <div className="recipe-likes">
-                                            <button className={'account-edit-button'}>Редагувати профіль</button>
+                                            <button
+                                                className={'account-edit-button'}
+                                                onClick={() => setOpenEditProfilePopup(true)}
+                                            >
+                                                Редагувати профіль
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

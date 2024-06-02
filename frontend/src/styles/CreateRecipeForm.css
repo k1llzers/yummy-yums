@@ -123,6 +123,8 @@
     margin: 0 0 30px 0;
 }
 
+.create-recipe-dialog
+
 @media (max-width: 730px) {
     .create-recipe-dialog .MuiTableContainer-root {
         width: 100%;

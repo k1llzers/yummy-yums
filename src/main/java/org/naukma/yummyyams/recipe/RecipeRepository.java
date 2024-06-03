@@ -13,10 +13,10 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
 
     List<RecipeEntity> findAllByNameLikeIgnoreCase(String name);
 
-    @Query(value = "select recipe.products from RecipeEntity recipe")
+    @Query(value = "select recipe.ingredients from RecipeEntity recipe")
     List<String> findProductsInRecipes();
 
-    @Query(value = "select recipe.products from RecipeEntity recipe where recipe.category.id = :categoryId")
+    @Query(value = "select recipe.ingredients from RecipeEntity recipe where recipe.category.id = :categoryId")
     List<String> findProductsInRecipesByCategory(@Param("categoryId") Integer categoryId);
 
     List<RecipeEntity> findAllByProductsContaining(List<String> products);

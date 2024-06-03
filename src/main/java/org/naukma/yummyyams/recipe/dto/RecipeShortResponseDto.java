@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.naukma.yummyyams.user.dto.UserShortResponse;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class RecipeShortResponseDto {
     private Integer id;
     private String name;
+    private UserShortResponse author;
     private List<String> ingredients;
     private Integer countOfLikes;
     private Integer countOfComments;

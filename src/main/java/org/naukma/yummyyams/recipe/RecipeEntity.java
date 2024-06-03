@@ -58,7 +58,7 @@ public class RecipeEntity implements GettableById<Integer> {
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "recipe_product", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "product", nullable = false)
-    private List<String> products;
+    private List<String> ingredients;
 
     @OneToMany(mappedBy = "recipe")
     private List<CommentEntity> comments;

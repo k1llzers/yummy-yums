@@ -4,6 +4,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,6 +54,11 @@ public class RecipeEntity implements GettableById<Integer> {
     @MapKeyColumn(name = "product_name")
     @Column(name = "count")
     private Map<String, String> productToCountMap;
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "recipe_product", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "product", nullable = false)
+    private List<String> products;
 
     @OneToMany(mappedBy = "recipe")
     private List<CommentEntity> comments;

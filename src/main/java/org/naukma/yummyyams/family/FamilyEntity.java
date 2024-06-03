@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.naukma.yummyyams.base.GettableById;
+import org.naukma.yummyyams.product.ProductEntity;
 import org.naukma.yummyyams.user.UserEntity;
 
 import java.util.List;
@@ -38,4 +39,10 @@ public class FamilyEntity implements GettableById<Integer> {
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> participants;
+
+    @ManyToMany
+    @JoinTable(name = "family_product",
+            joinColumns = @JoinColumn(name = "family_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<ProductEntity> products;
 }

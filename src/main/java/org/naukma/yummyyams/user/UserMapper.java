@@ -9,15 +9,22 @@ import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
 import org.naukma.yummyyams.user.dto.UserShortResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @org.mapstruct.Mapper(config = MapperConfig.class)
 public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateDto> {
+    @Autowired
+    protected PasswordEncoder encoder;
+
     @Override
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", expression = "java(encoder.encode(dto.getPassword()))")
     public abstract UserEntity mergeCreate(UserCreateUpdateDto dto);
 
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "password", expression = "java(encoder.encode(dto.getPassword()))")
     public abstract void mergeUpdate(@MappingTarget UserEntity entity, UserCreateUpdateDto dto);
 
     @Override

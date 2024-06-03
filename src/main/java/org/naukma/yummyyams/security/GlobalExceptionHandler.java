@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-//    @ExceptionHandler({NoSuchEntityException.class, MethodArgumentNotValidException.class, ValidationException.class})
-//    public ResponseEntity<ErrorResponse> handleNoSuchEntityException(Exception e) {
-//        return ResponseEntity.ok(new ErrorResponse(e.getMessage(), HttpStatus.CONFLICT.value()));
-//    }
-//
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception e) {
-//        return ResponseEntity.ok(new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
-//    }
+    @ExceptionHandler({NoSuchEntityException.class, MethodArgumentNotValidException.class, ValidationException.class})
+    public ResponseEntity<ErrorResponse> handleNoSuchEntityException(Exception e) {
+        return ResponseEntity.ok(new ErrorResponse(e.getMessage(), HttpStatus.CONFLICT.value()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception e) {
+        return ResponseEntity.ok(new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+    }
 }

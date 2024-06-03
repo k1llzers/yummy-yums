@@ -79,7 +79,13 @@
             <artifactId>selenium-devtools-v125</artifactId>
             <version>4.21.0</version>
         </dependency>
-        <!--    END FOR SCRAPING    -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+        <!--    END OF SCRAPING    -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>

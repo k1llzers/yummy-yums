@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.naukma.yummyyams.product.ProductEntity;
+import org.naukma.yummyyams.product.Store;
 import org.naukma.yummyyams.security.exception.NoTitleException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,27 +26,29 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class AtbService implements ScrapeService {
-    public Set<ProductDto> getProducts() {
-        Set<ProductDto> responseDTOS = new HashSet<>();
-        WebDriver driver = initDriver("https://www.atbmarket.com/catalog/353-riba-i-moreprodukti?page=" + 1);
-        int page = 1;
-        int countOfPage = getCountOfPage(driver);
-        log.info("count of page: " + countOfPage);
-        do {
-            driver.quit();
-            driver = initDriver("https://www.atbmarket.com/catalog/353-riba-i-moreprodukti?page=" + page);
-            log.info("get from page: " + page);
-            Elements productsElements = getElementsOfProducts(driver);
-            for (Element elem : productsElements) {
-                try {
-                    responseDTOS.add(getProductFromElem(elem));
-                } catch (NoTitleException ignored) {
+    public Set<ProductEntity> getProducts() {
+        Set<ProductEntity> responseDTOS = new HashSet<>();
+        for (String category: categoriesLinks) {
+            WebDriver driver = initDriver(category + "?page=" + 1);
+            int page = 1;
+            int countOfPage = getCountOfPage(driver);
+            log.info("count of page: " + countOfPage);
+            do {
+                driver.quit();
+                driver = initDriver(category + "?page=" + page);
+                log.info("get from page: " + page);
+                Elements productsElements = getElementsOfProducts(driver);
+                for (Element elem : productsElements) {
+                    try {
+                        responseDTOS.add(getProductFromElem(elem));
+                    } catch (NoTitleException ignored) {
+                    }
                 }
-            }
-            page++;
-        } while (page <= countOfPage);
-        driver.quit();
-        log.info(responseDTOS.size() + " products scraped from fish silpo");
+                page++;
+            } while (page <= countOfPage);
+            driver.quit();
+        }
+        log.info(responseDTOS.size() + " products scraped from atb");
         return responseDTOS;
     }
 
@@ -76,19 +80,20 @@ public class AtbService implements ScrapeService {
         }
     }
 
-    private ProductDto getProductFromElem(Element element) {
+    private ProductEntity getProductFromElem(Element element) {
         String weight = getProductWeight(element);
         String title = getProductTitle(element);
         String price = getProductPrice(element);
         String img = getProductImage(element);
-        ProductDto product = ProductDto.builder()
+        ProductEntity product = ProductEntity.builder()
                 .name(title)
-                .price(price)
+                .price(Double.parseDouble(price))
                 .weight(weight)
-                .img(img)
+                .imgUrl(img)
+                .store(Store.ATB)
                 .build();
         if (weight.equals("/шт"))
-            removeDimension(product);
+            product.setWeight(product.getWeight().replace("/", ""));
         if (product.getWeight().contains("/"))
             product.setWeight(product.getWeight().replace("/", "1"));
         return product;
@@ -142,7 +147,7 @@ public class AtbService implements ScrapeService {
         return result;
     }
 
-    public void removeDimension(ProductDto productDto) {
+    public void removeDimension(ProductEntity productDto) {
         String name = productDto.getName();
         // Регулярний вираз для пошуку розмірності (числа з комою або без і одиниці вимірювання)
         String regex = "\\d+[,.]?\\d*\\s?(л|мл|кг|г)?";
@@ -161,4 +166,10 @@ public class AtbService implements ScrapeService {
         }
         productDto.setName(name);
     }
+
+    private final List<String> categoriesLinks = List.of("https://www.atbmarket.com/catalog/287-ovochi-ta-frukti", "https://www.atbmarket.com/catalog/285-bakaliya",
+            "https://www.atbmarket.com/catalog/315-molochni-produkti", "https://www.atbmarket.com/catalog/353-riba-i-moreprodukti",
+            "https://www.atbmarket.com/catalog/325-khlibobulochni-virobi", "https://www.atbmarket.com/catalog/322-zamorozheni-produkti",
+            "https://www.atbmarket.com/catalog/kava-caj", "https://www.atbmarket.com/catalog/343-m-yaso-ta-yaytsya",
+            "https://www.atbmarket.com/catalog/360-kovbasa-i-m-yasni-delikatesi");
 }

@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.naukma.yummyyams.product.ProductEntity;
+import org.naukma.yummyyams.product.Store;
 import org.naukma.yummyyams.security.exception.NoTitleException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,34 +16,45 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SilpoService implements ScrapeService {
-    public Set<ProductDto> getProducts() {
-        Set<ProductDto> responseDTOS = new HashSet<>();
-        WebDriver driver = initDriver("https://shop.silpo.ua/category/ryba-4430?utm_source=silpo&utm_medium=site_button&utm_campaign=categories");
-        log.info("Start scrap from: " + "https://shop.silpo.ua/category/ryba-4430?utm_source=silpo&utm_medium=site_button&utm_campaign=categories");
-        log.info("count of pages: " + getCountOfPages(driver));
-        int page = 1;
-        boolean moreProductsPresent = true;
-        do {
-            log.info("get from page: " + page);
-            Elements productsElements = getElementsOfProducts(driver);
-            for (Element elem : productsElements) {
-                try {
-                    responseDTOS.add(getProductFromElem(elem));
-                } catch (NoTitleException ignored) {
-                } catch (Exception e) {
-                    moreProductsPresent = false;
+public class SilpoService {
+    public Set<ProductEntity> getFirstListProducts() {
+        return getProducts(firstCategoriesLinks);
+    }
+
+    public Set<ProductEntity> getSecondListProducts() {
+        return getProducts(secondCategoriesLinks);
+    }
+
+    public Set<ProductEntity> getProducts(List<String> cetegoryList) {
+        Set<ProductEntity> responseDTOS = new HashSet<>();
+        for (String category: cetegoryList) {
+            WebDriver driver = initDriver(category);
+            log.info("Start scrap from: " + category);
+            log.info("count of pages: " + getCountOfPages(driver));
+            int page = 1;
+            boolean moreProductsPresent = true;
+            do {
+                log.info("get from page: " + page);
+                Elements productsElements = getElementsOfProducts(driver);
+                for (Element elem : productsElements) {
+                    try {
+                        responseDTOS.add(getProductFromElem(elem));
+                    } catch (NoTitleException ignored) {
+                    } catch (Exception e) {
+                        moreProductsPresent = false;
+                    }
                 }
-            }
-            page++;
-        } while (goToNextPage(driver) && moreProductsPresent);
-        driver.quit();
-        log.info(responseDTOS.size() + " products scraped from fish silpo");
+                page++;
+            } while (goToNextPage(driver) && moreProductsPresent);
+            driver.quit();
+        }
+        log.info(responseDTOS.size() + " products scraped from silpo");
         return responseDTOS;
     }
 
@@ -84,16 +97,17 @@ public class SilpoService implements ScrapeService {
         }
     }
 
-    private ProductDto getProductFromElem(Element element) {
+    private ProductEntity getProductFromElem(Element element) {
         String title = getProductTitle(element);
         String price = getProductPrice(element);
         String weight = getProductWeight(element);
         String img = getProductImage(element);
-        return ProductDto.builder()
+        return ProductEntity.builder()
                 .name(title)
-                .price(price)
+                .price(Double.parseDouble(price.replace(" грн", "")))
                 .weight(weight)
-                .img(img)
+                .imgUrl(img)
+                .store(Store.SILPO)
                 .build();
     }
 
@@ -134,4 +148,12 @@ public class SilpoService implements ScrapeService {
             return false;
         }
     }
+
+    private final List<String> firstCategoriesLinks = List.of("https://shop.silpo.ua/category/frukty-ovochi-4788", "https://shop.silpo.ua/category/m-iaso-4411",
+            "https://shop.silpo.ua/category/ryba-4430", "https://shop.silpo.ua/category/kovbasni-vyroby-i-m-iasni-delikatesy-4731",
+            "https://shop.silpo.ua/category/syry-1468", "https://shop.silpo.ua/category/khlib-ta-khlibobulochni-vyroby-486");
+
+    private final List<String> secondCategoriesLinks = List.of("https://shop.silpo.ua/category/molochni-produkty-ta-iaitsia-234", "https://shop.silpo.ua/category/lavka-tradytsii-4487",
+            "https://shop.silpo.ua/category/zdorove-kharchuvannia-4864", "https://shop.silpo.ua/category/bakaliia-65",
+            "https://shop.silpo.ua/category/konservy-sousy-prypravy-130", "https://shop.silpo.ua/category/kava-chai-359");
 }

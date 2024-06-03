@@ -35,7 +35,7 @@ public class UserEntity implements GettableById<Integer>, UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Role role;
+    private Role role = Role.USER;
 
     @Column(name = "surname", nullable = false)
     private String surname;

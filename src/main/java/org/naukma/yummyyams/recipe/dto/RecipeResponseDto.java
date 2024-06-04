@@ -10,6 +10,7 @@ import org.naukma.yummyyams.user.dto.UserShortResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,7 @@ public class RecipeResponseDto {
     private String description;
     private String instruction;
     private Map<String, String> productToCountMap;
+    private Set<String> ingredients;
     private List<CommentResponseDto> comments;
     private UserShortResponse author;
     private CategoryResponseDto category;

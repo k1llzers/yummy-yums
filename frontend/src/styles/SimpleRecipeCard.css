@@ -50,11 +50,13 @@
     .simple-card-title {
         font-size: 1.3rem;
         width: 80%;
+        text-align: center;
     }
 
     .simple-card-container {
         flex-direction: column;
         align-items: center;
+        padding: 5px 0;
     }
 
     .simple-recipe-name {

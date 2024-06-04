@@ -1,4 +1,4 @@
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
+import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import HomePage from "../pages/HomePage";
@@ -6,79 +6,72 @@ import AccountPage from "../pages/AccountPage";
 import AllRecipesPage from "../pages/AllRecipesPage";
 import RecipePage from "../pages/RecipePage";
 import Logout from "../pages/Logout";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+import { useState } from "react";
+import CreateRecipeForm from "../components/CreateRecipeForm";
 
+const AppLayout = ({ setOpenCreateRecipe }) => (
+    <>
+        <NavBar setOpenCreateRecipe={setOpenCreateRecipe} />
+        <Outlet />
+        <Footer setOpenCreateRecipe={setOpenCreateRecipe} />
+    </>
+);
 
 const Routes = () => {
-    const {token, role} = useAuth()
+    const { token, role } = useAuth();
+    const [openCreateRecipe, setOpenCreateRecipe] = useState(false);
 
     const routesForAuthenticatedOnly = [
         {
             path: "/",
-            element: <ProtectedRoute/>,
-            children : [
-                {
-                    path: "/",
-                    element: <HomePage/>,
-                },
+            element: <ProtectedRoute setOpenCreateRecipe={setOpenCreateRecipe} />,
+            children: [
                 {
                     path: "/account",
-                    element: <AccountPage/>,
-                },
-                {
-                    path: "/all-recipes",
-                    element: <AllRecipesPage/>,
-                },
-                {
-                    path: "/recipe",
-                    element: <RecipePage/>,
+                    element: <AccountPage />,
                 },
                 {
                     path: "/logout",
-                    element: <Logout/>,
+                    element: <Logout />,
                 }
             ]
         }
-    ]
+    ];
 
-    // const routesForManagerOnly = [
-    //     {
-    //         path: "/",
-    //         element: <ProtectedRoute/>,
-    //         children : [
-    //             {
-    //                 path: "/categories",
-    //                 element: <Categories/>,
-    //             },
-    //             {
-    //                 path: "/employees",
-    //                 element: <Employees/>,
-    //             }
-    //         ]
-    //     }
-    // ]
-    //
-    // const routesForNotAuthenticatedOnly = [
-    //     {
-    //         path: "/login",
-    //         element: <Login/>
-    //     }
-    // ]
-    //
-    // const routes404 = [
-    //     {
-    //         path: "*",
-    //         element: <NotFound/>
-    //     }
-    // ]
+    const routesForAllUsers = [
+        {
+            path: "/",
+            element: <AppLayout setOpenCreateRecipe={setOpenCreateRecipe} />,
+            children: [
+                {
+                    path: "/",
+                    element: <HomePage />,
+                },
+                {
+                    path: "/all-recipes",
+                    element: <AllRecipesPage />,
+                },
+                {
+                    path: "/recipe/:id",
+                    element: <RecipePage />,
+                },
+            ]
+        },
+    ];
 
     const router = createBrowserRouter([
-        // ...(!token ? routesForNotAuthenticatedOnly : []),
-        ...routesForAuthenticatedOnly,
-        // ...(role === "MANAGER" ? routesForManagerOnly : []),
-        // ...routes404
-    ])
+        ...routesForAllUsers,
+        ...(token ? routesForAuthenticatedOnly : [])
+    ]);
 
-    return <RouterProvider router={router} />
-}
+    return (
+        <>
+            <RouterProvider router={router} />
+            <CreateRecipeForm open={openCreateRecipe} setOpen={setOpenCreateRecipe} />
+        </>
+    );
+};
 
 export default Routes;

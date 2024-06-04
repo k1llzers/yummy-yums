@@ -8,8 +8,10 @@ import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {useState} from "react";
+import {useAuth} from "../provider/authProvider";
 
 const RecipePage = () => {
+    const {role} = useAuth();
 
     const [openAddProductsPopup, setOpenProductsPopup] = useState(false);
 
@@ -58,20 +60,19 @@ const RecipePage = () => {
                     </div>
                     <div className="recipe-page-comments-container">
                         <p className="recipe-page-comments-label">Коментарі</p>
-                        <div className="add-comment-container">
+                        {role && <div className="add-comment-container">
                             <TextField
-                                fullWidth
                                 id="standard-basic"
                                 label="Ваш коментар"
                                 variant="standard"
                                 multiline
                             />
                             <button className="recipe-page-add-comment-button">Надіслати</button>
-                        </div>
+                        </div>}
                         <Comment/>
                     </div>
                 </div>
-                <Footer/>
+                {/*<Footer/>*/}
             </div>
         </>
     )

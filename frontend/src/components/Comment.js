@@ -16,7 +16,6 @@ const Comment = () => {
             <div className="comment-reply-container">
                 <TextField
                     sx={{margin: 0}}
-                    fullWidth
                     id="standard-basic"
                     label="Ваша відповідь"
                     variant="standard"

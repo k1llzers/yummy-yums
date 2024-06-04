@@ -12,8 +12,77 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const CreateRecipeForm = ({open, setOpen}) => {
+   const [categories, setCategories] = useState([]);
+
+   const [category, setCategory] = useState(0);
+   const [title, setTitle] = useState("");
+   const [photo, setPhoto] = useState([]);
+   const [description, setDescription] = useState("");
+   const [instruction, setInstruction] = useState("");
+   const [ingredient, setIngredient] = useState("");
+   const [number, setNumber] = useState("");
+   const [ingredients, setIngredients] = useState({});
+
+   const fetchCategories = async () => {
+       const response = await axios.get("http://localhost:8080/api/category");
+       setCategories(response.data)
+   }
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+   const handleSubmitRecipe = async () => {
+       setOpen(false);
+       clearFields();
+       // const response = await axios.po
+   }
+
+   const clearFields = () => {
+       setCategory(0);
+       setTitle("");
+       setPhoto([]);
+       setDescription("");
+       setInstruction("");
+       setIngredient("");
+       setNumber("");
+   }
+
+   const validateAddProduct = () => {
+       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient];
+   }
+
+    const handleAddProduct = () => {
+        setIngredients(prevState => ({
+            ...prevState,
+            [ingredient]: number
+        }));
+        setIngredient("");
+        setNumber("");
+    }
+
+    const handleDeleteProduct = (ingredient) => {
+        setIngredients(Object.assign({}, Object.keys(ingredients).filter((item)=>(item !== ingredient))));
+    }
+
+   const Row = ({ingredient}) => {
+        return (
+            <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                <TableCell align="center">{ingredient.name}</TableCell>
+                <TableCell align="center">{ingredient.number}</TableCell>
+                <TableCell align="center">
+                    <Button onClick={() => handleDeleteProduct(ingredient.name)}><CloseIcon/></Button>
+                </TableCell>
+            </TableRow>
+        )
+   }
+
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
@@ -36,22 +105,33 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть назву рецепту"
                         variant="standard"
                         multiline
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
                     <FormControl variant="standard" sx={{ m: 1, width: '100%', marginBottom: '30px'}}>
                         <InputLabel id="demo-simple-select-standard-label">Оберіть категорію рецепта</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
                         >
-                            <MenuItem value={10}>Лялялял</MenuItem>
-                            <MenuItem value={20}>Лялялял</MenuItem>
-                            <MenuItem value={30}>Лялялял</MenuItem>
+                            {
+                                categories.map((category) => (
+                                    <MenuItem
+                                        key={category.id}
+                                        value={category.id}
+                                    >{category.name}</MenuItem>
+                                ))
+                            }
                         </Select>
                     </FormControl>
                     <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть інгредієнт"
+                        value={ingredient}
+                        onChange={(e) => setIngredient(e.target.value)}
                         variant="standard"
                         multiline
                     />
@@ -60,9 +140,11 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         id="standard-basic"
                         label="Введіть кількість інгредієнта (шт/мл/г)"
                         variant="standard"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
                         multiline
                     />
-                    <button className="add-ingredient-button">
+                    <button className="add-ingredient-button" disabled={!validateAddProduct()} onClick={handleAddProduct}>
                         Додати інгредієнт
                     </button>
                     <TableContainer component={Paper}>
@@ -75,24 +157,11 @@ const CreateRecipeForm = ({open, setOpen}) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody sx={{backgroundColor: '#F9FAEE'}}>
-                                <TableRow
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">Помідори</TableCell>
-                                    <TableCell align="center">2 шт</TableCell>
-                                    <TableCell align="center">
-                                        <Button><CloseIcon/></Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">Сіль</TableCell>
-                                    <TableCell align="center">200 г</TableCell>
-                                    <TableCell align="center">
-                                        <Button><CloseIcon/></Button>
-                                    </TableCell>
-                                </TableRow>
+                                {
+                                    Object.keys(ingredients).map(key => (
+                                        <Row key={key} ingredient={{name: key, number: ingredients[key]}}/>
+                                    ))
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -104,6 +173,8 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть короткий опис"
                         variant="standard"
                         multiline
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                     <TextField
                         fullWidth
@@ -111,6 +182,8 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть детальні інструкції з приготування"
                         variant="standard"
                         multiline
+                        value={instruction}
+                        onChange={(e) => setInstruction(e.target.value)}
                     />
                     <button className="create-recipe-button">
                         Надіслати рецепт на підтвердження

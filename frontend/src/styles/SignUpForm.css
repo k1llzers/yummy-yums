@@ -23,6 +23,11 @@
     background-color: rgba(127, 165, 105, 0.34);
 }
 
+.sign-up-button:disabled {
+    background-color: #E2F0D2;
+    color: #C1D7AE;
+}
+
 .sign-up-photo-upload {
     font-family: "Gentium Plus", serif;
     font-size: 1.2rem;
@@ -90,7 +95,7 @@
         font-size: 0.8rem;
     }
 
-    .sign-up-dialog .recipe-photo-upload {
+    .sign-up-dialog .sign-up-photo-upload {
         font-size: 0.8rem;
     }
 

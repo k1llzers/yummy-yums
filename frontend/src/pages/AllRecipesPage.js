@@ -9,6 +9,7 @@ import {Autocomplete, Chip, FormControl, InputLabel, MenuItem, Select} from "@mu
 import TextField from "@mui/material/TextField";
 import {useState} from "react";
 import RecipeCard from "../components/RecipeCard";
+import {useAuth} from "../provider/authProvider";
 
 
 const top100Films = [
@@ -93,7 +94,7 @@ const AllRecipesPage = () => {
                     <RecipeCard/>
                 </div>
             </div>
-            <Footer/>
+            {/*<Footer/>*/}
         </div>
     )
 

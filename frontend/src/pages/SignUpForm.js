@@ -5,13 +5,63 @@ import TextField from "@mui/material/TextField";
 import Form from "react-bootstrap/Form";
 import Dialog from "@mui/material/Dialog";
 import '../styles/SignUpForm.css'
+import {useState} from "react";
+import axios from "axios";
 
 const SignUpForm = ({open, setOpen}) => {
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [repeatedPassword, setRepeatedPassword] = useState("");
+    const [photo, setPhoto] = useState(null);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
+    const emailRegex = /^[a-zA-Z0–9._-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,4}$/;
+
+    const handleSignUp = async() => {
+        setOpen(false);
+        clearFields();
+        const response = await axios.post("http://localhost:8080/api/user", {
+            surname: surname,
+            name: name,
+            email: email,
+            password: password
+        });
+        if (response.data.error) {
+            console.log(response.data.error);
+        } else {
+
+        }
+    }
+
+    const handlePhotoChange = (e) => {
+        const selectedPhoto = e.target.files[0];
+        setPhoto(selectedPhoto);
+        console.log(photo);
+    }
+
+    const validateSignUp = () => {
+        return emailRegex.test(email) && password === repeatedPassword &&
+            name.length > 0 && surname.length > 0 && password.length > 0 && repeatedPassword.length > 0;
+    }
+
+    const clearFields = () => {
+        setName("");
+        setSurname("");
+        setEmail("");
+        setPassword("");
+        setRepeatedPassword("");
+        setEmailError(false);
+        setPasswordError(false);
+    }
+
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
-                    onClick={() => setOpen(false)}
+                    onClick={() => {setOpen(false); clearFields()}}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -29,6 +79,9 @@ const SignUpForm = ({open, setOpen}) => {
                         label="Введіть ваше ім'я"
                         variant="standard"
                         multiline
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                     <TextField
                         fullWidth
@@ -36,21 +89,39 @@ const SignUpForm = ({open, setOpen}) => {
                         label="Введіть ваше прізвище"
                         variant="standard"
                         multiline
+                        required
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                     />
                     <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть ваш email"
                         variant="standard"
+                        error={emailError}
+                        helperText={emailError ? "Ви ввели некоректний email" : ""}
+                        value={email}
+                        required
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={() => setEmailError(!emailRegex.test(email))}
                     />
                     <p className="photo-upload-label">Додайте ваше фото</p>
-                    <Form.Control className="sign-up-photo-upload" type="file" size="md" accept="image/*" />
+                    <Form.Control
+                        className="sign-up-photo-upload"
+                        type="file"
+                        size="md"
+                        accept="image/*"
+                        onChange={handlePhotoChange}
+                    />
                     <TextField
                         fullWidth
                         id="standard-basic"
                         label="Введіть пароль"
                         variant="standard"
                         type="password"
+                        value={password}
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <TextField
                         fullWidth
@@ -58,8 +129,14 @@ const SignUpForm = ({open, setOpen}) => {
                         label="Повторіть ваш пароль"
                         variant="standard"
                         type="password"
+                        required
+                        error={passwordError}
+                        helperText={passwordError ? "Паролі повинні збігатись" : ""}
+                        value={repeatedPassword}
+                        onChange={(e) => setRepeatedPassword(e.target.value)}
+                        onBlur={(e) => setPasswordError(password !== repeatedPassword)}
                     />
-                    <button className="sign-up-button">
+                    <button className="sign-up-button" disabled={!validateSignUp()} onClick={handleSignUp}>
                         Зареєструватись
                     </button>
                 </div>

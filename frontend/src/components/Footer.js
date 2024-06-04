@@ -8,9 +8,11 @@ import ContactsIcon from '@mui/icons-material/Contacts';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import Divider from '@mui/material/Divider';
 import '../styles/Footer.css';
-const Footer  = () =>{
-    return (
+import {useAuth} from "../provider/authProvider";
+const Footer  = ({setOpenCreateRecipe}) =>{
+    const {role} = useAuth();
 
+    return (
             <div className={'main-footer'}
                  style={{backgroundColor: "#E2F0D2"}}>
                 <Divider style={{borderTop: "2px solid #3D6827"}} />
@@ -26,14 +28,14 @@ const Footer  = () =>{
                             <Nav className="me-auto" style={{marginLeft:'8px'}}>
                                 <ul className={'list-unstyled'} style={{textAlign:'left'}}>
                                     <li>
-                                        <Nav.Link href="#home" style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Рецепти</Nav.Link>
+                                        <Nav.Link href="/all-recipes" style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Рецепти</Nav.Link>
                                     </li>
-                                    <li>
-                                        <Nav.Link href="#features" style={{fontSize: "20px", fontFamily: "Forum",  color: "#3D6827"}}>Мій профіль</Nav.Link>
-                                    </li>
-                                    <li>
-                                        <Nav.Link href="#pricing" style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Створити рецепт</Nav.Link>
-                                    </li>
+                                    {role && <li>
+                                        <Nav.Link href="/account" style={{fontSize: "20px", fontFamily: "Forum",  color: "#3D6827"}}>Мій профіль</Nav.Link>
+                                    </li>}
+                                    {role && <li>
+                                        <Nav.Link onClick={() => setOpenCreateRecipe(true)} style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Створити рецепт</Nav.Link>
+                                    </li>}
                                 </ul>
                             </Nav>
                         </div>

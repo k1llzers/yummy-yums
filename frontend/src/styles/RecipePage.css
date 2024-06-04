@@ -185,7 +185,7 @@
     font-size: 1.2rem;
 }
 
-.recipe-main-container .MuiDialogContent-root .MuiInputBase-root  {
+.MuiDialogContent-root .MuiInputBase-root  {
     font-family: "Gentium Plus", serif;
     color: #5b5e59;
     font-size: 1.2rem;
@@ -267,6 +267,7 @@
     font-weight: bold;
     font-size: 1.5rem;
     text-align: start;
+    margin-bottom: 50px;
 }
 
 .recipe-page-comments-container .MuiFormLabel-root.Mui-focused {

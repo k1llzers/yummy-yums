@@ -379,7 +379,7 @@ const AccountPage = () => {
                     </Tab>
                 </Tabs>
             </div>
-            <Footer/>
+            {/*<Footer/>*/}
         </div>
 
     )

@@ -23,10 +23,9 @@
     background-color: rgba(127, 165, 105, 0.34);
 }
 
-.login-buttons-container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
+.login-button:disabled {
+    background-color: #E2F0D2;
+    color: #C1D7AE;
 }
 
 .login-dialog .MuiFormLabel-root.Mui-focused {
@@ -69,11 +68,7 @@
 
     .login-button {
         font-size: 0.8rem;
-        width: 70%;
-    }
-
-    .login-dialog .recipe-photo-upload {
-        font-size: 0.8rem;
+        width: 90%;
     }
 
     .login-dialog .MuiDialog-paperFullWidth {
@@ -85,17 +80,7 @@
         font-size: 0.8rem;
     }
 
-    .login-dialog .photo-upload-label {
-        font-size: 0.8rem;
-        margin-left: 40px;
-    }
-
     .login-dialog {
         padding: 10px;
-    }
-
-    .login-buttons-container {
-        flex-direction: column;
-        align-items: center;
     }
 }

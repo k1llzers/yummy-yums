@@ -31,6 +31,7 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
+    @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
     public abstract void mergeUpdate(@MappingTarget RecipeEntity entity, RecipeCreateUpdateDto dto);
 
     @Override
@@ -39,16 +40,11 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
 
     public abstract List<RecipeShortResponseDto> toShortResponseList(List<RecipeEntity> entities);
 
-    @Mapping(target = "ingredients", expression = "java(getRecipeIngredients(entity))")
     @Mapping(target = "countOfLikes", expression = "java(entity.getLikes().size())")
     @Mapping(target = "countOfComments", expression = "java(entity.getComments().size())")
     public abstract RecipeShortResponseDto toShortResponseDto(RecipeEntity entity);
 
     protected CategoryEntity getCategoryById(Integer id) {
         return categoryService.getById(id);
-    }
-
-    protected List<String> getRecipeIngredients(RecipeEntity entity) {
-        return new ArrayList<>(entity.getProductToCountMap().keySet());
     }
 }

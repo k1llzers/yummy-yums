@@ -29,7 +29,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
 
    const fetchCategories = async () => {
        const response = await axios.get("http://localhost:8080/api/category");
-       if(response.data) {
+       if(response) {
            setCategories(response.data)
        }else {
            setCategories([])

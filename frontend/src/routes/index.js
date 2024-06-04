@@ -5,7 +5,6 @@ import HomePage from "../pages/HomePage";
 import AccountPage from "../pages/AccountPage";
 import AllRecipesPage from "../pages/AllRecipesPage";
 import RecipePage from "../pages/RecipePage";
-import Logout from "../pages/Logout";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useState } from "react";
@@ -31,11 +30,11 @@ const Routes = () => {
                 {
                     path: "/account",
                     element: <AccountPage />,
-                },
-                {
-                    path: "/logout",
-                    element: <Logout />,
                 }
+                // {
+                //     path: "/logout",
+                //     element: <Logout />,
+                // }
             ]
         }
     ];

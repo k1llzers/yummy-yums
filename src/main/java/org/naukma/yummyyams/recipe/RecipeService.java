@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.BaseService;
 import org.naukma.yummyyams.category.CategoryEntity;
+import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.springframework.stereotype.Service;
@@ -23,23 +24,28 @@ import java.util.Set;
 public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateDto, Integer> {
     private final EntityManager em;
 
-    public List<RecipeShortResponseDto> getAll() {
-        return ((RecipeMapper) mapper).toShortResponseList(findRecipeByCategoryNameAndProducts(null, null, null));
+    public List<RecipeShortResponseDto> getAll(Integer categoryId, String name, Set<String> products) {
+        return ((RecipeMapper) mapper).toShortResponseList(findRecipeByCategoryNameAndProducts(categoryId, name, products));
     }
 
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);
-
         Root<RecipeEntity> recipe = cq.from(RecipeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-
         if (categoryId != null) {
-            Join<Object, Object> category = recipe.join("category", JoinType.LEFT);
-            predicates.add(cb.equal(category.get("id"), categoryId));
+            Join<RecipeEntity, CategoryEntity> category = recipe.join(RecipeEntity_.category, JoinType.LEFT);
+            predicates.add(cb.equal(category.get(CategoryEntity_.id), categoryId));
+        }
+        if (name != null) {
+            predicates.add(cb.like(cb.lower(recipe.get(RecipeEntity_.name)), name));
+        }
+        if (products != null) {
+            for (String product : products) {
+                predicates.add(cb.isMember(product, recipe.get(RecipeEntity_.ingredients)));
+            }
         }
         cq.where(predicates.toArray(new Predicate[0]));
-
         return em.createQuery(cq).getResultList();
     }
 }

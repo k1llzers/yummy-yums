@@ -13,7 +13,6 @@ import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @org.mapstruct.Mapper(config = MapperConfig.class)

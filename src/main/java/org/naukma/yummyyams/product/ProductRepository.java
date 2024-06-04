@@ -11,4 +11,13 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM product ORDER BY similarity(:input, product.name) DESC LIMIT :limit")
     List<ProductEntity> findAllOrderBySimilarity(@Param("input") String input, @Param("limit") Integer limit);
+
+    @Query("select (count(p) > 0) from ProductEntity p where p.name like '%:input%'")
+    Boolean canBeAddedToRecipe(@Param("input") String input);
+
+    @Query("SELECT (count(p) > 0) FROM ProductEntity p WHERE p.name LIKE CONCAT('%', :name, '%') AND " +
+            "(p.name LIKE CONCAT(:name, ' %') OR p.name LIKE CONCAT('% ', :name, '%') OR p.name = :name)")
+    boolean existsByNameLike(String name);
+
+
 }

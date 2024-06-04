@@ -18,4 +18,8 @@ public class ProductService {
         List<ProductEntity> allOrderBySimilarity = productRepository.findAllOrderBySimilarity(input, limit);
         return productMapper.toProductListDto(allOrderBySimilarity);
     }
+
+    public Boolean canBeAddedToRecipe(String input) {
+        return productRepository.canBeAddedToRecipe(input);
+    }
 }

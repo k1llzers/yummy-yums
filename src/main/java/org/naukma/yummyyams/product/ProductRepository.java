@@ -15,8 +15,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query("select (count(p) > 0) from ProductEntity p where p.name like '%:input%'")
     Boolean canBeAddedToRecipe(@Param("input") String input);
 
-    @Query("SELECT (count(p) > 0) FROM ProductEntity p WHERE p.name LIKE CONCAT('%', :name, '%') AND " +
-            "(p.name LIKE CONCAT(:name, ' %') OR p.name LIKE CONCAT('% ', :name, '%') OR p.name = :name)")
+    @Query("select (count(p) > 0) from ProductEntity p where p.name like CONCAT('% ', :name, ' %') or " +
+            "p.name like CONCAT(:name, ' %') or p.name like CONCAT('% ', :name) or p.name = :name")
     boolean existsByNameLike(String name);
 
 

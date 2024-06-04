@@ -44,31 +44,31 @@ public class YummyYamsApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @PostConstruct
-    public void initProducts() {
-        if (productRepository.count() == 0) {
-            log.info("start get products");
-            ExecutorService executor = Executors.newFixedThreadPool(4);
-
-            List<Callable<Set<ProductEntity>>> tasks = new ArrayList<>();
-            tasks.add(silpoService::getFirstListProducts);
-            tasks.add(silpoService::getSecondListProducts);
-            tasks.add(atbService::getProducts);
-            tasks.add(novusService::getProducts);
-
-            try {
-                log.info("waiting for products");
-                List<Future<Set<ProductEntity>>> results = executor.invokeAll(tasks);
-                log.info("products fetched");
-                for (Future<Set<ProductEntity>> result : results) {
-                    productRepository.saveAll(result.get());
-                }
-                log.info("products saved");
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            executor.shutdown();
-        }
-    }
+//    @PostConstruct
+//    public void initProducts() {
+//        if (productRepository.count() == 0) {
+//            log.info("start get products");
+//            ExecutorService executor = Executors.newFixedThreadPool(4);
+//
+//            List<Callable<Set<ProductEntity>>> tasks = new ArrayList<>();
+//            tasks.add(silpoService::getFirstListProducts);
+//            tasks.add(silpoService::getSecondListProducts);
+//            tasks.add(atbService::getProducts);
+//            tasks.add(novusService::getProducts);
+//
+//            try {
+//                log.info("waiting for products");
+//                List<Future<Set<ProductEntity>>> results = executor.invokeAll(tasks);
+//                log.info("products fetched");
+//                for (Future<Set<ProductEntity>> result : results) {
+//                    productRepository.saveAll(result.get());
+//                }
+//                log.info("products saved");
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//
+//            executor.shutdown();
+//        }
+//    }
 }

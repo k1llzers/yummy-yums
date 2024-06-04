@@ -5,17 +5,10 @@ import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -44,8 +37,16 @@ public class RecipeController {
         return ResponseEntity.ok(service.getResponseDto(id));
     }
 
+    @GetMapping("/products-in-scope")
+    public ResponseEntity<List<String>> getAllProductsForScope(@RequestParam(required = false) String name,
+                                                               @RequestParam(required = false) Integer categoryId) {
+        return ResponseEntity.ok(service.getProductsForScope(categoryId, name));
+    }
+
     @GetMapping
-    public ResponseEntity<List<RecipeShortResponseDto>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<List<RecipeShortResponseDto>> getAll(@RequestParam(required = false) String name,
+                                                               @RequestParam(required = false) Integer categoryId,
+                                                               @RequestParam(required = false) Set<String> ingredients) {
+        return ResponseEntity.ok(service.getAll(categoryId, name, ingredients));
     }
 }

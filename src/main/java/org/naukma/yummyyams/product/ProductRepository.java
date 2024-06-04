@@ -11,4 +11,8 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM product ORDER BY similarity(:input, product.name) DESC LIMIT :limit")
     List<ProductEntity> findAllOrderBySimilarity(@Param("input") String input, @Param("limit") Integer limit);
+
+    @Query("select (count(p) > 0) from ProductEntity p where lower(p.name) like lower(CONCAT('% ', :input, ' %')) or " +
+            "lower(p.name) like lower(CONCAT(:input, ' %')) or lower(p.name) like lower(CONCAT('% ', :input)) or lower(p.name) = lower(:input)")
+    Boolean canBeAddedToRecipe(@Param("input") String input);
 }

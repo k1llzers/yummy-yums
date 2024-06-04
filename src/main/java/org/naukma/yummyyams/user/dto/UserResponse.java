@@ -12,8 +12,9 @@ import org.naukma.yummyyams.security.Role;
 @Builder
 public class UserResponse {
     private Integer id;
-    private Role role;
     private String surname;
     private String name;
     private String email;
+    private Long countOfRecipes;
+    private Long countOfLikesOnMyRecipes;
 }

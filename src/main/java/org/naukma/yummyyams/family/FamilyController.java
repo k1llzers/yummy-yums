@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/family")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,5 +41,10 @@ public class FamilyController {
     @GetMapping("/{id}")
     public ResponseEntity<FamilyResponseDto> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
+    }
+
+    @GetMapping("/my-families")
+    public ResponseEntity<List<FamilyResponseDto>> getByParticipantId() {
+        return ResponseEntity.ok(service.getMyFamilies());
     }
 }

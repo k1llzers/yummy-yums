@@ -9,6 +9,7 @@ import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
+import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,10 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         return findRecipeByCategoryNameAndProducts(categoryId, name, null).stream()
                 .flatMap(recipe -> recipe.getIngredients().stream())
                 .toList();
+    }
+
+    public List<RecipeShortResponseDto> getMyRecipes() {
+        return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthor(SecurityContextAccessor.getUser()));
     }
 
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {

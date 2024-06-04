@@ -29,7 +29,11 @@ const CreateRecipeForm = ({open, setOpen}) => {
 
    const fetchCategories = async () => {
        const response = await axios.get("http://localhost:8080/api/category");
-       setCategories(response.data)
+       if(response.data) {
+           setCategories(response.data)
+       }else {
+           setCategories([])
+       }
    }
 
     useEffect(() => {
@@ -39,7 +43,9 @@ const CreateRecipeForm = ({open, setOpen}) => {
    const handleSubmitRecipe = async () => {
        setOpen(false);
        clearFields();
-       // const response = await axios.po
+       const response = await axios.post("http://localhost:8080/api/recipe", {
+
+       })
    }
 
    const clearFields = () => {

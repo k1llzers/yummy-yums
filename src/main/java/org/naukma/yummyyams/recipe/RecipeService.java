@@ -28,11 +28,18 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         return ((RecipeMapper) mapper).toShortResponseList(findRecipeByCategoryNameAndProducts(categoryId, name, products));
     }
 
+    public List<String> getProductsForScope(Integer categoryId, String name) {
+        return findRecipeByCategoryNameAndProducts(categoryId, name, null).stream()
+                .flatMap(recipe -> recipe.getIngredients().stream())
+                .toList();
+    }
+
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);
         Root<RecipeEntity> recipe = cq.from(RecipeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.isTrue(recipe.get(RecipeEntity_.approve)));
         if (categoryId != null) {
             Join<RecipeEntity, CategoryEntity> category = recipe.join(RecipeEntity_.category, JoinType.LEFT);
             predicates.add(cb.equal(category.get(CategoryEntity_.id), categoryId));

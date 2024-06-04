@@ -37,6 +37,12 @@ public class RecipeController {
         return ResponseEntity.ok(service.getResponseDto(id));
     }
 
+    @GetMapping("/products-in-scope")
+    public ResponseEntity<List<String>> getAllProductsForScope(@RequestParam(required = false) String name,
+                                                               @RequestParam(required = false) Integer categoryId) {
+        return ResponseEntity.ok(service.getProductsForScope(categoryId, name));
+    }
+
     @GetMapping
     public ResponseEntity<List<RecipeShortResponseDto>> getAll(@RequestParam(required = false) String name,
                                                                @RequestParam(required = false) Integer categoryId,

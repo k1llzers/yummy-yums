@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@org.mapstruct.Mapper(config = MapperConfig.class)
+@org.mapstruct.Mapper(config = MapperConfig.class, imports = {SecurityContextAccessor.class})
 public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateUpdateDto> {
     @Autowired
     protected CategoryService categoryService;
@@ -27,7 +27,7 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
     @Mapping(target = "approve", expression = "java(false)")
     @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
-    @Mapping(target = "author", expression = "java(getUser())")
+    @Mapping(target = "author", expression = "java(SecurityContextAccessor.getUser())")
     public abstract RecipeEntity mergeCreate(RecipeCreateUpdateDto dto);
 
     @Override
@@ -48,9 +48,5 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
 
     protected CategoryEntity getCategoryById(Integer id) {
         return categoryService.getById(id);
-    }
-
-    protected UserEntity getUser() {
-        return SecurityContextAccessor.getUser();
     }
 }

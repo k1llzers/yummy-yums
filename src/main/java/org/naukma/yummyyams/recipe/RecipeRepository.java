@@ -18,6 +18,4 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
 
     @Query(value = "select recipe.ingredients from RecipeEntity recipe where recipe.category.id = :categoryId")
     List<String> findProductsInRecipesByCategory(@Param("categoryId") Integer categoryId);
-
-    List<RecipeEntity> findAllByProductsContaining(List<String> products);
 }

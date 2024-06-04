@@ -26,6 +26,7 @@ import org.naukma.yummyyams.user.UserEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -58,7 +59,7 @@ public class RecipeEntity implements GettableById<Integer> {
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "recipe_product", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "product", nullable = false)
-    private List<String> ingredients;
+    private Set<String> ingredients;
 
     @OneToMany(mappedBy = "recipe")
     private List<CommentEntity> comments;

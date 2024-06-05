@@ -24,6 +24,7 @@ import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.comment.CommentEntity;
 import org.naukma.yummyyams.user.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,7 +63,7 @@ public class RecipeEntity implements GettableById<Integer> {
     private Set<String> ingredients;
 
     @OneToMany(mappedBy = "recipe")
-    private List<CommentEntity> comments;
+    private List<CommentEntity> comments = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "autor_id", referencedColumnName = "id")

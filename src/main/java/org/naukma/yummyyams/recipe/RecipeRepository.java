@@ -16,4 +16,6 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer>, 
     List<RecipeEntity> findAllByAuthorAndApproveTrue(UserEntity author);
 
     List<RecipeEntity> findAllByAuthor(UserEntity author);
+
+    List<RecipeEntity> findAllByLikesContains(UserEntity author);
 }

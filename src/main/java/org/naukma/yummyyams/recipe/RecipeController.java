@@ -27,6 +27,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.update(body));
     }
 
+    @PutMapping("/like/{id}")
+    public ResponseEntity<Boolean> like(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.likeRecipes(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(service.delete(id));
@@ -35,6 +40,16 @@ public class RecipeController {
     @GetMapping("/{id}")
     public ResponseEntity<RecipeResponseDto> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
+    }
+
+    @GetMapping("/get-my")
+    public ResponseEntity<List<RecipeShortResponseDto>> getMyRecipes() {
+        return ResponseEntity.ok(service.getMyRecipes());
+    }
+
+    @GetMapping("/get-my-liked")
+    public ResponseEntity<List<RecipeShortResponseDto>> getMyLikedRecipes() {
+        return ResponseEntity.ok(service.getMyLikes());
     }
 
     @GetMapping("/products-in-scope")

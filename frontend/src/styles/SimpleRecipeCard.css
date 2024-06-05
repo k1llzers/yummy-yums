@@ -1,4 +1,4 @@
-.simple-recipe-card {
+.own-recipes-container .simple-recipe-card {
     /*width: 60%;*/
     width: 95%;
     background-color: #F9FAEE;
@@ -6,7 +6,7 @@
     border: none;
     min-width: 200px;
 }
-.card-body{
+.own-recipes-container .card-body{
     padding: 1% 1%;
 }
 .simple-card-image {

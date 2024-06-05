@@ -1,11 +1,11 @@
-.recipe-card-liked {
+.liked-recipe-card .recipe-card-liked {
     width: 95%;
     background-color: #F9FAEE;
     border-radius: 20px;
     border: none;
     min-width: 200px;
 }
-.card-body{
+.liked-recipe-card .card-body{
     padding: 1% 1%;
 }
 .recipe-card-liked .card-image {

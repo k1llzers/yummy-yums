@@ -39,6 +39,13 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthor(SecurityContextAccessor.getUser()));
     }
 
+    public Boolean likeRecipes(Integer id) {
+        RecipeEntity toLike = getById(id);
+        toLike.getLikes().add(SecurityContextAccessor.getUser());
+        repository.save(toLike);
+        return true;
+    }
+
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);

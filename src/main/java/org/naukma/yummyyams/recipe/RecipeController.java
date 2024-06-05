@@ -27,6 +27,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.update(body));
     }
 
+    @PutMapping("/like/{id}")
+    public ResponseEntity<Boolean> like(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.likeRecipes(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(service.delete(id));

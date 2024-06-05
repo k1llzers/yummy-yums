@@ -50,7 +50,7 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
             predicates.add(cb.equal(category.get(CategoryEntity_.id), categoryId));
         }
         if (name != null) {
-            predicates.add(cb.like(cb.lower(recipe.get(RecipeEntity_.name)), name));
+            predicates.add(cb.like(cb.lower(recipe.get(RecipeEntity_.name)), "%" + name.toLowerCase() + "%"));
         }
         if (products != null) {
             for (String product : products) {

@@ -26,7 +26,7 @@
 }
 
 .recipe-author-image {
-    width: 3rem;
+    width: 2.5rem;
     aspect-ratio: 1 / 1;
 }
 
@@ -103,7 +103,7 @@
 .recipe-page-main-info-container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 100px 400px auto;
+    grid-template-rows: 100px auto auto;
     overflow: hidden;
     width: 100%;
 }
@@ -115,7 +115,7 @@
 
 .recipe-page-ingredients {
     margin-left: 50px;
-    margin-top: 50px;
+    margin-top: 100px;
     font-family: "Gentium Plus", serif;
     font-size: 1.5rem;
     color: #3D6827;
@@ -124,6 +124,20 @@
 
 .recipe-page-ingredients-label {
     font-weight: bold;
+    margin-right: 10px;
+}
+
+.recipe-page-category {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.2rem;
+}
+
+.recipe-page-category-label {
+    font-weight: bold;
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.2rem;
 }
 
 .recipe-page-add-products-label {
@@ -398,6 +412,7 @@
     .recipe-page-instructions {
         width: 100%;
         text-align: center;
+        margin-bottom: 50px;
     }
 
     .recipe-page-instructions-container {

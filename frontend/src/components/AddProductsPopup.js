@@ -12,7 +12,7 @@ import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import Image from "react-bootstrap/Image";
 
-const AddProductsPopup = ({open, setOpen}) => {
+const AddProductsPopup = ({open, setOpen, product}) => {
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>

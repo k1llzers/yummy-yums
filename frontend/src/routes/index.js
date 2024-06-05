@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import CreateRecipeForm from "../components/CreateRecipeForm";
 import LogOut from "../pages/LogOut";
+import { useParams } from "react-router-dom";
 
 const AppLayout = ({ setOpenCreateRecipe }) => (
     <>

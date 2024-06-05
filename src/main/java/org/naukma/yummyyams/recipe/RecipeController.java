@@ -47,6 +47,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.getMyRecipes());
     }
 
+    @GetMapping("/get-my-liked")
+    public ResponseEntity<List<RecipeShortResponseDto>> getMyLikedRecipes() {
+        return ResponseEntity.ok(service.getMyLikes());
+    }
+
     @GetMapping("/products-in-scope")
     public ResponseEntity<List<String>> getAllProductsForScope(@RequestParam(required = false) String name,
                                                                @RequestParam(required = false) Integer categoryId) {

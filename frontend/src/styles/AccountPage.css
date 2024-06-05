@@ -22,7 +22,7 @@
     width: 70%;
 }
 
-.account-card {
+.account-card#account-card {
     border: none;
     background-color: rgba(249, 250, 238, 1);
 }
@@ -90,7 +90,7 @@
     /*border: solid 1px rgb(61, 104, 39);*/
     color: rgb(61, 104, 39);
 }
-.form-select-family{
+.all-family-info-container .form-select-family{
     border-bottom: solid 1px #3D6827 ;
     border-top: none;
     border-left: none;
@@ -102,12 +102,12 @@
     font-size: 1.3rem;
     font-family: "Forum", "cursive";
 }
-.form-select-family option{
+.all-family-info-container .form-select-family option{
     font-size: 1.2rem;
     font-family: "Forum", "cursive";
     background-color: rgba(249, 250, 238, 1)
 }
-.form-select-family:focus, .form-select-family:active{
+.all-family-info-container .form-select-family:focus, .all-family-info-container .form-select-family:active{
     box-shadow: none;
     border-bottom: solid 2px #3D6827 ;
 }
@@ -142,7 +142,7 @@
 .create-family-button:hover{
     background-color: rgba(127, 165, 105, 0.34);
 }
-.nav-item {
+.bottom-container .nav-item {
     margin-top: 50px;
     margin-right: 7px;
     background-color: #E2F0D2;
@@ -153,24 +153,24 @@
 
 }
 
-.nav-item:hover {
+.bottom-container .nav-item:hover {
     background-color: rgba(127, 165, 105, 0.34);
     color: rgb(61, 104, 39);
 }
 
-.nav-tabs .nav-link, .nav-tabs {
+.bottom-container .nav-tabs .nav-link, .nav-tabs {
     border: none;
     font-size: 1.4rem;
     font-family: "Gentium Plus", serif;
 }
 
-.nav-tabs .nav-link.active {
+.bottom-container .nav-tabs .nav-link.active {
     background-color: rgba(127, 165, 105, 0.34);
     color: rgb(61, 104, 39);
     border-radius: 0 20px 0 0;
 }
 
-.nav-item button, .nav-item:hover button {
+.bottom-container .nav-item button, .bottom-container .nav-item:hover button {
     color: rgb(61, 104, 39);
 }
 
@@ -189,9 +189,6 @@
     padding: 20px 10px;
     overflow-y: scroll;
 
-}
-.all-store-locations{
-    /*border: solid 1px #3D6827;*/
 }
 .one-store-location{
     border: solid 1px #3D6827;

@@ -5,11 +5,11 @@ import HomePage from "../pages/HomePage";
 import AccountPage from "../pages/AccountPage";
 import AllRecipesPage from "../pages/AllRecipesPage";
 import RecipePage from "../pages/RecipePage";
-import Logout from "../pages/Logout";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import CreateRecipeForm from "../components/CreateRecipeForm";
+import LogOut from "../pages/LogOut";
 
 const AppLayout = ({ setOpenCreateRecipe }) => (
     <>
@@ -34,7 +34,7 @@ const Routes = () => {
                 },
                 {
                     path: "/logout",
-                    element: <Logout />,
+                    element: <LogOut />,
                 }
             ]
         }

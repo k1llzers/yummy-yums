@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
-import {Button} from "@mui/material";
+import {Button, Popover} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Tab from 'react-bootstrap/Tab';
@@ -115,6 +115,11 @@ const AccountPage = () => {
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>

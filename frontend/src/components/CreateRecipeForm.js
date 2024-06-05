@@ -17,35 +17,48 @@ import axios from "axios";
 
 const CreateRecipeForm = ({open, setOpen}) => {
    const [categories, setCategories] = useState([]);
+   const [ingredient, setIngredient] = useState("");
+   const [number, setNumber] = useState("");
+   const [checkProduct, setCheckProduct] = useState(true)
 
-   const [category, setCategory] = useState(0);
+   const [category, setCategory] = useState("");
    const [title, setTitle] = useState("");
    const [photo, setPhoto] = useState([]);
    const [description, setDescription] = useState("");
    const [instruction, setInstruction] = useState("");
-   const [ingredient, setIngredient] = useState("");
-   const [number, setNumber] = useState("");
    const [ingredients, setIngredients] = useState({});
+
 
    const fetchCategories = async () => {
        const response = await axios.get("http://localhost:8080/api/category");
-       if(response.data) {
+       if (response) {
            setCategories(response.data)
        }else {
            setCategories([])
        }
    }
 
-    useEffect(() => {
-        fetchCategories();
-    }, []);
+   useEffect(() => {
+       fetchCategories();
+   }, []);
+
+   useEffect(() => {
+       checkExistingProduct();
+   }, [ingredient])
 
    const handleSubmitRecipe = async () => {
        setOpen(false);
        clearFields();
        const response = await axios.post("http://localhost:8080/api/recipe", {
-
-       })
+           name: title,
+           description: description,
+           instruction: instruction,
+           productToCountMap: ingredients,
+           categoryId: +category
+       });
+       if (response.data.error) {
+           console.log(response.data.error);
+       }
    }
 
    const clearFields = () => {
@@ -58,8 +71,23 @@ const CreateRecipeForm = ({open, setOpen}) => {
        setNumber("");
    }
 
+   const validateSubmitRecipe = () => {
+       return title.length > 0 && description.length > 0 && instruction.length > 0
+           && Object.keys(ingredients).length > 0 && category > 0;
+   }
+
+   const checkExistingProduct = async () => {
+       if (ingredient.length === 0) return;
+       const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
+       if(response.error) {
+           setCheckProduct(false);
+       } else {
+           setCheckProduct(response.data);
+       }
+   }
+
    const validateAddProduct = () => {
-       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient];
+       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient] && checkProduct;
    }
 
     const handleAddProduct = () => {
@@ -72,7 +100,9 @@ const CreateRecipeForm = ({open, setOpen}) => {
     }
 
     const handleDeleteProduct = (ingredient) => {
-        setIngredients(Object.assign({}, Object.keys(ingredients).filter((item)=>(item !== ingredient))));
+        const newIngredients = { ...ingredients };
+        delete newIngredients[ingredient];
+        setIngredients(newIngredients);
     }
 
    const Row = ({ingredient}) => {
@@ -111,11 +141,12 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть назву рецепту"
                         variant="standard"
                         multiline
+                        required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <FormControl variant="standard" sx={{ m: 1, width: '100%', marginBottom: '30px'}}>
-                        <InputLabel id="demo-simple-select-standard-label">Оберіть категорію рецепта</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label" required>Оберіть категорію рецепта</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
@@ -137,7 +168,10 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         id="standard-basic"
                         label="Введіть інгредієнт"
                         value={ingredient}
+                        error={!checkProduct}
+                        helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
                         onChange={(e) => setIngredient(e.target.value)}
+                        onBlur={() => setCheckProduct(true)}
                         variant="standard"
                         multiline
                     />
@@ -171,7 +205,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <p className="photo-upload-label">Додайте фото готової страви</p>
+                    <p className="photo-upload-label">Додайте фото готової страви *</p>
                     <Form.Control className="recipe-photo-upload" type="file" size="md" accept="image/*" />
                     <TextField
                         fullWidth
@@ -179,6 +213,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть короткий опис"
                         variant="standard"
                         multiline
+                        required
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
@@ -188,10 +223,11 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         label="Введіть детальні інструкції з приготування"
                         variant="standard"
                         multiline
+                        required
                         value={instruction}
                         onChange={(e) => setInstruction(e.target.value)}
                     />
-                    <button className="create-recipe-button">
+                    <button className="create-recipe-button" disabled={!validateSubmitRecipe()} onClick={handleSubmitRecipe}>
                         Надіслати рецепт на підтвердження
                     </button>
                 </div>

@@ -129,7 +129,7 @@
     margin-left: 2px;
 }
 .create-family-button{
-    width: 91%;
+    width: 93%;
     border-radius: 12px;
     border: solid 1px #3D6827;
     background-color: rgba(249, 250, 238, 1);
@@ -176,18 +176,29 @@
 
 .tab-content {
     background-color: #C1D7AE;
-    /*height: auto;*/
 }
-
+.MuiButtonBase_root .MuiAccordionSummary-content{
+    margin: 0;
+    max-width: 220px ;
+}
 .own-recipes-container, .liked-recipe-card, .friend-request-card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3% 0;
     justify-items: center;
     padding: 20px 10px;
+    overflow: scroll;
 
 }
-
+.all-store-locations{
+    /*border: solid 1px #3D6827;*/
+}
+.one-store-location{
+    border: solid 1px #3D6827;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    padding: 3px 12px;
+}
 .own-product-list {
     display: flex;
     flex-direction: row;
@@ -195,9 +206,18 @@
     justify-content: space-around;
     min-height: 250px;
 }
+/*#locations div{*/
+/*    margin-left: 0;*/
+/*    margin-right: 0;*/
+/*    padding-left: 0;*/
+/*    padding-right: 0;*/
+/*}*/
 .input-table-container{
     margin-top: 20px;
 }
+/*#panel1-header{*/
+/*    padding: 0;*/
+/*}*/
 .input-table-container .MuiFormLabel-root.Mui-focused, .input-table-container .MuiFormLabel-root, .input-table-container .MuiInput-underline {
     color: #3D6827;
     font-size: 1.2rem;
@@ -326,4 +346,21 @@
     .own-recipes-container, .liked-recipe-card{
         grid-template-columns: repeat(1, 1fr);
     }
+}
+@media (max-width: 991px) {
+    #panel1-header{
+        margin-left: 20%;
+    }
+    .MuiButtonBase-root .MuiAccordionSummary-content{
+        margin-top: 0;
+    }
+    .css-eqpfi5-MuiAccordionSummary-content.Mui-expanded{
+        margin-top: 0;
+    }
+}
+@media (max-width: 440px) {
+    #panel1-header{
+        margin-left: 0;
+    }
+
 }

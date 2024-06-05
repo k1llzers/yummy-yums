@@ -175,9 +175,7 @@
 }
 
 .tab-content {
-    /*background-color: #C1D7AE;*/
-    background-color: #1a1e21;
-    /*height: auto;*/
+    background-color: #C1D7AE;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;

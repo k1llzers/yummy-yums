@@ -9,6 +9,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import CreateRecipeForm from "../components/CreateRecipeForm";
+import LogOut from "../pages/LogOut";
 
 const AppLayout = ({ setOpenCreateRecipe }) => (
     <>
@@ -30,11 +31,11 @@ const Routes = () => {
                 {
                     path: "/account",
                     element: <AccountPage />,
+                },
+                {
+                    path: "/logout",
+                    element: <LogOut />,
                 }
-                // {
-                //     path: "/logout",
-                //     element: <Logout />,
-                // }
             ]
         }
     ];

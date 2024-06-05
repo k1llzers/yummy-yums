@@ -7,9 +7,10 @@ import Search from "../styled components/Search";
 import StyledInputBase from "../styled components/StyledInputBase";
 import {Autocomplete, Chip, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RecipeCard from "../components/RecipeCard";
 import {useAuth} from "../provider/authProvider";
+import axios from "axios";
 
 
 const top100Films = [
@@ -23,13 +24,29 @@ const top100Films = [
 ];
 
 const AllRecipesPage = () => {
+    const [categories, setCategories] = useState([]);
+
+    const [category, setCategory] = useState(0);
 
     const fixedOptions = [];
     const [value, setValue] = useState([...fixedOptions]);
 
+    const fetchCategories = async () => {
+        const response = await axios.get("http://localhost:8080/api/category");
+        if (response) {
+            setCategories(response.data)
+        } else {
+            setCategories([])
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+
     return (
         <div className="all-recipes-main-container">
-            {/*<NavBar/>*/}
             <div className="all-recipes-inner-container">
                 <div className="all-recipes-filters-container">
                     <Search>
@@ -46,10 +63,18 @@ const AllRecipesPage = () => {
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
                         >
-                            <MenuItem value={10}>Лялялял</MenuItem>
-                            <MenuItem value={20}>Лялялял</MenuItem>
-                            <MenuItem value={30}>Лялялял</MenuItem>
+                            {
+                                categories.map((category) => (
+                                    <MenuItem
+                                        key={category.id}
+                                        value={category.id}
+                                    >{category.name}</MenuItem>
+                                ))
+                            }
+                            <MenuItem key={0} value={0}>Всі категорії</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -94,7 +119,6 @@ const AllRecipesPage = () => {
                     <RecipeCard/>
                 </div>
             </div>
-            {/*<Footer/>*/}
         </div>
     )
 

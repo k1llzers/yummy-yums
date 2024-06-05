@@ -40,4 +40,9 @@ public class UserController {
     public ResponseEntity<UserResponse> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
     }
+
+    @GetMapping("/myself")
+    public ResponseEntity<UserResponse> getMyselfInfo() {
+        return ResponseEntity.ok(service.getMyselfInfo());
+    }
 }

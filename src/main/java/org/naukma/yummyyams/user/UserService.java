@@ -3,7 +3,9 @@ package org.naukma.yummyyams.user;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.BaseService;
+import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
+import org.naukma.yummyyams.user.dto.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,4 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, Integer> {
+    public UserResponse getMyselfInfo() {
+        return mapper.toResponseDto(SecurityContextAccessor.getUser());
+    }
 }

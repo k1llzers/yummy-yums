@@ -42,7 +42,7 @@ public class RecipeController {
         return ResponseEntity.ok(service.getResponseDto(id));
     }
 
-    @GetMapping("/get-mine")
+    @GetMapping("/get-my")
     public ResponseEntity<List<RecipeShortResponseDto>> getMyRecipes() {
         return ResponseEntity.ok(service.getMyRecipes());
     }

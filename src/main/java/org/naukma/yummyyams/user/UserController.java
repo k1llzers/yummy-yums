@@ -36,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-    @GetMapping("/by-id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
     }

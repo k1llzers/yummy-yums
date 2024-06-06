@@ -1,6 +1,8 @@
 package org.naukma.yummyyams.recipe;
 
+import org.naukma.yummyyams.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -8,14 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
-    List<RecipeEntity> findAllByCategory_Id(Integer category_id);
+public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer>, JpaSpecificationExecutor<RecipeEntity> {
+    Long countByAuthorAndApproveTrue(UserEntity author);
 
-    List<RecipeEntity> findAllByNameLikeIgnoreCase(String name);
+    List<RecipeEntity> findAllByAuthorAndApproveTrue(UserEntity author);
 
-    @Query(value = "select recipe.ingredients from RecipeEntity recipe")
-    List<String> findProductsInRecipes();
+    List<RecipeEntity> findAllByAuthor(UserEntity author);
 
-    @Query(value = "select recipe.ingredients from RecipeEntity recipe where recipe.category.id = :categoryId")
-    List<String> findProductsInRecipesByCategory(@Param("categoryId") Integer categoryId);
+    List<RecipeEntity> findAllByLikesContains(UserEntity author);
 }

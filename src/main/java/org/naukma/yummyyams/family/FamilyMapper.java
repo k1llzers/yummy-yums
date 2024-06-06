@@ -34,6 +34,8 @@ public abstract class FamilyMapper implements Mapper<FamilyEntity, FamilyCreateU
     @Override
     public abstract FamilyResponseDto toResponseDto(FamilyEntity entity);
 
+    public abstract List<FamilyResponseDto> toResponseDtoList(List<FamilyEntity> entity);
+
     protected List<UserEntity> mapUsersIdToUsersEntity(List<Integer> usersId) {
         return usersId.stream()
                 .map(this::getUserById)

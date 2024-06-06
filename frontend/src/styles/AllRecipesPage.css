@@ -1,6 +1,7 @@
 .all-recipes-main-container {
     width: 100%;
     background-color: #F9FAEE;
+    min-height: 100vh;
 }
 
 .all-recipes-inner-container {

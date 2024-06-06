@@ -11,11 +11,13 @@ import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
+import org.naukma.yummyyams.security.SecurityContextAccessor;
+import org.naukma.yummyyams.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@org.mapstruct.Mapper(config = MapperConfig.class)
+@org.mapstruct.Mapper(config = MapperConfig.class, imports = {SecurityContextAccessor.class})
 public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateUpdateDto> {
     @Autowired
     protected CategoryService categoryService;
@@ -25,6 +27,7 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
     @Mapping(target = "approve", expression = "java(false)")
     @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
+    @Mapping(target = "author", expression = "java(SecurityContextAccessor.getUser())")
     public abstract RecipeEntity mergeCreate(RecipeCreateUpdateDto dto);
 
     @Override

@@ -1,5 +1,4 @@
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
+
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
@@ -22,42 +21,84 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import EditIcon from '@mui/icons-material/Edit';
 import FriendRequestCard from "../components/FriendRequestCard";
 import TextField from "@mui/material/TextField";
-import SearchIconWrapper from "../styled components/SearchIconWrapper";
-import SearchIcon from "@mui/icons-material/Search";
-import StyledInputBase from "../styled components/StyledInputBase";
-import Search from "../styled components/Search";
-import EditFamilyPopup from "../components/EditFamilyPopup";
 import EditProfilePopup from "../components/EditProfilePopup";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const AccountPage = () => {
+    const navigation=  useNavigate();
+    const [weather, setWeather] = useState({
+        location:{
+            name: "Kyiv",
+            country: "Ukraine"
+        }
+    });
+    const [accountName, setAccountName] = useState("");
+    const [accountEmail, setAccountEmail] = useState("");
+    const [accountLikesCount, setAccountLikesCount] = useState(0);
+    const [accountRecipesCount, setAccountRecipesCount] = useState(0);
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
-    return (
+    const fetchPersonalInfo = async ()=>{
+        const response = await axios.get("http://localhost:8080/api/user/myself");
+        if(response){
+            setAccountName(response.data.surname + " " +response.data.name);
+            setAccountEmail(response.data.email);
+            setAccountLikesCount(response.data.countOfLikesOnMyRecipes);
+            setAccountRecipesCount(response.data.countOfRecipes);
+        }else {
+            console.log("хуйня")
+        }
+    }
+    useEffect(() => {
+        fetchPersonalInfo();
+    }, []);
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                fetch(`https://api.weatherapi.com/v1/forecast.json?key=f99baae0ef1a4d1187a94526231511&q=${latitude},${longitude}&days=5&aqi=no&alerts=yes`)
+                    .then((info) => info.json())
+                    .then((data) => {
+                       console.log(data);
+                       setWeather(data);
+                    })
+                    .catch((error) => {
+                        console.error("Exception: ", error);
+                    });
 
+            },
+            (error) => {
+                console.error("Error getting location:", error);
+            }
+        );
+
+    }, [navigation]);
+    return (
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
-                    <Card body className="account-card">
+                    <Card body className="account-card" id={'account-card'}>
                         <Card.Body style={{padding: "0px 5px"}}>
                             <div className="card-container">
                                 <div className="account-name">
                                     <Image className="account-card-image"
                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSouz4bFZt20u2XHT4zM-7vP4OV_lZ1nT0JlQ&s"/>
                                     <div className="account-card-text-info">
-                                        <p className="account-title">Григорій Сковорода </p>
+                                        <p className="account-title">{accountName}</p>
                                         <p className="account-info">
-                                            h.skovoroda@ukma.edu.ua
+                                            {accountEmail}
                                         </p>
                                         <p className="account-info">
-                                            Kyiv, Ukraine
+                                            {weather.location.name}, {weather.location.country}
                                         </p>
                                         <div className={'with-icon'}>
                                             <p className="account-info">
-                                                <DescriptionIcon style={{height: '30px'}}/> 37 рецептів
+                                                <DescriptionIcon style={{height: '30px'}}/> {accountRecipesCount} рецептів
                                             </p>
                                             <p className="account-info info-likes"><FavoriteBorderIcon
-                                                style={{height: '30px'}}/> 468 лайків</p>
+                                                style={{height: '30px'}}/> {accountLikesCount} лайків</p>
                                         </div>
                                         <div className="recipe-likes">
                                             <button
@@ -115,6 +156,11 @@ const AccountPage = () => {
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
+                            <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>
                             <SimpleRecipeCard/>

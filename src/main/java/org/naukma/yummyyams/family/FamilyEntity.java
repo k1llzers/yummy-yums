@@ -45,4 +45,10 @@ public class FamilyEntity implements GettableById<Integer> {
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<ProductEntity> products;
+
+    @ManyToMany
+    @JoinTable(name = "family_requests",
+            joinColumns = @JoinColumn(name = "family_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<UserEntity> requests;
 }

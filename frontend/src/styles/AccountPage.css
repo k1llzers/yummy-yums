@@ -22,7 +22,7 @@
     width: 70%;
 }
 
-.account-card {
+.account-card#account-card {
     border: none;
     background-color: rgba(249, 250, 238, 1);
 }
@@ -90,7 +90,7 @@
     /*border: solid 1px rgb(61, 104, 39);*/
     color: rgb(61, 104, 39);
 }
-.form-select-family{
+.all-family-info-container .form-select-family{
     border-bottom: solid 1px #3D6827 ;
     border-top: none;
     border-left: none;
@@ -102,12 +102,12 @@
     font-size: 1.3rem;
     font-family: "Forum", "cursive";
 }
-.form-select-family option{
+.all-family-info-container .form-select-family option{
     font-size: 1.2rem;
     font-family: "Forum", "cursive";
     background-color: rgba(249, 250, 238, 1)
 }
-.form-select-family:focus, .form-select-family:active{
+.all-family-info-container .form-select-family:focus, .all-family-info-container .form-select-family:active{
     box-shadow: none;
     border-bottom: solid 2px #3D6827 ;
 }
@@ -129,7 +129,7 @@
     margin-left: 2px;
 }
 .create-family-button{
-    width: 91%;
+    width: 93%;
     border-radius: 12px;
     border: solid 1px #3D6827;
     background-color: rgba(249, 250, 238, 1);
@@ -142,7 +142,7 @@
 .create-family-button:hover{
     background-color: rgba(127, 165, 105, 0.34);
 }
-.nav-item {
+.bottom-container .nav-item {
     margin-top: 50px;
     margin-right: 7px;
     background-color: #E2F0D2;
@@ -153,41 +153,49 @@
 
 }
 
-.nav-item:hover {
+.bottom-container .nav-item:hover {
     background-color: rgba(127, 165, 105, 0.34);
     color: rgb(61, 104, 39);
 }
 
-.nav-tabs .nav-link, .nav-tabs {
+.bottom-container .nav-tabs .nav-link, .nav-tabs {
     border: none;
     font-size: 1.4rem;
     font-family: "Gentium Plus", serif;
 }
 
-.nav-tabs .nav-link.active {
+.bottom-container .nav-tabs .nav-link.active {
     background-color: rgba(127, 165, 105, 0.34);
     color: rgb(61, 104, 39);
     border-radius: 0 20px 0 0;
 }
 
-.nav-item button, .nav-item:hover button {
+.bottom-container .nav-item button, .bottom-container .nav-item:hover button {
     color: rgb(61, 104, 39);
 }
 
 .tab-content {
     background-color: #C1D7AE;
-    /*height: auto;*/
 }
-
+.MuiButtonBase_root .MuiAccordionSummary-content{
+    margin: 0;
+    max-width: 220px ;
+}
 .own-recipes-container, .liked-recipe-card, .friend-request-card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3% 0;
     justify-items: center;
     padding: 20px 10px;
+    overflow-y: scroll;
 
 }
-
+.one-store-location{
+    border: solid 1px #3D6827;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    padding: 3px 12px;
+}
 .own-product-list {
     display: flex;
     flex-direction: row;
@@ -195,9 +203,18 @@
     justify-content: space-around;
     min-height: 250px;
 }
+/*#locations div{*/
+/*    margin-left: 0;*/
+/*    margin-right: 0;*/
+/*    padding-left: 0;*/
+/*    padding-right: 0;*/
+/*}*/
 .input-table-container{
     margin-top: 20px;
 }
+/*#panel1-header{*/
+/*    padding: 0;*/
+/*}*/
 .input-table-container .MuiFormLabel-root.Mui-focused, .input-table-container .MuiFormLabel-root, .input-table-container .MuiInput-underline {
     color: #3D6827;
     font-size: 1.2rem;
@@ -326,4 +343,21 @@
     .own-recipes-container, .liked-recipe-card{
         grid-template-columns: repeat(1, 1fr);
     }
+}
+@media (max-width: 991px) {
+    #panel1-header{
+        margin-left: 20%;
+    }
+    .MuiButtonBase-root .MuiAccordionSummary-content{
+        margin-top: 0;
+    }
+    .css-eqpfi5-MuiAccordionSummary-content.Mui-expanded{
+        margin-top: 0;
+    }
+}
+@media (max-width: 440px) {
+    #panel1-header{
+        margin-left: 0;
+    }
+
 }

@@ -12,24 +12,16 @@ import RecipeCard from "../components/RecipeCard";
 import {useAuth} from "../provider/authProvider";
 import axios from "axios";
 
-
-const top100Films = [
-    { title: 'Помідори', year: 1994 },
-    { title: 'Сіль', year: 1972 },
-    { title: 'Огірки', year: 1974 },
-    { title: 'Гречка', year: 2008 },
-    { title: 'Макарони', year: 1957 },
-    { title: "Перець", year: 1993 },
-    { title: 'Салат', year: 1994 },
-];
-
 const AllRecipesPage = () => {
     const [categories, setCategories] = useState([]);
+    const [recipes, setRecipes] = useState([]);
+    const [products, setProducts] = useState([]);
 
     const [category, setCategory] = useState(0);
+    const [titleSearch, setTitleSearch] = useState("");
 
-    const fixedOptions = [];
-    const [value, setValue] = useState([...fixedOptions]);
+    const productsOptions = products.map((product, index) => ({ title: product }));
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
     const fetchCategories = async () => {
         const response = await axios.get("http://localhost:8080/api/category");
@@ -40,10 +32,31 @@ const AllRecipesPage = () => {
         }
     }
 
+    const fetchRecipes = async () => {
+        const name = titleSearch.length > 0 ? "name=" + titleSearch : "";
+        const categoryId = category > 0 ? "&categoryId=" + category : "";
+        const ingredients = selectedProducts.length > 0 ? "&ingredients=" + selectedProducts.map(product => product.title).join(',') : "";
+        const response = await axios.get("http://localhost:8080/api/recipe?" + name + categoryId + ingredients);
+        setRecipes(response.data);
+    }
+
+    const fetchProducts = async () => {
+        const response = await axios.get("http://localhost:8080/api/recipe/products-in-scope");
+        if (response) {
+            setProducts(response.data)
+        } else {
+            setProducts([])
+        }
+    }
+
     useEffect(() => {
         fetchCategories();
+        fetchProducts();
     }, []);
 
+    useEffect(() => {
+        fetchRecipes();
+    }, [category, selectedProducts, titleSearch])
 
     return (
         <div className="all-recipes-main-container">
@@ -54,6 +67,8 @@ const AllRecipesPage = () => {
                             <SearchIcon sx={{color: '#3D6827'}} />
                         </SearchIconWrapper>
                         <StyledInputBase
+                            value={titleSearch}
+                            onChange={(e) => setTitleSearch(e.target.value)}
                             placeholder="Назва рецептa…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
@@ -81,42 +96,45 @@ const AllRecipesPage = () => {
                 <div className="all-recipes-products-container">
                     <Autocomplete
                         multiple
-                        id="fixed-tags-demo"
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue([
-                                ...fixedOptions,
-                                ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
-                            ]);
-                        }}
-                        options={top100Films}
+                        id="tags-standard"
+                        options={productsOptions}
+                        isOptionEqualToValue={(option, value) => option.title === value.title}
+                        value={selectedProducts}
                         getOptionLabel={(option) => option.title}
+                        onChange={(event, newValue) => {
+                            setSelectedProducts([...newValue]);
+                        }}
                         renderTags={(tagValue, getTagProps) =>
-                            tagValue.map((option, index) => (
-                                <Chip
-                                    label={option.title}
-                                    {...getTagProps({ index })}
-                                    sx={{
-                                        backgroundColor: '#E2F0D2',
-                                        color: '#3D6827',
-                                        fontFamily: 'Gentium Plus',
-                                        fontSize: '1.1rem'
-                                    }}
-                                />
-                            ))
-                        }
+                                tagValue.map((option, index) => (
+                                    <Chip
+                                        label={option.title}
+                                        {...getTagProps({ index })}
+                                        sx={{
+                                            backgroundColor: '#E2F0D2',
+                                            color: '#3D6827',
+                                            fontFamily: 'Gentium Plus',
+                                            fontSize: '1.1rem'
+                                        }}
+                                    />
+                                ))
+                            }
                         renderInput={(params) => (
                             <TextField {...params} label="Оберіть продукти" placeholder="Пошук..." />
                         )}
                     />
                 </div>
                 <div className="all-recipes-cards-container">
-                    <RecipeCard/>
-                    <RecipeCard/>
-                    <RecipeCard/>
-                    <RecipeCard/>
-                    <RecipeCard/>
-                    <RecipeCard/>
+                    {recipes.map((recipe) => (
+                        <RecipeCard
+                            key={recipe.id}
+                            id={recipe.id}
+                            title={recipe.name}
+                            author={recipe.author.pib}
+                            authorId={recipe.author.id}
+                            numberOfLikes={recipe.countOfLikes}
+                            ingredients={recipe.ingredients}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

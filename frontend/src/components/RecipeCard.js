@@ -23,7 +23,12 @@ const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, is
 
     const handleLike =  async () => {
         setLiked((prev) => !prev);
-        const response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
+        let response;
+        if(!liked) {
+            response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
+        }else {
+            response = await axios.put("http://localhost:8080/api/recipe/unlike/" + recipeId);
+        }
         setLikes(response.data);
     }
 

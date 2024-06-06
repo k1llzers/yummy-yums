@@ -67,6 +67,9 @@ const EditProfilePopup = ({open, setOpen}) => {
             [field]: value
         }));
     };
+    const validateEditingAccount = () =>{
+        return checkEqualPasswords()||(!emailRegex.test(tempAccount.tempAccEmail));
+    }
     useEffect(() => {
         getStaticInfo();
     }, []);
@@ -140,7 +143,7 @@ const EditProfilePopup = ({open, setOpen}) => {
                         onChange={(event)=>{updateTempAccount('tempAccRepeatedPassword', event.target.value)}}
                         onBlur={()=> setPasswordError(tempAccount.tempAccPassword!==tempAccount.tempAccRepeatedPassword)}
                     />
-                    <button className="edit-button" disabled={checkEnteredPassword()}>
+                    <button className="edit-button" disabled={validateEditingAccount()}>
                         Редагувати профіль
                     </button>
                 </div>

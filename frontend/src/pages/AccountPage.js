@@ -35,6 +35,7 @@ const AccountPage = () => {
             country: "Ukraine"
         }
     });
+    const [ownRecipes, setOwnRecipes] =useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
@@ -51,8 +52,18 @@ const AccountPage = () => {
             console.log("Error fetching personal info");
         }
     }
+    const fetchOwnRecipes = async () =>{
+        const response = await axios.get("http://localhost:8080/api/recipe/get-my");
+
+        if(response){
+            setOwnRecipes(response.data);
+        }else{
+            setOwnRecipes([]);
+        }
+    }
     useEffect(() => {
         fetchPersonalInfo();
+        fetchOwnRecipes();
     }, []);
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -158,17 +169,14 @@ const AccountPage = () => {
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
+                            {ownRecipes.map((recipe)=>(
+                                <SimpleRecipeCard
+                                    title={recipe.name}
+                                    likes={recipe.countOfLikes}
+                                    comments={recipe.countOfComments}
+                                    isLiked={recipe.iliked}
+                                />
+                            ))}
                         </div>
 
                     </Tab>

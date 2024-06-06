@@ -43,11 +43,18 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByLikesContains(SecurityContextAccessor.getUser()));
     }
 
-    public Boolean likeRecipes(Integer id) {
+    public Integer likeRecipe(Integer id) {
         RecipeEntity toLike = getById(id);
         toLike.getLikes().add(SecurityContextAccessor.getUser());
         repository.save(toLike);
-        return true;
+        return toLike.getLikes().size();
+    }
+
+    public Integer unlikeRecipe(Integer id) {
+        RecipeEntity toLike = getById(id);
+        toLike.getLikes().remove(SecurityContextAccessor.getUser());
+        repository.save(toLike);
+        return toLike.getLikes().size();
     }
 
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {

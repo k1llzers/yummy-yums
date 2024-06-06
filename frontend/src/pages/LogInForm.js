@@ -15,8 +15,7 @@ const LogInForm = ({openLogin, setOpenLogin}) => {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
 
-    const emailRegex = /^[a-zA-Z0–9._-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,4}$/;
-
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const handleLogIn = async () => {
         setOpenLogin(false);
         clearFields();

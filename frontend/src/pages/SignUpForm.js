@@ -18,8 +18,7 @@ const SignUpForm = ({open, setOpen}) => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    const emailRegex = /^[a-zA-Z0–9._-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,4}$/;
-
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const handleSignUp = async() => {
         setOpen(false);
         clearFields();

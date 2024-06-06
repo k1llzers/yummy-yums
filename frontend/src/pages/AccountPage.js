@@ -25,6 +25,7 @@ import EditProfilePopup from "../components/EditProfilePopup";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import accountPage from "./AccountPage";
 
 const AccountPage = () => {
     const navigation=  useNavigate();
@@ -47,7 +48,7 @@ const AccountPage = () => {
             setAccountLikesCount(response.data.countOfLikesOnMyRecipes);
             setAccountRecipesCount(response.data.countOfRecipes);
         }else {
-            console.log("хуйня")
+            console.log("Error fetching personal info");
         }
     }
     useEffect(() => {
@@ -76,6 +77,7 @@ const AccountPage = () => {
     }, [navigation]);
     return (
         <div className={'main-container'}>
+            {/*<EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} account={account} setAccount={updateAccount}/>*/}
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>

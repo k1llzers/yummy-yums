@@ -23,7 +23,7 @@
     background-color: rgba(127, 165, 105, 0.34);
 }
 
-.edit-photo-upload {
+.edit-profile-dialog .edit-photo-upload {
     font-family: "Gentium Plus", serif;
     font-size: 1.2rem;
     border-radius: 30px;

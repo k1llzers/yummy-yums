@@ -82,6 +82,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
        if(response.error) {
            setCheckProduct(false);
        } else {
+           console.log(response.data)
            setCheckProduct(response.data);
        }
    }
@@ -171,7 +172,6 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         error={!checkProduct}
                         helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
                         onChange={(e) => setIngredient(e.target.value)}
-                        onBlur={() => setCheckProduct(true)}
                         variant="standard"
                         multiline
                     />

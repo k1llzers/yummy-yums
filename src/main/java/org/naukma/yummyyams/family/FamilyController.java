@@ -2,6 +2,7 @@ package org.naukma.yummyyams.family;
 
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
+import org.naukma.yummyyams.family.dto.FamilyRequestDto;
 import org.naukma.yummyyams.family.dto.FamilyResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,6 +34,21 @@ public class FamilyController {
         return ResponseEntity.ok(service.update(body));
     }
 
+    @PutMapping("/send-request/{familyId}/{userEmail}")
+    public ResponseEntity<Boolean> sendRequestToFamily(@PathVariable Integer familyId, @PathVariable String userEmail) {
+        return ResponseEntity.ok(service.sendRequest(familyId, userEmail));
+    }
+
+    @PutMapping("/confirm-request/{familyId}")
+    public ResponseEntity<Boolean> confirmRequest(@PathVariable Integer familyId) {
+        return ResponseEntity.ok(service.confirmRequest(familyId));
+    }
+
+    @PutMapping("/cancel-request/{familyId}")
+    public ResponseEntity<Boolean> rejectRequest(@PathVariable Integer familyId) {
+        return ResponseEntity.ok(service.cancelRequest(familyId));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(service.delete(id));
@@ -46,5 +62,10 @@ public class FamilyController {
     @GetMapping("/my-families")
     public ResponseEntity<List<FamilyResponseDto>> getByParticipantId() {
         return ResponseEntity.ok(service.getMyFamilies());
+    }
+
+    @GetMapping("/my-requests")
+    public ResponseEntity<List<FamilyRequestDto>> getMyRequests() {
+        return ResponseEntity.ok(service.getMyRequests());
     }
 }

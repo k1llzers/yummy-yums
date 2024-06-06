@@ -12,9 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FamilyResponseDto {
+public class FamilyRequestDto {
     private Integer id;
     private String name;
     private List<UserShortResponse> participants;
-    private List<UserShortResponse> requests;
 }

@@ -38,6 +38,7 @@ const AllRecipesPage = () => {
         const ingredients = selectedProducts.length > 0 ? "&ingredients=" + selectedProducts.map(product => product.title).join(',') : "";
         const response = await axios.get("http://localhost:8080/api/recipe?" + name + categoryId + ingredients);
         setRecipes(response.data);
+        console.log(recipes)
     }
 
     const fetchProducts = async () => {
@@ -133,6 +134,7 @@ const AllRecipesPage = () => {
                             authorId={recipe.author.id}
                             numberOfLikes={recipe.countOfLikes}
                             ingredients={recipe.ingredients}
+                            isLiked={recipe.iliked}
                         />
                     ))}
                 </div>

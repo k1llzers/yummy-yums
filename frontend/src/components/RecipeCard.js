@@ -5,20 +5,25 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {useAuth} from "../provider/authProvider";
 import {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import axios from "axios";
 
-const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients}) => {
+const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
     const {role} = useAuth();
-    // const [recipeTitle, setRecipeTitle] = useState("");
-    // const [recipeAuthor, setRecipeAuthor] = useState("");
-    // const [likes, setLikes] = useState("");
-    // const [ingredientsList, setIngredientsList] = useState([]);
+
+    const [liked, setLiked] = useState(false);
+    const [recipeId, setRecipeId] = useState(0);
 
     useEffect(() => {
-        // setRecipeTitle(title);
-        // setRecipeAuthor(author);
-        // setLikes(numberOfLikes);
-        // setIngredientsList(ingredients);
+        setLiked(isLiked);
+        setRecipeId(id);
     }, []);
+
+    const handleLike =  () => {
+        setLiked(!liked);
+        console.log(liked)
+        // const response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
+    }
 
     return (
         <Card body className="recipe-card">
@@ -41,7 +46,12 @@ const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients}) =
                     <div className="recipe-likes">
                         <span>{numberOfLikes} </span>
                         {role ? <button className="recipe-card-like-button"><FavoriteBorderIcon fontSize="large"/></button> :
-                            <button disabled className="recipe-card-like-button"><FavoriteBorderIcon fontSize="large"/></button>}
+                            <button disabled={!role}
+                                    className="recipe-card-like-button"
+                                    onClick={handleLike}
+                            >
+                                {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
+                            </button>}
                     </div>
                 </div>
             </Card.Body>

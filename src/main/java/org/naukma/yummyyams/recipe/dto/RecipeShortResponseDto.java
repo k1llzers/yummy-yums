@@ -19,4 +19,5 @@ public class RecipeShortResponseDto {
     private Set<String> ingredients;
     private Integer countOfLikes;
     private Integer countOfComments;
+    private Boolean iLiked;
 }

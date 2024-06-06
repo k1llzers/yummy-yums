@@ -27,4 +27,5 @@ public class RecipeResponseDto {
     private UserShortResponse author;
     private CategoryResponseDto category;
     private Integer countOfLikes;
+    private Boolean iLiked;
 }

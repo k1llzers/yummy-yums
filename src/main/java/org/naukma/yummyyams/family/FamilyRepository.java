@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FamilyRepository extends JpaRepository<FamilyEntity, Integer> {
     List<FamilyEntity> findAllByParticipantsContains(UserEntity participants);
+
+    List<FamilyEntity> findAllByRequestsContains(UserEntity participants);
 }

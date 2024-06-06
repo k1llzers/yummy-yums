@@ -17,6 +17,7 @@ import org.naukma.yummyyams.base.GettableById;
 import org.naukma.yummyyams.product.ProductEntity;
 import org.naukma.yummyyams.user.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -38,17 +39,17 @@ public class FamilyEntity implements GettableById<Integer> {
     @JoinTable(name = "family_user",
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<UserEntity> participants;
+    private List<UserEntity> participants = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "family_product",
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<ProductEntity> products;
+    private List<ProductEntity> products = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "family_requests",
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<UserEntity> requests;
+    private List<UserEntity> requests = new ArrayList<>();
 }

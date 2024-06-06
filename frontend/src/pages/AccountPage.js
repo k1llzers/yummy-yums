@@ -25,7 +25,7 @@ import EditProfilePopup from "../components/EditProfilePopup";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import accountPage from "./AccountPage";
+
 
 const AccountPage = () => {
     const navigation=  useNavigate();
@@ -72,7 +72,6 @@ const AccountPage = () => {
                 fetch(`https://api.weatherapi.com/v1/forecast.json?key=f99baae0ef1a4d1187a94526231511&q=${latitude},${longitude}&days=5&aqi=no&alerts=yes`)
                     .then((info) => info.json())
                     .then((data) => {
-                       console.log(data);
                        setWeather(data);
                     })
                     .catch((error) => {
@@ -171,6 +170,7 @@ const AccountPage = () => {
                         <div className={'own-recipes-container'}>
                             {ownRecipes.map((recipe)=>(
                                 <SimpleRecipeCard
+                                    id={recipe.id}
                                     title={recipe.name}
                                     likes={recipe.countOfLikes}
                                     comments={recipe.countOfComments}

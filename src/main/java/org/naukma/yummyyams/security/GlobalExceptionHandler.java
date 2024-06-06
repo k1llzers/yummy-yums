@@ -7,6 +7,7 @@ import org.naukma.yummyyams.security.dto.ErrorResponse;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({NoSuchEntityException.class, MethodArgumentNotValidException.class, ValidationException.class})
     public ResponseEntity<ErrorResponse> handleNoSuchEntityException(Exception e) {
         return ResponseEntity.ok(new ErrorResponse(e.getMessage(), HttpStatus.CONFLICT.value()));
+    }
+
+    @ExceptionHandler({AuthenticationException.class})
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+        return ResponseEntity.ok(new ErrorResponse("Не вірний email або пароль", HttpStatus.CONFLICT.value()));
     }
 
     @ExceptionHandler(Exception.class)

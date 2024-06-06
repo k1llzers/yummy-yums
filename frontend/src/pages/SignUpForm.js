@@ -129,7 +129,7 @@ const SignUpForm = ({open, setOpen}) => {
                         variant="standard"
                         type="password"
                         required
-                        disabled={!password}
+                        disabled={password.length === 0}
                         error={passwordError}
                         helperText={passwordError ? "Паролі повинні збігатись" : ""}
                         value={repeatedPassword}

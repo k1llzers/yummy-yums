@@ -47,7 +47,12 @@ const RecipePage = () => {
     }, [])
 
     const handleLike = async () => {
-        const response = await axios.put("http://localhost:8080/api/recipe/like/" + id.id);
+        let response;
+        if (!liked) {
+            await axios.put("http://localhost:8080/api/recipe/like/" + id.id)
+        } else {
+            await axios.put("http://localhost:8080/api/recipe/unlike/" + id.id)
+        }
         await fetchRecipe();
     }
 

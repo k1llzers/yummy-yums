@@ -11,8 +11,18 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import Image from "react-bootstrap/Image";
+import {useEffect, useState} from "react";
 
 const AddProductsPopup = ({open, setOpen, product}) => {
+
+    const [products, setProducts] = useState([]);
+
+    const fetchProducts = async () => {
+
+    }
+
+
+
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>

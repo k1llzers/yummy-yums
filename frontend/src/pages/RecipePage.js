@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {useAuth} from "../provider/authProvider";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const RecipePage = () => {
     const {role} = useAuth();
@@ -26,6 +27,7 @@ const RecipePage = () => {
     const [author, setAuthor] = useState({});
     const [category, setCategory] = useState({});
     const [countOfLikes, setCountOfLikes] = useState(0);
+    const [liked, setLiked] = useState(false);
 
     const fetchRecipe = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/" + id.id);
@@ -37,16 +39,22 @@ const RecipePage = () => {
         setAuthor(response.data.author);
         setCategory(response.data.category);
         setCountOfLikes(response.data.countOfLikes);
+        setLiked(response.data.iliked);
     }
 
     useEffect(() => {
         fetchRecipe();
     }, [])
 
+    const handleLike = async () => {
+        const response = await axios.put("http://localhost:8080/api/recipe/like/" + id.id);
+        await fetchRecipe();
+    }
+
     return (
         <>
             <div className="recipe-main-container">
-                <AddProductsPopup open={openAddProductsPopup} setOpen={setOpenProductsPopup}/>
+                <AddProductsPopup open={openAddProductsPopup} setOpen={setOpenProductsPopup} product={chosenProduct}/>
                 <div className="recipe-inner-container">
                     <div className="recipe-page-main-info-container">
                         <div className="name-and-description-container">
@@ -61,7 +69,11 @@ const RecipePage = () => {
                             <p className="recipe-page-category"><span className="recipe-page-category-label">Категорія: </span>{category.name}</p>
                             <div className="recipe-likes-info">
                                 <span>{countOfLikes} </span>
-                                <button className="recipe-page-like-button"><FavoriteBorderIcon fontSize="medium"/>
+                                <button
+                                    className="recipe-page-like-button"
+                                    onClick={handleLike}
+                                >
+                                    {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
                                 </button>
                             </div>
                             <p className="recipe-page-description">{description}</p>

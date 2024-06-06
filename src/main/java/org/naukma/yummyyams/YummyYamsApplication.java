@@ -46,14 +46,14 @@ public class YummyYamsApplication {
 
     @PostConstruct
     public void initProducts() {
-        if (productRepository.count() == 0) {
+        if (productRepository.count() < 16000) {
             log.info("start get products");
             ExecutorService executor = Executors.newFixedThreadPool(4);
 
             List<Callable<Set<ProductEntity>>> tasks = new ArrayList<>();
-            tasks.add(silpoService::getFirstListProducts);
-            tasks.add(silpoService::getSecondListProducts);
-            tasks.add(atbService::getProducts);
+//            tasks.add(silpoService::getFirstListProducts);
+//            tasks.add(silpoService::getSecondListProducts);
+//            tasks.add(atbService::getProducts);
             tasks.add(novusService::getProducts);
 
             try {

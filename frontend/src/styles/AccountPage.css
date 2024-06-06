@@ -176,6 +176,7 @@
 
 .tab-content {
     background-color: #C1D7AE;
+    min-height: 118px;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;
@@ -187,8 +188,12 @@
     gap: 3% 0;
     justify-items: center;
     padding: 20px 10px;
+    align-content: center;
     overflow-y: scroll;
 
+}
+.own-recipes-container{
+    gap: 7% 0;
 }
 .one-store-location{
     border: solid 1px #3D6827;
@@ -201,7 +206,7 @@
     flex-direction: row;
     /*width: 90%;*/
     justify-content: space-around;
-    min-height: 250px;
+    /*min-height: 250px;*/
 }
 /*#locations div{*/
 /*    margin-left: 0;*/

@@ -83,7 +83,7 @@
 .edit-profile-dialog .MuiTextField-root {
     margin: 0 0 30px 0;
 }
-.edit-button:disabled {
+.edit-profile-dialog .edit-button:disabled {
     background-color: #E2F0D2;
     color: #C1D7AE;
 }

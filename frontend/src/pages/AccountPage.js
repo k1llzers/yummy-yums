@@ -25,7 +25,7 @@ import EditProfilePopup from "../components/EditProfilePopup";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import accountPage from "./AccountPage";
+
 
 const AccountPage = () => {
     const navigation=  useNavigate();
@@ -35,6 +35,7 @@ const AccountPage = () => {
             country: "Ukraine"
         }
     });
+    const [ownRecipes, setOwnRecipes] =useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
@@ -51,8 +52,18 @@ const AccountPage = () => {
             console.log("Error fetching personal info");
         }
     }
+    const fetchOwnRecipes = async () =>{
+        const response = await axios.get("http://localhost:8080/api/recipe/get-my");
+
+        if(response){
+            setOwnRecipes(response.data);
+        }else{
+            setOwnRecipes([]);
+        }
+    }
     useEffect(() => {
         fetchPersonalInfo();
+        fetchOwnRecipes();
     }, []);
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -61,7 +72,6 @@ const AccountPage = () => {
                 fetch(`https://api.weatherapi.com/v1/forecast.json?key=f99baae0ef1a4d1187a94526231511&q=${latitude},${longitude}&days=5&aqi=no&alerts=yes`)
                     .then((info) => info.json())
                     .then((data) => {
-                       console.log(data);
                        setWeather(data);
                     })
                     .catch((error) => {
@@ -158,17 +168,15 @@ const AccountPage = () => {
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
-                            <SimpleRecipeCard/>
+                            {ownRecipes.map((recipe)=>(
+                                <SimpleRecipeCard
+                                    id={recipe.id}
+                                    title={recipe.name}
+                                    likes={recipe.countOfLikes}
+                                    comments={recipe.countOfComments}
+                                    isLiked={recipe.iliked}
+                                />
+                            ))}
                         </div>
 
                     </Tab>

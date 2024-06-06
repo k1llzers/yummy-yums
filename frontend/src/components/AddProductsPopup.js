@@ -12,16 +12,53 @@ import TableBody from "@mui/material/TableBody";
 import AddIcon from "@mui/icons-material/Add";
 import Image from "react-bootstrap/Image";
 import {useEffect, useState} from "react";
+import axios from "axios";
 
 const AddProductsPopup = ({open, setOpen, product}) => {
 
+    const [productInput, setProductInput] = useState(product);
     const [products, setProducts] = useState([]);
 
-    const fetchProducts = async () => {
-
+    const storeImages = {
+        "SILPO" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
+        "ATB" : "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
+        "NOVUS" : "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
     }
 
+    useEffect(() => {
+        setProductInput(product);
+    }, [product]);
 
+    useEffect(() => {
+        if(productInput) fetchProducts();
+    }, [productInput]);
+
+    const fetchProducts = async () => {
+        const response = await axios.get("http://localhost:8080/api/product?input=" + productInput);
+        setProducts(response.data);
+    }
+
+    const Row = ({product}) => {
+        return (
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell align="left">
+                    <Image className="popup-product-photo" src={product.imgUrl}></Image>
+                </TableCell>
+                <TableCell align="center">{product.name}</TableCell>
+                <TableCell align="center">{product.weight}</TableCell>
+                <TableCell align="center">
+                    <Image
+                        src={storeImages[product.store]}
+                        className={'shop-image'}>
+                    </Image>
+                </TableCell>
+                <TableCell align="center">{product.price} грн</TableCell>
+                <TableCell align="center">
+                    <Button><AddIcon/></Button>
+                </TableCell>
+            </TableRow>
+        )
+    }
 
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
@@ -41,7 +78,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                 <TableContainer component={Paper}>
                     <IconButton
                         aria-label="close"
-                        onClick={() => setOpen(false)}
+                        onClick={() => {setOpen(false); setProducts([])}}
                         sx={{
                             position: 'absolute',
                             right: 25,
@@ -63,38 +100,11 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left">
-                                    <Image className="popup-product-photo" src="https://winetime.com.ua/uploads/public/goods/3656/1585225128_63618_502_378.jpg"></Image>
-                                </TableCell>
-                                <TableCell align="center">Банан</TableCell>
-                                <TableCell align="center">1 шт</TableCell>
-                                <TableCell align="center">
-                                    <Image
-                                        src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
-                                        className={'shop-image'}></Image>
-                                </TableCell>
-                                <TableCell align="center">20 грн</TableCell>
-                                <TableCell align="center">
-                                    <Button><AddIcon/></Button>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left">
-                                    <Image className="popup-product-photo" src="https://cooker.net.ua/upload/iblock/12a/pomidor-500-600g-1033.jpg"></Image>
-                                </TableCell>
-                                <TableCell align="center">Помідор</TableCell>
-                                <TableCell align="center">1 шт</TableCell>
-                                <TableCell align="center">
-                                    <Image
-                                        src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
-                                        className={'shop-image'}></Image>
-                                </TableCell>
-                                <TableCell align="center">20 грн</TableCell>
-                                <TableCell align="center">
-                                    <Button><AddIcon/></Button>
-                                </TableCell>
-                            </TableRow>
+                            {
+                                products.map((product) => (
+                                    <Row key={product.id} product={product}/>
+                                ))
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>

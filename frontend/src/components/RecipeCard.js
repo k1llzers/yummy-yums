@@ -11,18 +11,20 @@ import axios from "axios";
 const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
     const {role} = useAuth();
 
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(isLiked);
     const [recipeId, setRecipeId] = useState(0);
+    const [likes, setLikes] = useState(numberOfLikes);
 
     useEffect(() => {
         setLiked(isLiked);
         setRecipeId(id);
+        setLikes(likes);
     }, []);
 
-    const handleLike =  () => {
-        setLiked(!liked);
-        console.log(liked)
-        // const response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
+    const handleLike =  async () => {
+        setLiked((prev) => !prev);
+        const response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
+        setLikes(response.data);
     }
 
     return (
@@ -44,14 +46,13 @@ const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, is
                         </div>
                     </div>
                     <div className="recipe-likes">
-                        <span>{numberOfLikes} </span>
-                        {role ? <button className="recipe-card-like-button"><FavoriteBorderIcon fontSize="large"/></button> :
-                            <button disabled={!role}
+                        <span>{likes} </span>
+                            <button
                                     className="recipe-card-like-button"
                                     onClick={handleLike}
                             >
                                 {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
-                            </button>}
+                            </button>
                     </div>
                 </div>
             </Card.Body>

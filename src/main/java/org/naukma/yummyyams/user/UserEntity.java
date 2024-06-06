@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.naukma.yummyyams.base.GettableById;
+import org.naukma.yummyyams.base.Storagable;
 import org.naukma.yummyyams.security.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity implements GettableById<Integer>, UserDetails {
+public class UserEntity implements GettableById<Integer>, UserDetails, Storagable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,5 +78,10 @@ public class UserEntity implements GettableById<Integer>, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getFolder() {
+        return "/users";
     }
 }

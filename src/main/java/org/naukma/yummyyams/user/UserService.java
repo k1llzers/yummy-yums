@@ -7,6 +7,7 @@ import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
+import org.naukma.yummyyams.utils.ImageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +25,14 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         return ((UserRepository) repository).findByEmail(email).orElseThrow(
                 () -> new NoSuchEntityException("Can`t find user by email: " + email)
         );
+    }
+
+    @Override
+    public Integer create(UserCreateUpdateDto view) {
+        UserEntity entity = mapper.mergeCreate(view);
+        preCreate(entity, view);
+        UserEntity saved = repository.save(entity);
+        ImageService.saveImage(view.getPhoto(), saved);
+        return saved.getId();
     }
 }

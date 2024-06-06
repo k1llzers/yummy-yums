@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.naukma.yummyyams.base.GettableById;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +17,5 @@ public class UserCreateUpdateDto implements GettableById<Integer> {
     private String name;
     private String email;
     private String password;
+    private MultipartFile photo;
 }

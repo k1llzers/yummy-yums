@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import '../styles/LogInForm.css'
 import {useAuth} from "../provider/authProvider";
-import {useNavigate} from "react-router-dom";
+import Alert from '@mui/material/Alert';
 import {useState} from "react";
 import axios from "axios";
 
@@ -14,20 +14,23 @@ const LogInForm = ({openLogin, setOpenLogin}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
     const handleLogIn = async () => {
-        setOpenLogin(false);
-        clearFields();
         const response = await axios.post("http://localhost:8080/api/auth/login", {
             username: email,
             password: password
         });
         if (response.data.error) {
-            console.log(response.data.error);
+            setErrorMessage(response.data.error)
+            setTimeout(() => setErrorMessage(""), 3000)
         } else {
             setToken(response.data.token);
             setRole(response.data.role);
+            setOpenLogin(false);
+            clearFields();
         }
     }
 
@@ -82,6 +85,8 @@ const LogInForm = ({openLogin, setOpenLogin}) => {
                     </button>
                 </div>
             </DialogContent>
+            {errorMessage && <Alert severity="error" sx={{fontFamily: "Gentium Plus",
+                fontSize: '1.1rem'}} onClose={() => setErrorMessage("")}>{errorMessage}</Alert>}
         </Dialog>
     )
 }

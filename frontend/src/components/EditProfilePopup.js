@@ -55,6 +55,12 @@ const EditProfilePopup = ({open, setOpen}) => {
         setEmailError(false);
         setPasswordError(false);
     }
+    const checkEnteredPassword = () =>{
+        return !tempAccount.tempAccPassword;
+    }
+    const checkEqualPasswords= () =>{
+        return tempAccount.tempAccPassword!==tempAccount.tempAccRepeatedPassword;
+    }
     const updateTempAccount = (field, value) => {
         setTempAccount((prevAccount) => ({
             ...prevAccount,
@@ -68,7 +74,7 @@ const EditProfilePopup = ({open, setOpen}) => {
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
-                    onClick={() => setOpen(false)}
+                    onClick={() => {setOpen(false);  clearFields();}}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -102,10 +108,13 @@ const EditProfilePopup = ({open, setOpen}) => {
                         fullWidth
                         id="standard-basic"
                         label="Редагуйте email"
+                        error={emailError}
+                        helperText={emailError ? "Ви ввели некоректний email" : ""}
                         value={tempAccount.tempAccEmail}
                         onChange={(event)=>updateTempAccount('tempAccEmail', event.target.value)}
                         variant="standard"
                         multiline
+                        onBlur={()=> setEmailError(!emailRegex.test(tempAccount.tempAccEmail))}
                     />
                     <p className="edit-photo-upload-label">Додайте нове фото</p>
                     <Form.Control className="edit-photo-upload" type="file" size="md" accept="image/*" />
@@ -115,6 +124,8 @@ const EditProfilePopup = ({open, setOpen}) => {
                         label="Редагуйте пароль"
                         variant="standard"
                         type="password"
+                        value={tempAccount.tempAccPassword}
+                        onChange={(event)=>{updateTempAccount('tempAccPassword', event.target.value)}}
                     />
                     <TextField
                         fullWidth
@@ -122,8 +133,14 @@ const EditProfilePopup = ({open, setOpen}) => {
                         label="Повторіть пароль"
                         variant="standard"
                         type="password"
+                        error={passwordError}
+                        helperText={passwordError? "Паролі повинні бути однаковими!": ""}
+                        value={tempAccount.tempAccRepeatedPassword}
+                        disabled={ checkEnteredPassword()}
+                        onChange={(event)=>{updateTempAccount('tempAccRepeatedPassword', event.target.value)}}
+                        onBlur={()=> setPasswordError(tempAccount.tempAccPassword!==tempAccount.tempAccRepeatedPassword)}
                     />
-                    <button className="edit-button">
+                    <button className="edit-button" disabled={checkEnteredPassword()}>
                         Редагувати профіль
                     </button>
                 </div>

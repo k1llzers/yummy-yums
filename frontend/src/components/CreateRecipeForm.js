@@ -47,6 +47,22 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }, [ingredient])
 
    const handleSubmitRecipe = async () => {
+        // const recipe = {
+        //     "name": title,
+        //     "description": description,
+        //     "instruction": instruction,
+        //     "productToCountMap": ingredients,
+        //     "categoryId": +category
+        // }
+        // const json = JSON.stringify(recipe);
+        // const blob = new Blob([json], {
+        //     type: 'application/json'
+        // });
+        // const data = new FormData();
+        // data.append("");
+
+
+
        setOpen(false);
        clearFields();
        const response = await axios.post("http://localhost:8080/api/recipe", {

@@ -43,6 +43,11 @@ const EditProfilePopup = ({open, setOpen}) => {
             console.log("Error fetching personal info");
         }
     }
+
+    const handleEditProfile = async () => {
+
+    }
+
     const clearFields = () => {
         setTempAccount({
             tempAccName: staticAccount.staticAccName,

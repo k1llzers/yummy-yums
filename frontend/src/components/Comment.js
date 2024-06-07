@@ -22,12 +22,12 @@ const Comment = ({commentObject, commentShift, recipeId, updateRecipe}) => {
 
 
     const addReply = async () => {
+        setNewReply("");
         await axios.post("http://localhost:8080/api/comment", {
             comment: newReply,
             recipeId: id,
             replyToId: comment.id
         });
-        setNewReply("");
         updateRecipe();
     }
 
@@ -47,6 +47,7 @@ const Comment = ({commentObject, commentShift, recipeId, updateRecipe}) => {
                     label="Ваша відповідь"
                     variant="standard"
                     multiline
+                    value={newReply}
                     onChange={(e) => setNewReply(e.target.value)}
                 />
                 <button

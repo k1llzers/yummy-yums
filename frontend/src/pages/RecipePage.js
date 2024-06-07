@@ -44,11 +44,11 @@ const RecipePage = () => {
     }
 
     const addComment = async () => {
+        setNewComment("");
         await axios.post("http://localhost:8080/api/comment", {
             comment: newComment,
             recipeId: id.id
         });
-        setNewComment("");
         fetchRecipe();
     }
 
@@ -120,6 +120,7 @@ const RecipePage = () => {
                                 label="Ваш коментар"
                                 variant="standard"
                                 multiline
+                                value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                             />
                             <button

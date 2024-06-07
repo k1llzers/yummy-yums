@@ -6,6 +6,7 @@ import org.naukma.yummyyams.user.dto.UserResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/user")
@@ -15,8 +16,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Integer> create(@ModelAttribute UserCreateUpdateDto body) {
-        return ResponseEntity.ok(service.create(body));
+    public ResponseEntity<Integer> create(@RequestPart UserCreateUpdateDto user, @RequestPart(required = false) MultipartFile photo) {
+        return ResponseEntity.ok(service.create(user, photo));
     }
 
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })

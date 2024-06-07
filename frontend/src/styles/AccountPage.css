@@ -176,7 +176,7 @@
 
 .tab-content {
     background-color: #C1D7AE;
-    min-height: 118px;
+    min-height: 185px;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;
@@ -185,11 +185,11 @@
 .own-recipes-container, .liked-recipe-card, .friend-request-card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3% 0;
+    /*gap: 3% 0;*/
     justify-items: center;
     padding: 20px 10px;
     align-content: center;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 
 }
 .own-recipes-container{

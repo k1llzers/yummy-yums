@@ -18,6 +18,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
 
     const [productInput, setProductInput] = useState(product);
     const [products, setProducts] = useState([]);
+    const [limit, setLimit] = useState(10);
 
     const storeImages = {
         "SILPO" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
@@ -31,11 +32,16 @@ const AddProductsPopup = ({open, setOpen, product}) => {
 
     useEffect(() => {
         if(productInput) fetchProducts();
-    }, [productInput]);
+    }, [productInput, limit]);
 
     const fetchProducts = async () => {
-        const response = await axios.get("http://localhost:8080/api/product?input=" + productInput);
+        const response = await axios.get("http://localhost:8080/api/product?input=" + productInput
+            + "&limit=" + limit);
         setProducts(response.data);
+    }
+
+    const addProductToList = async (id) => {
+        // const response = await axios.
     }
 
     const Row = ({product}) => {
@@ -54,7 +60,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                 </TableCell>
                 <TableCell align="center">{product.price} грн</TableCell>
                 <TableCell align="center">
-                    <Button><AddIcon/></Button>
+                    <Button onClick={() => addProductToList(product.id)}><AddIcon/></Button>
                 </TableCell>
             </TableRow>
         )
@@ -64,7 +70,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <p className="recipe-page-add-products-label">Додайте продукт до власного списку</p>
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 220, width: '50%' }}>
+                <FormControl variant="standard" sx={{m: 1, minWidth: 220, width: '50%'}}>
                     <InputLabel id="demo-simple-select-standard-label">Оберіть список продуктів</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
@@ -78,7 +84,11 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                 <TableContainer component={Paper}>
                     <IconButton
                         aria-label="close"
-                        onClick={() => {setOpen(false); setProducts([])}}
+                        onClick={() => {
+                            setOpen(false);
+                            setProducts([]);
+                            setLimit(10);
+                        }}
                         sx={{
                             position: 'absolute',
                             right: 25,
@@ -88,7 +98,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                     >
                         <CloseIcon fontSize="large"/>
                     </IconButton>
-                    <Table sx={{ minWidth: 450 }} aria-label="simple table">
+                    <Table sx={{minWidth: 450}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center"></TableCell>
@@ -108,6 +118,13 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <button
+                    className="add-ingredient-button"
+                    onClick={() => setLimit((prev) => prev+10)}
+                    disabled={limit === 100}
+                >
+                    Показати ще
+                </button>
             </DialogContent>
         </Dialog>
     )

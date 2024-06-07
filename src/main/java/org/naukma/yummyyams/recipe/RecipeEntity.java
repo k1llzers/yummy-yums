@@ -62,14 +62,14 @@ public class RecipeEntity implements GettableById<Integer> {
     @Column(name = "product", nullable = false)
     private Set<String> ingredients;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     private List<CommentEntity> comments = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "autor_id", referencedColumnName = "id")
     private UserEntity author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipe_like",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")

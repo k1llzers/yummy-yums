@@ -9,7 +9,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from "axios";
 
 const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
-    const {role} = useAuth();
 
     const [liked, setLiked] = useState(isLiked);
     const [recipeId, setRecipeId] = useState(0);

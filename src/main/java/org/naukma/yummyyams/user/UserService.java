@@ -11,6 +11,7 @@ import org.naukma.yummyyams.utils.ImageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @EntityNotFoundMessage(errorMessage = "Can`t find user by id")
 @Service
@@ -27,12 +28,12 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         );
     }
 
-    @Override
-    public Integer create(UserCreateUpdateDto view) {
+    public Integer create(UserCreateUpdateDto view, MultipartFile photo) {
         UserEntity entity = mapper.mergeCreate(view);
         preCreate(entity, view);
         UserEntity saved = repository.save(entity);
-        ImageService.saveImage(view.getPhoto(), saved);
+        if (photo != null)
+            ImageService.saveImage(photo, saved);
         return saved.getId();
     }
 }

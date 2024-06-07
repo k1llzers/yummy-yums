@@ -82,6 +82,6 @@ public class UserEntity implements GettableById<Integer>, UserDetails, Storagabl
 
     @Override
     public String getFolder() {
-        return "/users";
+        return "usersPhotos/";
     }
 }

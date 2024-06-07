@@ -431,6 +431,14 @@ const AccountPage = () => {
                             <FriendRequestCard/>
                             <FriendRequestCard/>
                             <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
                         </div>
                     </Tab>
                 </Tabs>

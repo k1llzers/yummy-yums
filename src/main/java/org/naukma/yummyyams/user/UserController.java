@@ -16,7 +16,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Integer> create(@RequestPart UserCreateUpdateDto user, @RequestPart MultipartFile photo) {
+    public ResponseEntity<Integer> create(@RequestPart UserCreateUpdateDto user, @RequestPart(required = false) MultipartFile photo) {
         return ResponseEntity.ok(service.create(user, photo));
     }
 

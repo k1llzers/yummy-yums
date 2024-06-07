@@ -10,11 +10,12 @@ import org.naukma.yummyyams.comment.dto.CommentResponseDto;
 import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.RecipeEntity;
 import org.naukma.yummyyams.recipe.RecipeService;
+import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserEntity;
 import org.naukma.yummyyams.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@org.mapstruct.Mapper(config = MapperConfig.class)
+@org.mapstruct.Mapper(config = MapperConfig.class, imports = {SecurityContextAccessor.class})
 public abstract class CommentMapper implements Mapper<CommentEntity, CommentCreateUpdateDto> {
     @Autowired
     protected RecipeService recipeService;
@@ -23,7 +24,7 @@ public abstract class CommentMapper implements Mapper<CommentEntity, CommentCrea
 
     @Override
     @Mapping(target = "recipe", expression = "java(getRecipeById(dto.getRecipeId()))")
-    @Mapping(target = "user", expression = "java(getUserById(dto.getUserId()))")
+    @Mapping(target = "user", expression = "java(SecurityContextAccessor.getUser())")
     public abstract CommentEntity mergeCreate(CommentCreateUpdateDto dto);
 
     @Override

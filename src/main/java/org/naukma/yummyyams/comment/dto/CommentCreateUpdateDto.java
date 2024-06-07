@@ -14,6 +14,5 @@ public class CommentCreateUpdateDto implements GettableById<Integer> {
     private Integer id;
     private String comment;
     private Integer recipeId;
-    private Integer userId;
     private Integer replyToId;
 }

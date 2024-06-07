@@ -14,7 +14,12 @@
     height: 75px;
     border-radius: 20px;
 }
-
+.recipe-card-text-info .card-title{
+    margin-bottom: 0;
+}
+.recipe-card-liked .recipe-card-text-info{
+    margin-left: 15px;
+}
 .card-container {
     width: 100%;
     display: flex;

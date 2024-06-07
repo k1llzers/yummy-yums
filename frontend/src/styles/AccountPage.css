@@ -173,10 +173,10 @@
 .bottom-container .nav-item button, .bottom-container .nav-item:hover button {
     color: rgb(61, 104, 39);
 }
-
 .tab-content {
     background-color: #C1D7AE;
     min-height: 185px;
+    align-content: center;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;
@@ -187,13 +187,13 @@
     grid-template-columns: repeat(2, 1fr);
     /*gap: 3% 0;*/
     justify-items: center;
-    padding: 20px 10px;
+    padding: 20px 10px 0 20px;
     align-content: center;
     /*overflow-y: scroll;*/
 
 }
 .own-recipes-container{
-    gap: 7% 0;
+    /*gap: 7% 0;*/
 }
 .one-store-location{
     border: solid 1px #3D6827;
@@ -303,7 +303,7 @@
 
 .friend-request-card {
     min-height: 250px;
-    padding-top: 7px;
+    /*padding-top: 7px;*/
 }
 
 .main-product-list-container {

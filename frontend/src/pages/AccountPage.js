@@ -36,6 +36,7 @@ const AccountPage = () => {
         }
     });
     const [ownRecipes, setOwnRecipes] =useState([]);
+    const [likedRecipes, setLikedRecipes] =useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
@@ -60,6 +61,16 @@ const AccountPage = () => {
         }else{
             setOwnRecipes([]);
         }
+    }
+    const fetchLikedRecipes = async() =>{
+        // const response = await axios.get("http://localhost:8080/api/recipe/get-my-liked")
+        // if(response){
+        //     setLikedRecipes(response.data);
+        //     console.log(likedRecipes);
+        // }else{
+        //     setLikedRecipes([]);
+        // }
+        console.log("nfjiefhiure")
     }
     useEffect(() => {
         fetchPersonalInfo();
@@ -87,7 +98,6 @@ const AccountPage = () => {
     }, [navigation]);
     return (
         <div className={'main-container'}>
-            {/*<EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} account={account} setAccount={updateAccount}/>*/}
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
@@ -170,6 +180,7 @@ const AccountPage = () => {
                         <div className={'own-recipes-container'}>
                             {ownRecipes.map((recipe)=>(
                                 <SimpleRecipeCard
+                                    key={recipe.id}
                                     id={recipe.id}
                                     title={recipe.name}
                                     likes={recipe.countOfLikes}
@@ -180,7 +191,9 @@ const AccountPage = () => {
                         </div>
 
                     </Tab>
-                    <Tab eventKey="likes-recipes" title="Вподобані">
+                    <Tab eventKey="likes-recipes" title="Вподобані" onSelect={
+                      fetchLikedRecipes
+                    } >
                         <div className={'liked-recipe-card'}>
                             <LikedRecipeCard/>
                             <LikedRecipeCard/>
@@ -427,6 +440,14 @@ const AccountPage = () => {
                     </Tab>
                     <Tab eventKey="friend-requests" title="Запити">
                         <div className={'friend-request-card'}>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
                             <FriendRequestCard/>
                             <FriendRequestCard/>
                             <FriendRequestCard/>

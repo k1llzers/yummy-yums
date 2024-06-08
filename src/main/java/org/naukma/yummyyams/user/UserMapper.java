@@ -13,6 +13,8 @@ import org.naukma.yummyyams.user.dto.UserShortResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @org.mapstruct.Mapper(config = MapperConfig.class)
 public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateDto> {
     @Autowired
@@ -38,6 +40,8 @@ public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateD
 
     @Mapping(target = "pib", expression = "java(entity.getPib())")
     public abstract UserShortResponse toShortResponse(UserEntity entity);
+
+    public abstract List<UserShortResponse> toShortResponseDtoList(List<UserEntity> entities);
 
     protected Long getCountOfRecipes(UserEntity entity) {
         return recipeRepository.countByAuthorAndApproveTrue(entity);

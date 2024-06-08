@@ -7,12 +7,15 @@ import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
+import org.naukma.yummyyams.user.dto.UserShortResponse;
 import org.naukma.yummyyams.utils.ImageService;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @EntityNotFoundMessage(errorMessage = "Can`t find user by id")
 @Service
@@ -31,6 +34,10 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         return ((UserRepository) repository).findByEmail(email).orElseThrow(
                 () -> new NoSuchEntityException("Can`t find user by email: " + email)
         );
+    }
+
+    public List<UserShortResponse> getUsersByRestrict(String restrict) {
+        return ((UserMapper) mapper).toShortResponseDtoList(((UserRepository) repository).findAllByRestrict(restrict));
     }
 
     public Integer create(UserCreateUpdateDto view, MultipartFile photo) {

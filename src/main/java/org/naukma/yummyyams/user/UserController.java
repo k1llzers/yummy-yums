@@ -3,11 +3,14 @@ package org.naukma.yummyyams.user;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
+import org.naukma.yummyyams.user.dto.UserShortResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
@@ -34,6 +37,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
+    }
+
+    @GetMapping("/by-restrict/{restrict}")
+    public ResponseEntity<List<UserShortResponse>> getById(@PathVariable String restrict) {
+        return ResponseEntity.ok(service.getUsersByRestrict(restrict));
     }
 
     @GetMapping("/myself")

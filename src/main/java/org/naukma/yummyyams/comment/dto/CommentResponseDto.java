@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.naukma.yummyyams.user.dto.UserShortResponse;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,5 +16,5 @@ public class CommentResponseDto {
     private Integer id;
     private String comment;
     private UserShortResponse user;
-    private CommentResponseDto reply;
+    private List<CommentResponseDto> replies;
 }

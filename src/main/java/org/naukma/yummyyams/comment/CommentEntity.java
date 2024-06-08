@@ -1,14 +1,6 @@
 package org.naukma.yummyyams.comment;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +8,8 @@ import lombok.Setter;
 import org.naukma.yummyyams.base.GettableById;
 import org.naukma.yummyyams.recipe.RecipeEntity;
 import org.naukma.yummyyams.user.UserEntity;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -40,10 +34,10 @@ public class CommentEntity implements GettableById<Integer> {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToOne(mappedBy = "replyTo")
-    private CommentEntity reply;
+    @OneToMany(mappedBy = "replyTo", fetch = FetchType.EAGER)
+    private List<CommentEntity> replies;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_to_id")
     private CommentEntity replyTo;
 }

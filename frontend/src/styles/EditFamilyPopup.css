@@ -18,9 +18,26 @@
     font-size: 20px;
     transition: ease 0.5s;
 }
-
+.create-family-form-button {
+    border-radius: 35px;
+    background-color: #E2F0D2;
+    color: #3D6827;
+    border: none;
+    font-family: "Gentium Plus", serif;
+    margin: 15px 5px 0 5px;
+    padding: 10px 30px;
+    font-size: 12px;
+    transition: ease 0.5s;
+}
+.create-family-form-button:hover {
+    background-color: rgba(127, 165, 105, 0.34);
+}
 .edit-family-form-button:hover {
     background-color: rgba(127, 165, 105, 0.34);
+}
+#save-new-family-button:disabled{
+        background-color: #E2F0D2;
+        color: #C1D7AE;
 }
 
 .edit-family-dialog .MuiFormLabel-root.Mui-focused {
@@ -68,6 +85,18 @@
     max-width: 820px;
     padding-top: 10px;
 }
+.family-create-members {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    font-family: "Gentium Plus", serif;
+    align-content: center;
+    font-size: 1.8rem;
+    color: #3D6827;
+    max-width: 820px;
+    padding-top: 10px;
+    width: 100%;
+}
 
 .family-page-members-item {
     font-family: "Gentium Plus", serif;
@@ -80,10 +109,12 @@
     margin: 0 5px 10px 0;
     transition: ease 0.5s;
 }
-
-.family-page-members-item:hover {
-    background-color: #E2F0D2;
+.family-create-members-item{
+    margin-left: 5px;
 }
+/*.family-page-members-item:hover {*/
+/*    background-color: #E2F0D2;*/
+/*}*/
 
 .single-family-member-account{
     font-family: "Gentium Plus", serif;
@@ -128,6 +159,9 @@
 .edit-family-bottom-buttons{
     text-align: center;
 }
+.button-family{
+    white-space: nowrap;
+}
 #add-members-label{
     width: 100%;
     display: flex;
@@ -148,6 +182,15 @@
         border-radius: 0.8vw;
     }
 }
+@media (max-width: 930px) {
+    .family-create-members{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .family-create-members-item .single-family-member-account{
+        font-size:2.5vw;
+    }
+}
+
 
 @media (max-width: 845px) {
     .family-page-members {

@@ -37,6 +37,7 @@ public abstract class CommentMapper implements Mapper<CommentEntity, CommentCrea
     public abstract CommentResponseDto toResponseDto(CommentEntity entity);
 
     protected RecipeEntity getRecipeById(Integer id) {
+        if (id == null) return null;
         return recipeService.getById(id);
     }
 }

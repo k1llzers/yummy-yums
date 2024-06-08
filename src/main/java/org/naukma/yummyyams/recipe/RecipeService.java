@@ -63,6 +63,13 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         return toLike.getLikes().size();
     }
 
+    public Boolean approveRecipe(Integer id) {
+        RecipeEntity toApprove = getById(id);
+        toApprove.setApprove(true);
+        repository.save(toApprove);
+        return true;
+    }
+
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);

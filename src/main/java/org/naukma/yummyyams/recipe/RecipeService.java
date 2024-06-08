@@ -34,6 +34,7 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
     public List<String> getProductsForScope(Integer categoryId, String name) {
         return findRecipeByCategoryNameAndProducts(categoryId, name, null).stream()
                 .flatMap(recipe -> recipe.getIngredients().stream())
+                .distinct()
                 .toList();
     }
 

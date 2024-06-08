@@ -3,6 +3,8 @@ package org.naukma.yummyyams.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.naukma.yummyyams.base.Storagable;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -28,7 +30,7 @@ public class ImageService {
 
     public static  <T extends Storagable> Boolean saveImage(MultipartFile photo, T toSave) {
         String photoName = photo.getOriginalFilename();
-        Path savePath = basePath.resolve(toSave.getFolder()  + toSave.getId().toString());
+        Path savePath = basePath.resolve(toSave.getFolder()  + toSave.getId().toString() + ".jpg");
         try {
             Files.createDirectories(savePath.getParent());
 //            if (!Files.exists(savePath))
@@ -43,12 +45,8 @@ public class ImageService {
     }
 
     @SneakyThrows
-    public static  <T extends Storagable> byte[] getPhoto(T toGet) {
-        Path getPath = basePath.resolve(toGet.getFolder()  + toGet.getId().toString());
-        File toReturn = getPath.toFile();
-        InputStream stream = new FileInputStream(toReturn);
-        byte[] bytes = stream.readAllBytes();
-        stream.close();
-        return bytes;
+    public static  <T extends Storagable> Resource getPhoto(T toGet) {
+        Path getPath = basePath.resolve(toGet.getFolder()  + toGet.getId().toString() + ".jpg");
+        return new ByteArrayResource(Files.readAllBytes(getPath));
     }
 }

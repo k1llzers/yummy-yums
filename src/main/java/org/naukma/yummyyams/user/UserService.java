@@ -8,6 +8,7 @@ import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
 import org.naukma.yummyyams.utils.ImageService;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         return mapper.toResponseDto(SecurityContextAccessor.getUser());
     }
 
-    public byte[] getPhoto(Integer id) {
+    public Resource getPhoto(Integer id) {
         return ImageService.getPhoto(getById(id));
     }
 

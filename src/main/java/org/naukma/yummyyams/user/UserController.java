@@ -3,6 +3,7 @@ package org.naukma.yummyyams.user;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,9 @@ public class UserController {
     }
 
     @GetMapping("/get-user-image/{id}")
-    public ResponseEntity<byte[]> getUserImage(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getPhoto(id));
+    public ResponseEntity<Resource> getUserImage(@PathVariable Integer id) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(service.getPhoto(id));
     }
 }

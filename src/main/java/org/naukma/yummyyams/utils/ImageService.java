@@ -17,7 +17,7 @@ import java.nio.file.StandardOpenOption;
 
 @Slf4j
 public class ImageService {
-    private static final Path basePath = Path.of("/");
+    private static final Path basePath = Path.of("/yummy-yums/");
 
     static {
         try {

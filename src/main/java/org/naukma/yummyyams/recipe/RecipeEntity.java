@@ -50,7 +50,7 @@ public class RecipeEntity implements GettableById<Integer> {
     @Column(name = "instruction")
     private String instruction;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_count_mapping",
             joinColumns = {@JoinColumn(name = "recipe_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "product_name")

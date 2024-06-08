@@ -11,4 +11,5 @@ import org.naukma.yummyyams.security.Role;
 public class TokenResponse {
     private String token;
     private Role role;
+    private Integer id;
 }

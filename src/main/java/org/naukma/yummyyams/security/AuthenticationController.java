@@ -28,6 +28,6 @@ public class AuthenticationController {
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         UserEntity principal = (UserEntity) authentication.getPrincipal();
         return ResponseEntity.ok(
-                new TokenResponse(jwtService.generateToken(authRequest.getUsername()), principal.getRole()));
+                new TokenResponse(jwtService.generateToken(authRequest.getUsername()), principal.getRole(), principal.getId()));
     }
 }

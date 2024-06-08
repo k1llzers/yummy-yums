@@ -61,7 +61,9 @@ public class YummyYamsApplication {
                 List<Future<Set<ProductEntity>>> results = executor.invokeAll(tasks);
                 log.info("products fetched");
                 for (Future<Set<ProductEntity>> result : results) {
+                    log.info("start saving");
                     productRepository.saveAll(result.get());
+                    log.info("finish saving");
                 }
                 log.info("products saved");
             } catch (InterruptedException | ExecutionException e) {

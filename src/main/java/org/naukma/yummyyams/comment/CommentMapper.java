@@ -11,7 +11,6 @@ import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.RecipeEntity;
 import org.naukma.yummyyams.recipe.RecipeService;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
-import org.naukma.yummyyams.user.UserEntity;
 import org.naukma.yummyyams.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,9 +38,5 @@ public abstract class CommentMapper implements Mapper<CommentEntity, CommentCrea
 
     protected RecipeEntity getRecipeById(Integer id) {
         return recipeService.getById(id);
-    }
-
-    protected UserEntity getUserById(Integer id) {
-        return userService.getById(id);
     }
 }

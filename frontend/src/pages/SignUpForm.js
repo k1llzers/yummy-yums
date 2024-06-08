@@ -19,26 +19,40 @@ const SignUpForm = ({open, setOpen}) => {
     const [passwordError, setPasswordError] = useState(false);
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const handleSignUp = async() => {
-        setOpen(false);
-        clearFields();
-        const response = await axios.post("http://localhost:8080/api/user", {
-            surname: surname,
-            name: name,
-            email: email,
-            password: password
-        });
-        if (response.data.error) {
-            console.log(response.data.error);
-        } else {
 
-        }
+    const handleSignUp = async() => {
+        const user = {
+            "surname": surname,
+            "name": name,
+            "email": email,
+            "password": password
+        };
+        const json = JSON.stringify(user);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+        const data = new FormData();
+        data.append("user", blob);
+        if(photo) data.append("photo", photo);
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/api/user',
+            data: data,
+        }).then(function (response) {
+            console.log(response);
+        })
+            .catch(function (response) {
+                console.log(response);
+            })
+            .finally(() => {
+                setOpen(false);
+                clearFields();
+            });
     }
 
     const handlePhotoChange = (e) => {
         const selectedPhoto = e.target.files[0];
         setPhoto(selectedPhoto);
-        console.log(photo);
     }
 
     const validateSignUp = () => {

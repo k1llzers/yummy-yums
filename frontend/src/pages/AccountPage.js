@@ -1,4 +1,3 @@
-
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/AccountPage.css';
@@ -28,51 +27,76 @@ import {useNavigate} from "react-router-dom";
 
 
 const AccountPage = () => {
-    const navigation=  useNavigate();
+    const navigation = useNavigate();
     const [weather, setWeather] = useState({
-        location:{
+        location: {
             name: "Kyiv",
             country: "Ukraine"
         }
     });
-    const [ownRecipes, setOwnRecipes] =useState([]);
+    const [selectedTab, setSelectedTab] = useState(0);
+    const [ownRecipes, setOwnRecipes] = useState([]);
+    const [likedRecipes, setLikedRecipes] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
     const [accountRecipesCount, setAccountRecipesCount] = useState(0);
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
-    const fetchPersonalInfo = async ()=>{
+    const fetchPersonalInfo = async () => {
         const response = await axios.get("http://localhost:8080/api/user/myself");
-        if(response){
-            setAccountName(response.data.surname + " " +response.data.name);
+        if (response) {
+            setAccountName(response.data.surname + " " + response.data.name);
             setAccountEmail(response.data.email);
             setAccountLikesCount(response.data.countOfLikesOnMyRecipes);
             setAccountRecipesCount(response.data.countOfRecipes);
-        }else {
+        } else {
             console.log("Error fetching personal info");
         }
     }
-    const fetchOwnRecipes = async () =>{
+    const handleTabChange = (event, newValue) => {
+        setSelectedTab(newValue);
+        if (newValue === 0) fetchOwnRecipes();
+        else if (newValue === 1) {
+            fetchLikedRecipes();
+        }
+    };
+    const fetchOwnRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my");
 
-        if(response){
+        if (response) {
             setOwnRecipes(response.data);
-        }else{
+        } else {
             setOwnRecipes([]);
         }
     }
+    const fetchLikedRecipes = async () => {
+        const response = await axios.get("http://localhost:8080/api/recipe/get-my-liked")
+        if (response) {
+            setLikedRecipes(response.data);
+        } else {
+            setLikedRecipes([]);
+        }
+    }
+
+    const onToggleLike = async (id)=>{
+        await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
+        fetchLikedRecipes();
+    }
+
     useEffect(() => {
         fetchPersonalInfo();
         fetchOwnRecipes();
+        fetchLikedRecipes();
     }, []);
+    console.log(likedRecipes);
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const { latitude, longitude } = position.coords;
+                const {latitude, longitude} = position.coords;
                 fetch(`https://api.weatherapi.com/v1/forecast.json?key=f99baae0ef1a4d1187a94526231511&q=${latitude},${longitude}&days=5&aqi=no&alerts=yes`)
                     .then((info) => info.json())
                     .then((data) => {
-                       setWeather(data);
+                        setWeather(data);
                     })
                     .catch((error) => {
                         console.error("Exception: ", error);
@@ -87,7 +111,6 @@ const AccountPage = () => {
     }, [navigation]);
     return (
         <div className={'main-container'}>
-            {/*<EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} account={account} setAccount={updateAccount}/>*/}
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
@@ -107,7 +130,8 @@ const AccountPage = () => {
                                         </p>
                                         <div className={'with-icon'}>
                                             <p className="account-info">
-                                                <DescriptionIcon style={{height: '30px'}}/> {accountRecipesCount} рецептів
+                                                <DescriptionIcon
+                                                    style={{height: '30px'}}/> {accountRecipesCount} рецептів
                                             </p>
                                             <p className="account-info info-likes"><FavoriteBorderIcon
                                                 style={{height: '30px'}}/> {accountLikesCount} лайків</p>
@@ -152,9 +176,9 @@ const AccountPage = () => {
                             </div>
 
                         </div>
-                            <button className="create-family-button">
-                                Створити сімʼю
-                            </button>
+                        <button className="create-family-button">
+                            Створити сімʼю
+                        </button>
                     </div>
                     <div className={'edit-family-buttons'}>
                         <EditIcon/>
@@ -164,12 +188,14 @@ const AccountPage = () => {
             <div className={'bottom-container'}>
                 <Tabs
                     id="controlled-tab-example"
-
+                    // value={selectedTab}
+                    // onChange={handleTabChange}
                 >
                     <Tab eventKey="recepts" title="Мої рецепти">
                         <div className={'own-recipes-container'}>
-                            {ownRecipes.map((recipe)=>(
+                            {ownRecipes.map((recipe) => (
                                 <SimpleRecipeCard
+                                    key={recipe.id}
                                     id={recipe.id}
                                     title={recipe.name}
                                     likes={recipe.countOfLikes}
@@ -182,10 +208,17 @@ const AccountPage = () => {
                     </Tab>
                     <Tab eventKey="likes-recipes" title="Вподобані">
                         <div className={'liked-recipe-card'}>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
-                            <LikedRecipeCard/>
+                            {likedRecipes.map((recipe) => (
+                                <LikedRecipeCard
+                                    key={recipe.id}
+                                    id={recipe.id}
+                                    name={recipe.name}
+                                    ingredients={recipe.ingredients}
+                                    author={recipe.author.pib}
+                                    likes={recipe.countOfLikes}
+                                    toggleLikes={onToggleLike}
+                                />
+                            ))}
                         </div>
                     </Tab>
                     <Tab eventKey="product-list" title="Список продуктів">
@@ -427,6 +460,14 @@ const AccountPage = () => {
                     </Tab>
                     <Tab eventKey="friend-requests" title="Запити">
                         <div className={'friend-request-card'}>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
+                            <FriendRequestCard/>
                             <FriendRequestCard/>
                             <FriendRequestCard/>
                             <FriendRequestCard/>

@@ -6,7 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const FriendRequestCard = () =>{
     return(
         <Card body className="friend-card">
-            <Card.Body style={{padding: "0px 5px"}}>
+            <Card.Body >
                 <div className="friend-card-container">
                     <div className="friend-request-info">
                         <div className="request-card-text-info">

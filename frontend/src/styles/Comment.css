@@ -1,5 +1,5 @@
 .comment-card {
-    width: 40%;
+    width: 100%;
 }
 
 .comment-container {
@@ -9,10 +9,10 @@
 }
 
 .comment-author-img {
-    width: 3.5rem;
+    width: 20px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    margin: 10px 10px 10px 0;
+    margin: 5px 10px 10px 0;
 }
 
 .comment-main-info {
@@ -35,6 +35,9 @@
     font-size: 1rem;
     margin: 0;
     text-align: start;
+    max-width: 390px;
+    text-wrap: wrap;
+    white-space: wrap;
 }
 
 .comment-reply-button {
@@ -52,6 +55,10 @@
 
 .comment-reply-button:hover {
     background-color: #E2F0D2;
+}
+
+.comment-reply-button:disabled {
+    color: #C1D7AE;
 }
 
 .MuiAccordion-gutters{
@@ -77,8 +84,9 @@
 
 .comment-reply-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
+    width: 30%;
 }
 
 @media (max-width: 845px) {

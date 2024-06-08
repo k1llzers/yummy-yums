@@ -2,11 +2,12 @@
     background-color: #C1D7AE;
     display: flex;
     justify-content: center;
-    padding: 2% 0 0 0;
+    padding: 0;
 }
 .friend-card{
     border: none;
     width: 95%;
+    margin-bottom: 3%;
 }
 .friend-card-container{
     width: 100%;
@@ -17,7 +18,7 @@
 .friend-request-info{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap:3% 0;
+    /*gap:3% 0;*/
     justify-items: left;
     justify-content: space-around;
     padding: 20px 10px;
@@ -29,7 +30,8 @@
     margin-right: 0.4em;
 }
 .friend-request-card{
-    padding-bottom: 2%;
+    /*padding-bottom: 2%;*/
+    border: none;
 }
 .single-account, .request-info{
     font-family: "Gentium Plus", serif;

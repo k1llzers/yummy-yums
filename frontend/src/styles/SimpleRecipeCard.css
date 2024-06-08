@@ -5,6 +5,7 @@
     border-radius: 20px;
     border: none;
     min-width: 200px;
+    margin-bottom: 3%;
 }
 .own-recipes-container .card-body{
     padding: 1% 1%;
@@ -28,6 +29,9 @@
     font-size: 1.4rem;
     color: #3D6827;
     /*font-weight: bold;*/
+}
+.simple-card-link{
+    text-decoration: none;
 }
 
 .simple-recipe-likes {

@@ -343,6 +343,10 @@
     background-color: #E2F0D2;
 }
 
+.recipe-page-add-comment-button:disabled {
+    color: #C1D7AE;
+}
+
 .popup-product-photo {
     border-radius: 20px;
     height: 80px;

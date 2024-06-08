@@ -2,8 +2,10 @@ import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import '../styles/LikedRecipeCard.css'
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import {Link} from "react-router-dom";
+import axios from "axios";
 
-const LikedRecipeCard = ()=>{
+const LikedRecipeCard = ({id, name, ingredients, author, likes, toggleLikes})=>{
     return (
         <Card body className="recipe-card-liked">
             <Card.Body style={{padding: "0px 5px"}}>
@@ -11,20 +13,22 @@ const LikedRecipeCard = ()=>{
                     <div className="recipe-name">
                         <Image className="card-image" src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505" />
                         <div className="recipe-card-text-info">
-                            <p className="card-title">Прекрасний неймовірний салат </p>
+                            <Link className="card-title simple-card-link" to={`/recipe/${id}`}>{name}</Link>
                             <p className="recipe-info">
                                 <span className="info-title">Інгредієнти: </span>
-                                помідори, огірки, сіль
+                                {ingredients ? ingredients.map((item) => item.toLowerCase()).join(', ') : ""}
                             </p>
                             <p className="recipe-info">
-                                <span className="info-title">Автор: </span>
-                                Ірина Качинська
+                                <span className="info-title">Автор:  </span>
+                                {author}
                             </p>
                         </div>
                     </div>
                     <div className="recipe-likes">
-                        <span>25 </span>
-                        <button className="recipe-card-like-button"><FavoriteIcon fontSize={"large"}/></button>
+                        <span>{likes} </span>
+                        <button className="recipe-card-like-button" onClick={()=>{
+                            toggleLikes(id);
+                        }}><FavoriteIcon fontSize={"large"}/></button>
                     </div>
                 </div>
             </Card.Body>

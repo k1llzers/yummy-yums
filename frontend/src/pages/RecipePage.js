@@ -18,6 +18,7 @@ const RecipePage = () => {
     const id = useParams();
     const [openAddProductsPopup, setOpenProductsPopup] = useState(false);
     const [chosenProduct, setChosenProduct] = useState("");
+    const [newComment, setNewComment] = useState("");
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -42,12 +43,20 @@ const RecipePage = () => {
         setLiked(response.data.iliked);
     }
 
+    const addComment = async () => {
+        setNewComment("");
+        await axios.post("http://localhost:8080/api/comment", {
+            comment: newComment,
+            recipeId: id.id
+        });
+        fetchRecipe();
+    }
+
     useEffect(() => {
         fetchRecipe();
     }, [])
 
     const handleLike = async () => {
-        let response;
         if (!liked) {
             await axios.put("http://localhost:8080/api/recipe/like/" + id.id)
         } else {
@@ -111,10 +120,18 @@ const RecipePage = () => {
                                 label="Ваш коментар"
                                 variant="standard"
                                 multiline
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
                             />
-                            <button className="recipe-page-add-comment-button">Надіслати</button>
+                            <button
+                                className="recipe-page-add-comment-button"
+                                disabled={newComment.length === 0}
+                                onClick={addComment}
+                            >Надіслати</button>
                         </div>}
-                        <Comment/>
+                        {comments.map((comment) => (
+                            <Comment commentObject={comment} commentShift={0} recipeId={id.id} updateRecipe={fetchRecipe}/>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -17,9 +19,9 @@ import java.util.Set;
 public class RecipeController {
     private final RecipeService service;
 
-    @PostMapping
-    public ResponseEntity<Integer> create(@RequestBody RecipeCreateUpdateDto body) {
-        return ResponseEntity.ok(service.create(body));
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Integer> create(@RequestPart RecipeCreateUpdateDto recipe,  @RequestPart MultipartFile photo) {
+        return ResponseEntity.ok(service.create(recipe, photo));
     }
 
     @PutMapping

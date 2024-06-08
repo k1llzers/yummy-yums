@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.naukma.yummyyams.base.GettableById;
+import org.naukma.yummyyams.base.Storagable;
 import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.comment.CommentEntity;
 import org.naukma.yummyyams.user.UserEntity;
@@ -35,7 +35,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "recipe")
-public class RecipeEntity implements GettableById<Integer> {
+public class RecipeEntity implements Storagable<Integer> {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,4 +82,9 @@ public class RecipeEntity implements GettableById<Integer> {
 
     @Column(name = "approve")
     private Boolean approve;
+
+    @Override
+    public String getFolder() {
+        return "recipesPhoto/";
+    }
 }

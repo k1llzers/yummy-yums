@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
-import org.naukma.yummyyams.base.service.BaseService;
+import org.naukma.yummyyams.base.service.StoragableService;
 import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
@@ -23,7 +23,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
-public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateDto, Integer> {
+public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateUpdateDto, Integer> {
     private final EntityManager em;
     private final UserService userService;
 

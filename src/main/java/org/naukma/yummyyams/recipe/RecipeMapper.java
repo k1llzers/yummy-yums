@@ -38,17 +38,23 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
 
     @Override
     @Mapping(target = "countOfLikes", expression = "java(entity.getLikes().size())")
-    @Mapping(target = "iLiked", expression = "java(entity.getLikes().contains(SecurityContextAccessor.getUser()))")
+    @Mapping(target = "iLiked", expression = "java(isLiked(entity))")
     public abstract RecipeResponseDto toResponseDto(RecipeEntity entity);
 
     public abstract List<RecipeShortResponseDto> toShortResponseList(List<RecipeEntity> entities);
 
     @Mapping(target = "countOfLikes", expression = "java(entity.getLikes().size())")
     @Mapping(target = "countOfComments", expression = "java(entity.getComments().size())")
-    @Mapping(target = "iLiked", expression = "java(entity.getLikes().contains(SecurityContextAccessor.getUser()))")
+    @Mapping(target = "iLiked", expression = "java(isLiked(entity))")
     public abstract RecipeShortResponseDto toShortResponseDto(RecipeEntity entity);
 
     protected CategoryEntity getCategoryById(Integer id) {
         return categoryService.getById(id);
+    }
+
+    protected Boolean isLiked(RecipeEntity entity) {
+        if (!SecurityContextAccessor.isAuthenticated())
+            return false;
+        return entity.getLikes().contains(SecurityContextAccessor.getUser());
     }
 }

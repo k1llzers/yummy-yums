@@ -36,6 +36,6 @@ public class UserService extends StoragableService<UserEntity, UserCreateUpdateD
     }
 
     public List<UserShortResponse> getUsersByRestrict(String restrict) {
-        return ((UserMapper) mapper).toShortResponseDtoList(((UserRepository) repository).findAllByRestrict(restrict));
+        return ((UserMapper) mapper).toShortResponseDtoList(((UserRepository) repository).findAllByRestrict("%" + restrict + "%"));
     }
 }

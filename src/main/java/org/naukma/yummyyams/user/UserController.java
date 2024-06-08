@@ -3,10 +3,14 @@ package org.naukma.yummyyams.user;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
+import org.naukma.yummyyams.user.dto.UserShortResponse;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
@@ -35,8 +39,20 @@ public class UserController {
         return ResponseEntity.ok(service.getResponseDto(id));
     }
 
+    @GetMapping("/by-restrict/{restrict}")
+    public ResponseEntity<List<UserShortResponse>> getById(@PathVariable String restrict) {
+        return ResponseEntity.ok(service.getUsersByRestrict(restrict));
+    }
+
     @GetMapping("/myself")
     public ResponseEntity<UserResponse> getMyselfInfo() {
         return ResponseEntity.ok(service.getMyselfInfo());
+    }
+
+    @GetMapping("/get-user-image/{id}")
+    public ResponseEntity<Resource> getUserImage(@PathVariable Integer id) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(service.getPhoto(id));
     }
 }

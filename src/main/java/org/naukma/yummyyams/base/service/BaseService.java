@@ -5,6 +5,8 @@ import org.naukma.yummyyams.base.GettableById;
 import org.naukma.yummyyams.base.Mapper;
 import org.naukma.yummyyams.security.exception.IdNotNullException;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public abstract class BaseService<E extends GettableById<I>, V extends GettableById<I>, I> implements Service<E, V, I> {
+    private static final Logger log = LoggerFactory.getLogger(BaseService.class);
     @Autowired
     protected JpaRepository<E, I> repository;
     @Autowired
@@ -41,6 +44,7 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
     public Boolean delete(I id) {
         preDelete(id);
         repository.deleteById(id);
+        log.info("We delete id: " + id);
         return true;
     }
 
@@ -48,7 +52,7 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
     @Transactional
     public E getById(I id) {
         return repository.findById(id).orElseThrow(
-                () -> new NoSuchEntityException(getEntityNotFoundException())
+                () -> new NoSuchEntityException(getEntityNotFoundException(id))
         );
     }
 
@@ -62,9 +66,9 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
         return mapper.toResponseDto(getById(id));
     }
 
-    private String getEntityNotFoundException() {
+    private String getEntityNotFoundException(I id) {
         EntityNotFoundMessage annotation = this.getClass().getAnnotation(EntityNotFoundMessage.class);
-        return annotation != null ? annotation.errorMessage() : "Entity not found";
+        return annotation != null ? annotation.errorMessage() + id : "Entity not found";
     }
 
     protected void preCreate(E entity, V view) {}

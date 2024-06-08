@@ -34,6 +34,7 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
     public List<String> getProductsForScope(Integer categoryId, String name) {
         return findRecipeByCategoryNameAndProducts(categoryId, name, null).stream()
                 .flatMap(recipe -> recipe.getIngredients().stream())
+                .distinct()
                 .toList();
     }
 
@@ -61,6 +62,13 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
         toLike.getLikes().remove(SecurityContextAccessor.getUser());
         repository.save(toLike);
         return toLike.getLikes().size();
+    }
+
+    public Boolean approveRecipe(Integer id) {
+        RecipeEntity toApprove = getById(id);
+        toApprove.setApprove(true);
+        repository.save(toApprove);
+        return true;
     }
 
     public List<RecipeEntity> findRecipeByCategoryNameAndProducts(Integer categoryId, String name, Set<String> products) {

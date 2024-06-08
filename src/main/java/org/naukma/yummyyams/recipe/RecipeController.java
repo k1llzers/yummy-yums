@@ -27,6 +27,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.update(body));
     }
 
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<Boolean> approve(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.approveRecipe(id));
+    }
+
     @PutMapping("/like/{id}")
     public ResponseEntity<Integer> like(@PathVariable Integer id) {
         return ResponseEntity.ok(service.likeRecipe(id));

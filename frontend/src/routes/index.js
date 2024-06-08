@@ -12,6 +12,7 @@ import CreateRecipeForm from "../components/CreateRecipeForm";
 import LogOut from "../pages/LogOut";
 import { useParams } from "react-router-dom";
 import UserAccountPage from "../pages/UserAccountPage";
+import ErrorPage from "../pages/ErrorPage";
 
 const AppLayout = ({ setOpenCreateRecipe }) => (
     <>
@@ -67,9 +68,17 @@ const Routes = () => {
         },
     ];
 
+    const routes404 = [
+        {
+            path: "*",
+            element: <ErrorPage/>
+        }
+    ]
+
     const router = createBrowserRouter([
         ...routesForAllUsers,
-        ...(token ? routesForAuthenticatedOnly : [])
+        ...(token ? routesForAuthenticatedOnly : []),
+        ...routes404
     ]);
 
     return (

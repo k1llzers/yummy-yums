@@ -25,9 +25,12 @@
     border: none;
     font-family: "Gentium Plus", serif;
     margin: 15px 5px 0 5px;
-    padding: 10px 30px;
-    font-size: 12px;
+    padding: 5px 15px;
+    font-size: 15px;
     transition: ease 0.5s;
+}
+.create-family-form-button .card-title-a{
+    color: #3D6827;
 }
 .create-family-form-button:hover {
     background-color: rgba(127, 165, 105, 0.34);
@@ -94,7 +97,6 @@
     font-size: 1.8rem;
     color: #3D6827;
     max-width: 820px;
-    padding-top: 10px;
     width: 100%;
 }
 

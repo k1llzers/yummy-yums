@@ -10,35 +10,85 @@ import SearchIcon from "@mui/icons-material/Search";
 import StyledInputBase from "../styled components/StyledInputBase";
 import '../styles/EditFamilyPopup.css'
 import useSlot from "@mui/material/utils/useSlot";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const CreateFamilyPopup = ({open, setOpen}) => {
     const [inputFamilyName, setInputFamilyName] = useState("");
-    const [inputNameUser, setInputNameUser] = useState("");
-    const [checkUser, setCheckUser]=useState("");
-    const clearFields= ()=>{
-        setInputNameUser("");
-        setInputFamilyName("")
+    const [usersForRequest, setUsersForRequest] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const clearFields = () => {
+        setInputFamilyName("");
+        setRequests([]);
     }
-    const checkExistingUser = async () => {
-        if (inputNameUser.length === 0) return;
-        // const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
-        // if(response.error) {
-        //     setCheckUser(false);
-        // } else {
-        //     console.log(response.data)
-        //     setCheckUser(response.data);
-        // }
+    const checkExistingUser = async (curName) => {
+        if (curName.length === 0) return;
+        const response = await axios.get("http://localhost:8080/api/user/by-restrict/" + curName);
+        if (response.error) {
+            setRequests([]);
+        } else {
+            console.log("input name user : " + curName);
+            setUsersForRequest(response.data);
+        }
     }
-    const validateCreatingFamily = () =>{
-        return inputFamilyName!=='';
+    const validateCreatingFamily = () => {
+        return inputFamilyName !== '';
+    }
+    const handleRequestToggle = (id) => {
+        setRequests((prevRequests) => {
+            if (prevRequests.includes(id)) {
+                return prevRequests.filter(requestId => requestId !== id);
+            } else {
+                return [...prevRequests, id];
+            }
+        });
+    };
+    const fetchPhoto = async (userId) => {
+        if (!userId) return
+        await axios.get("http://localhost:8080/api/user/get-user-image/" + userId, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            return(URL.createObjectURL(response.data));
+        });
+    }
+    const isRequested = (userId)=>{ return requests.includes(userId);}
+    const OfferedUser = ({user}) => {
+        return (
+            <div className="family-page-members-item family-create-members-item">
+                <div className={'single-family-member-account'}>
+                    <Image className="family-member-card-image"
+                           src={user.photo}/>
+                    {user.pib}
+                </div>
+                <div className={"button-family"}>
+                    <button
+                        className="create-family-form-button"
+                    >
+                        <a
+                            className="card-title-a"
+                            href={`/user/${user.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Переглянути профіль
+                        </a>
+                    </button>
+                    <button className="create-family-form-button"
+                            onClick={() => handleRequestToggle(user.id)}
+                    >
+                        {isRequested(user.id) ? 'Скасувати запит' : 'Надіслати запит'}
+                    </button>
+                </div>
+            </div>
+        );
     }
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
-                    onClick={()=>{
+                    onClick={() => {
                         clearFields();
                         setOpen(false);
                     }}
@@ -57,7 +107,7 @@ const CreateFamilyPopup = ({open, setOpen}) => {
                         fullWidth
                         id="standard-basic"
                         label="Введіть назву сімʼї"
-                        onChange={(event)=>{
+                        onChange={(event) => {
                             setInputFamilyName(event.target.value);
                         }}
                         variant="standard"
@@ -74,93 +124,28 @@ const CreateFamilyPopup = ({open, setOpen}) => {
                                 <StyledInputBase
                                     placeholder="Імʼя або e-mail нового члена"
                                     inputProps={{'aria-label': 'search'}}
-                                    // value{inputNameUser}
-                                    // error={!checkUser}
-                                    // helperText={!checkUser ? "Такого користувача не існує" : ""}
+                                    onChange={(event) => {
+                                        const nameCurrent = event.target.value;
+                                        console.log("current name " + nameCurrent)
+                                        if (nameCurrent==='')setUsersForRequest([])
+                                        else checkExistingUser(nameCurrent);
+                                    }}
                                 />
                             </Search>
                             <div className={'family-create-members '}>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
+                                {usersForRequest.map((propose)=>(
+                                    <OfferedUser
+                                        key={propose.id}
+                                        photo={fetchPhoto(propose.id)}
+                                        user={propose}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
                     <div id={'save-new-family-container'} className={'edit-family-bottom-buttons'}>
                         <button id={'save-new-family-button'} className="edit-family-form-button"
-                        disabled={!validateCreatingFamily()}>
+                                disabled={!validateCreatingFamily()}>
                             Зберегти зміни
                         </button>
                     </div>

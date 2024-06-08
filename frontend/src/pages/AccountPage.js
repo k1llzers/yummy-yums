@@ -38,9 +38,9 @@ const AccountPage = () => {
         }
     });
     const storeImages = {
-        "SILPO" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
-        "ATB" : "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
-        "NOVUS" : "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
+        "SILPO": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
+        "ATB": "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
+        "NOVUS": "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
     }
     const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
 
@@ -101,7 +101,7 @@ const AccountPage = () => {
     const checkExistingProduct = async () => {
         if (ingredient.length === 0) return;
         const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
-        if(response.error) {
+        if (response.error) {
             setCheckProduct(false);
         } else {
             console.log(response.data)
@@ -125,18 +125,18 @@ const AccountPage = () => {
             setLikedRecipes([]);
         }
     }
-    const handleAddProduct = async () =>{
+    const handleAddProduct = async () => {
         setLimit((prev) => prev + 10);
         const response = await axios.get("http://localhost:8080/api/product?input=" + ingredient +
             "&limit=" + limit);
-        if(response){
+        if (response) {
             setOfferedProducts(response.data);
-        }else{
+        } else {
             setOwnRecipes([]);
         }
     }
 
-    const onToggleLike = async (id)=>{
+    const onToggleLike = async (id) => {
         await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
         fetchLikedRecipes();
     }
@@ -149,9 +149,11 @@ const AccountPage = () => {
     useEffect(() => {
         checkExistingProduct();
     }, [ingredient])
-    useEffect(()=>{
-        if (ingredient===""){
-            setCheckProduct(true); setLimit(10);}
+    useEffect(() => {
+        if (ingredient === "") {
+            setCheckProduct(true);
+            setLimit(10);
+        }
     }, [ingredient, limit])
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -173,11 +175,12 @@ const AccountPage = () => {
         );
 
     }, [navigation]);
-    const OfferedRow = ({offered}) =>{
+    const OfferedRow = ({offered}) => {
         return (
             <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell align="center">
-                    <Image className="popup-product-photo" src={offered.imgUrl} style={{width : '60px', height:"60px"}}></Image>
+                    <Image className="popup-product-photo" src={offered.imgUrl}
+                           style={{width: '60px', height: "60px"}}></Image>
                 </TableCell>
                 <TableCell align="left">{offered.name} </TableCell>
                 <TableCell align="center">
@@ -326,21 +329,26 @@ const AccountPage = () => {
                                         value={ingredient}
                                         error={!checkProduct}
                                         helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
-                                        onChange={(e) => setIngredient(e.target.value)}
-                                        onBlur={()=>{
-                                            if(ingredient==='')setCheckProduct(true);
+                                        onChange={(e) => {
+                                            const current=e.target.value;
+                                            setIngredient(current)
+                                            if(current==='')setOfferedProducts([]);
+                                        }
+                                        }
+                                        onBlur={() => {
+                                            if (ingredient === '') setCheckProduct(true);
                                         }}
                                         variant="standard"
                                     />
                                     <button className="add-ingredient-button"
                                             disabled={!validateAddProduct()}
                                             onClick={handleAddProduct}
-                                        >
+                                    >
                                         <SearchIcon/>
                                     </button>
                                 </div>
                                 <div className={'proposal-table-container'}>
-                                    <TableContainer component={Paper} style={{maxHeight:"900px"}}>
+                                    <TableContainer component={Paper} style={{maxHeight: "900px", maxWidth: "650px"}}>
                                         <Table aria-label="simple table">
                                             <TableHead>
                                                 <TableRow>
@@ -354,7 +362,7 @@ const AccountPage = () => {
                                             </TableHead>
                                             <TableBody>
                                                 {
-                                                    offeredProducts.map((offered)=>(
+                                                    offeredProducts.map((offered) => (
                                                         <OfferedRow key={offered.id} offered={offered}/>
                                                     ))
                                                 }
@@ -363,8 +371,10 @@ const AccountPage = () => {
                                     </TableContainer>
                                     <button
                                         className="add-ingredient-button"
-                                        onClick={() => {handleAddProduct();}}
-                                        disabled={limit === 100||ingredient===''}
+                                        onClick={() => {
+                                            handleAddProduct();
+                                        }}
+                                        disabled={limit === 100 || ingredient === ''}
                                     >
                                         Показати ще
                                     </button>

@@ -23,7 +23,8 @@ public class ImageService {
     }
 
     public static  <T extends Storagable> Boolean saveImage(MultipartFile photo, T toSave) {
-        Path savePath = basePath.resolve(toSave.getFolder()  + toSave.getId().toString() + ".jpg");
+        String photoName = photo.getOriginalFilename();
+        Path savePath = basePath.resolve(toSave.getFolder()  + toSave.getId().toString() + photoName.substring(photoName.lastIndexOf(".")));
         try {
             Files.createDirectories(savePath.getParent());
 //            if (!Files.exists(savePath))

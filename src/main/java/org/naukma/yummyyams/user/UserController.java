@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Boolean> update(@ModelAttribute UserCreateUpdateDto body) {
-        return ResponseEntity.ok(service.update(body));
+    public ResponseEntity<Boolean> update(@RequestPart UserCreateUpdateDto user, @RequestPart(required = false) MultipartFile photo) {
+        return ResponseEntity.ok(service.update(user, photo));
     }
 
     @DeleteMapping("/{id}")

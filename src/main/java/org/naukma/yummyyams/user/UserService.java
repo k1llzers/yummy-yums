@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.BaseService;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
+import org.naukma.yummyyams.security.exception.IdNotNullException;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
@@ -47,5 +48,16 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         if (photo != null)
             ImageService.saveImage(photo, saved);
         return saved.getId();
+    }
+
+    public Boolean update(UserCreateUpdateDto view, MultipartFile photo) {
+        if (view.getId() == null) throw new IdNotNullException();
+        UserEntity entity = getById(view.getId());
+        mapper.mergeUpdate(entity, view);
+        preUpdate(entity, view);
+        repository.save(entity);
+        if (photo != null)
+            ImageService.saveImage(photo, entity);
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package org.naukma.yummyyams.security;
 
 import org.naukma.yummyyams.user.UserEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityContextAccessor {
@@ -9,6 +10,6 @@ public class SecurityContextAccessor {
     }
 
     public static Boolean isAuthenticated() {
-        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+        return SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
     }
 }

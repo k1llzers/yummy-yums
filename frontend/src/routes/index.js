@@ -11,6 +11,7 @@ import { useState } from "react";
 import CreateRecipeForm from "../components/CreateRecipeForm";
 import LogOut from "../pages/LogOut";
 import { useParams } from "react-router-dom";
+import UserAccountPage from "../pages/UserAccountPage";
 
 const AppLayout = ({ setOpenCreateRecipe }) => (
     <>
@@ -21,7 +22,7 @@ const AppLayout = ({ setOpenCreateRecipe }) => (
 );
 
 const Routes = () => {
-    const { token, role } = useAuth();
+    const { token, role, id } = useAuth();
     const [openCreateRecipe, setOpenCreateRecipe] = useState(false);
 
     const routesForAuthenticatedOnly = [
@@ -58,6 +59,10 @@ const Routes = () => {
                     path: "/recipe/:id",
                     element: <RecipePage />,
                 },
+                {
+                    path: "/user/:id",
+                    element: <UserAccountPage/>
+                }
             ]
         },
     ];

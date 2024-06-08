@@ -42,6 +42,8 @@ const AccountPage = () => {
         "ATB" : "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
         "NOVUS" : "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
     }
+    const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+
     const [ingredient, setIngredient] = useState("");
     const [checkProduct, setCheckProduct] = useState(true)
     const [selectedTab, setSelectedTab] = useState(0);
@@ -49,6 +51,8 @@ const AccountPage = () => {
     const [likedRecipes, setLikedRecipes] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
+    const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
+    const [accountId, setAccountId] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
     const [accountRecipesCount, setAccountRecipesCount] = useState(0);
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
@@ -56,6 +60,7 @@ const AccountPage = () => {
     const [openEditFamilyPopup, setOpenEditFamilyPopup] = useState(false);
     const [offeredProducts, setOfferedProducts] = useState([]);
     const [limit, setLimit] = useState(0);
+
     const fetchPersonalInfo = async () => {
         const response = await axios.get("http://localhost:8080/api/user/myself");
         if (response) {
@@ -63,10 +68,26 @@ const AccountPage = () => {
             setAccountEmail(response.data.email);
             setAccountLikesCount(response.data.countOfLikesOnMyRecipes);
             setAccountRecipesCount(response.data.countOfRecipes);
+            setAccountId(response.data.id);
         } else {
             console.log("Error fetching personal info");
         }
     }
+
+    const fetchPhoto = async () => {
+        if (!accountId) return
+        await axios.get("http://localhost:8080/api/user/get-user-image/" + accountId, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            setAccountPhoto(URL.createObjectURL(response.data));
+        });
+    }
+
+    useEffect(() => {
+        fetchPhoto();
+    }, [accountId]);
+
     // const handleTabChange = (event, newValue) => {
     //     setSelectedTab(newValue);
     //     if (newValue === 0) fetchOwnRecipes();
@@ -180,7 +201,7 @@ const AccountPage = () => {
     }
     return (
         <div className={'main-container'}>
-            <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
+            <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
             <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup}/>
             <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup}/>
             <div className={"top-container"}>
@@ -190,7 +211,7 @@ const AccountPage = () => {
                             <div className="card-container">
                                 <div className="account-name">
                                     <Image className="account-card-image"
-                                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSouz4bFZt20u2XHT4zM-7vP4OV_lZ1nT0JlQ&s"/>
+                                           src={accountPhoto}/>
                                     <div className="account-card-text-info">
                                         <p className="account-title">{accountName}</p>
                                         <p className="account-info">

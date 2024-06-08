@@ -12,6 +12,7 @@ const AuthContext = createContext();
 const AuthProvider =  ({children}) => {
     const [token, setToken_] = useState(localStorage.getItem("token"))
     const [role, setRole_] = useState(localStorage.getItem("role"))
+    const [id, setId_] = useState(localStorage.getItem("id"))
 
     const setToken = (newToken) => {
         setToken_(newToken)
@@ -21,13 +22,19 @@ const AuthProvider =  ({children}) => {
         setRole_(role)
     }
 
+    const setId = (id) => {
+        setId_(id)
+    }
+
     useEffect(() => {
         if(token) {
             localStorage.setItem("token", token)
             localStorage.setItem("role", role)
+            localStorage.setItem("id", id);
         } else {
             localStorage.removeItem("token")
             localStorage.removeItem("role")
+            localStorage.removeItem("id")
         }
     }, [token])
 
@@ -41,7 +48,6 @@ const AuthProvider =  ({children}) => {
     axios.interceptors.response.use(response => {
         return response;
     }, error => {
-        console.log(error.response.status)
         if (error.response.status === 401) {
             window.location.href = "/logout"
         }
@@ -51,10 +57,12 @@ const AuthProvider =  ({children}) => {
         () => ({
             token,
             role,
+            id,
             setToken,
             setRole,
+            setId
         }),
-        [token, role]
+        [token, role, id]
     )
 
     return (

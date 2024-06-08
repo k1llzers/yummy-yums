@@ -10,22 +10,36 @@ import axios from "axios";
 
 const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
 
+    const defaultRecipePhoto = "https://i.pinimg.com/564x/07/7f/d7/077fd782b16b4fb5d96d5fcd74703039.jpg";
+
     const [liked, setLiked] = useState(isLiked);
     const [recipeId, setRecipeId] = useState(0);
     const [likes, setLikes] = useState(numberOfLikes);
+    const [photo, setPhoto] = useState(defaultRecipePhoto);
 
     useEffect(() => {
         setLiked(isLiked);
         setRecipeId(id);
         setLikes(likes);
+        fetchPhoto();
     }, []);
+
+    const fetchPhoto = async () => {
+        if (!id) return
+        await axios.get("http://localhost:8080/api/recipe/get-recipe-image/" + id, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            setPhoto(URL.createObjectURL(response.data));
+        });
+    }
 
     const handleLike =  async () => {
         setLiked((prev) => !prev);
         let response;
         if(!liked) {
             response = await axios.put("http://localhost:8080/api/recipe/like/" + recipeId);
-        }else {
+        } else {
             response = await axios.put("http://localhost:8080/api/recipe/unlike/" + recipeId);
         }
         setLikes(response.data);
@@ -36,7 +50,7 @@ const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, is
             <Card.Body style={{padding: "0px 5px"}}>
                 <div className="card-container">
                     <div className="recipe-name">
-                        <Image className="card-image" src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505" />
+                        <Image className="card-image" src={photo} />
                         <div className="recipe-card-text-info">
                             <Link className="card-title-a" to={`/recipe/${id}`}><p className="card-title">{title}</p></Link>
                             <p className="recipe-info">

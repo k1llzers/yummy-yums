@@ -23,7 +23,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
 
    const [category, setCategory] = useState("");
    const [title, setTitle] = useState("");
-   const [photo, setPhoto] = useState([]);
+   const [photo, setPhoto] = useState(null);
    const [description, setDescription] = useState("");
    const [instruction, setInstruction] = useState("");
    const [ingredients, setIngredients] = useState({});
@@ -47,34 +47,34 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }, [ingredient])
 
    const handleSubmitRecipe = async () => {
-        // const recipe = {
-        //     "name": title,
-        //     "description": description,
-        //     "instruction": instruction,
-        //     "productToCountMap": ingredients,
-        //     "categoryId": +category
-        // }
-        // const json = JSON.stringify(recipe);
-        // const blob = new Blob([json], {
-        //     type: 'application/json'
-        // });
-        // const data = new FormData();
-        // data.append("");
-
-
-
-       setOpen(false);
-       clearFields();
-       const response = await axios.post("http://localhost:8080/api/recipe", {
-           name: title,
-           description: description,
-           instruction: instruction,
-           productToCountMap: ingredients,
-           categoryId: +category
-       });
-       if (response.data.error) {
-           console.log(response.data.error);
-       }
+        const recipe = {
+            "name": title,
+            "description": description,
+            "instruction": instruction,
+            "productToCountMap": ingredients,
+            "categoryId": +category
+        }
+        const json = JSON.stringify(recipe);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+        const data = new FormData();
+        data.append("recipe", blob);
+        data.append("photo", photo);
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/api/recipe',
+            data: data,
+        }).then(function (response) {
+            console.log(response);
+        })
+            .catch(function (response) {
+                console.log(response);
+            })
+            .finally(() => {
+                setOpen(false);
+                clearFields();
+            });
    }
 
    const clearFields = () => {
@@ -89,7 +89,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
 
    const validateSubmitRecipe = () => {
        return title.length > 0 && description.length > 0 && instruction.length > 0
-           && Object.keys(ingredients).length > 0 && category > 0;
+           && Object.keys(ingredients).length > 0 && category > 0 && photo;
    }
 
    const checkExistingProduct = async () => {
@@ -222,7 +222,13 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         </Table>
                     </TableContainer>
                     <p className="photo-upload-label">Додайте фото готової страви *</p>
-                    <Form.Control className="recipe-photo-upload" type="file" size="md" accept="image/*" />
+                    <Form.Control
+                        className="recipe-photo-upload"
+                        type="file"
+                        size="md"
+                        accept="image/*"
+                        onChange={(e) => setPhoto(e.target.files[0])}
+                    />
                     <TextField
                         fullWidth
                         id="standard-basic"

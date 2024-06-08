@@ -8,56 +8,79 @@ import '../styles/EditProfilePopup.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-const EditProfilePopup = ({open, setOpen}) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const [emailError, setEmailError] = useState(false);
+const EditProfilePopup = ({open, setOpen, updatePersonalInfo}) => {
     const [passwordError, setPasswordError] = useState(false);
     const [staticAccount, setStaticAccount] = useState({
         staticAccName: "",
         staticAccSurname: "",
-        staticAccEmail: "",
-        staticAccPhoto: null
+        staticAccId: ""
     });
     const [tempAccount, setTempAccount] = useState({
         tempAccName: "",
         tempAccSurname: "",
-        tempAccEmail: "",
         tempAccPassword: "",
-        tempAccRepeatedPassword: ""
-
+        tempAccRepeatedPassword: "",
+        tempAccPhoto: null
     });
     const getStaticInfo = async()=>{
         const response = await axios.get("http://localhost:8080/api/user/myself");
         if(response){
-            setTempAccount({
+            setTempAccount((prevState) => ({
+                ...prevState,
                 tempAccName: response.data.name,
                 tempAccSurname: response.data.surname,
-                tempAccEmail: response.data.email
-            });
-            setStaticAccount({
+            }));
+            setStaticAccount((prevState) => ({
+                ...prevState,
                 staticAccName: response.data.name,
                 staticAccSurname: response.data.surname,
-                staticAccEmail: response.data.email
-            });
-        }else {
+                staticAccId: response.data.id
+            }));
+        } else {
             console.log("Error fetching personal info");
         }
     }
 
     const handleEditProfile = async () => {
-
+        const updatedUser = {
+            "id": staticAccount.staticAccId,
+            "surname": tempAccount.tempAccSurname,
+            "name": tempAccount.tempAccName,
+            "password": tempAccount.tempAccPassword ? tempAccount.tempAccPassword : null
+        }
+        const json = JSON.stringify(updatedUser);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+        const data = new FormData();
+        data.append("user", blob);
+        if(tempAccount.tempAccPhoto) data.append("photo", tempAccount.tempAccPhoto);
+        axios({
+            method: 'put',
+            url: 'http://localhost:8080/api/user',
+            data: data
+        }).then(function (response) {
+            console.log(response);
+        })
+            .catch(function (response) {
+                console.log(response);
+            })
+            .finally(() => {
+                setOpen(false);
+                updatePersonalInfo();
+                getStaticInfo();
+                clearFields();
+            });
     }
 
     const clearFields = () => {
         setTempAccount({
             tempAccName: staticAccount.staticAccName,
             tempAccSurname: staticAccount.staticAccSurname,
-            tempAccEmail: staticAccount.staticAccEmail,
             tempAccPassword: "",
             tempAccRepeatedPassword: "",
-
+            tempAccPhoto: null
         });
-        setEmailError(false);
         setPasswordError(false);
     }
     const checkEnteredPassword = () =>{
@@ -73,7 +96,7 @@ const EditProfilePopup = ({open, setOpen}) => {
         }));
     };
     const validateEditingAccount = () =>{
-        return checkEqualPasswords()||(!emailRegex.test(tempAccount.tempAccEmail));
+        return checkEqualPasswords();
     }
     useEffect(() => {
         getStaticInfo();
@@ -112,20 +135,17 @@ const EditProfilePopup = ({open, setOpen}) => {
                         variant="standard"
                         multiline
                     />
-                    <TextField
-                        fullWidth
-                        id="standard-basic"
-                        label="Редагуйте email"
-                        error={emailError}
-                        helperText={emailError ? "Ви ввели некоректний email" : ""}
-                        value={tempAccount.tempAccEmail}
-                        onChange={(event)=>updateTempAccount('tempAccEmail', event.target.value)}
-                        variant="standard"
-                        multiline
-                        onBlur={()=> setEmailError(!emailRegex.test(tempAccount.tempAccEmail))}
-                    />
                     <p className="edit-photo-upload-label">Додайте нове фото</p>
-                    <Form.Control className="edit-photo-upload" type="file" size="md" accept="image/*" />
+                    <Form.Control
+                        className="edit-photo-upload"
+                        type="file"
+                        size="md"
+                        accept="image/*"
+                        onChange={(e) =>  setTempAccount((prevState) => ({
+                            ...prevState,
+                            tempAccPhoto: e.target.files[0]
+                        }))}
+                    />
                     <TextField
                         fullWidth
                         id="standard-basic"
@@ -148,7 +168,7 @@ const EditProfilePopup = ({open, setOpen}) => {
                         onChange={(event)=>{updateTempAccount('tempAccRepeatedPassword', event.target.value)}}
                         onBlur={()=> setPasswordError(tempAccount.tempAccPassword!==tempAccount.tempAccRepeatedPassword)}
                     />
-                    <button className="edit-button" disabled={validateEditingAccount()}>
+                    <button className="edit-button" disabled={validateEditingAccount()} onClick={handleEditProfile}>
                         Редагувати профіль
                     </button>
                 </div>

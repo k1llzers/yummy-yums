@@ -1,9 +1,6 @@
 package org.naukma.yummyyams.user;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.naukma.yummyyams.base.Mapper;
 import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.RecipeRepository;
@@ -25,12 +22,12 @@ public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateD
 
     @Override
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password", expression = "java(encoder.encode(dto.getPassword()))")
+    @Mapping(target = "password", ignore = true)
     public abstract UserEntity mergeCreate(UserCreateUpdateDto dto);
 
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "password", expression = "java(encoder.encode(dto.getPassword()))")
+    @Mapping(target = "password", ignore = true)
     public abstract void mergeUpdate(@MappingTarget UserEntity entity, UserCreateUpdateDto dto);
 
     @Override
@@ -51,5 +48,12 @@ public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateD
         return recipeRepository.findAllByAuthorAndApproveTrue(entity).stream()
                 .mapToLong(recipe -> recipe.getLikes().size())
                 .sum();
+    }
+
+    @BeforeMapping
+    protected void encodePassword(UserCreateUpdateDto dto, @MappingTarget UserEntity entity) {
+        if(dto.getPassword() != null) {
+            entity.setPassword(encoder.encode(dto.getPassword()));
+        }
     }
 }

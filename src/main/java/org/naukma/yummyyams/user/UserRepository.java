@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     Optional<UserEntity> findByEmail(String email);
 
-    @Query("select u from UserEntity u where lower(concat(u.name, ' ', u.surname)) like lower(:restrict) or lower(u.email) like lower(:restrict)")
+    @Query("select u from UserEntity u where (lower(concat(u.name, ' ', u.surname)) like lower(:restrict) or lower(u.email) like lower(:restrict)) and u.role = org.naukma.yummyyams.security.Role.USER")
     List<UserEntity> findAllByRestrict(@Param("restrict") String restrict);
 }

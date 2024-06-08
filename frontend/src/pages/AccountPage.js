@@ -24,6 +24,7 @@ import EditProfilePopup from "../components/EditProfilePopup";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
 
 
 const AccountPage = () => {
@@ -34,6 +35,13 @@ const AccountPage = () => {
             country: "Ukraine"
         }
     });
+    const storeImages = {
+        "SILPO" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
+        "ATB" : "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
+        "NOVUS" : "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
+    }
+    const [ingredient, setIngredient] = useState("");
+    const [checkProduct, setCheckProduct] = useState(true)
     const [selectedTab, setSelectedTab] = useState(0);
     const [ownRecipes, setOwnRecipes] = useState([]);
     const [likedRecipes, setLikedRecipes] = useState([]);
@@ -42,6 +50,8 @@ const AccountPage = () => {
     const [accountLikesCount, setAccountLikesCount] = useState(0);
     const [accountRecipesCount, setAccountRecipesCount] = useState(0);
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
+    const [offeredProducts, setOfferedProducts] = useState([]);
+    const [limit, setLimit] = useState(0);
     const fetchPersonalInfo = async () => {
         const response = await axios.get("http://localhost:8080/api/user/myself");
         if (response) {
@@ -53,13 +63,26 @@ const AccountPage = () => {
             console.log("Error fetching personal info");
         }
     }
-    const handleTabChange = (event, newValue) => {
-        setSelectedTab(newValue);
-        if (newValue === 0) fetchOwnRecipes();
-        else if (newValue === 1) {
-            fetchLikedRecipes();
+    // const handleTabChange = (event, newValue) => {
+    //     setSelectedTab(newValue);
+    //     if (newValue === 0) fetchOwnRecipes();
+    //     else if (newValue === 1) {
+    //         fetchLikedRecipes();
+    //     }
+    // };
+    const validateAddProduct = () => {
+        return ingredient.length > 0 && checkProduct;
+    }
+    const checkExistingProduct = async () => {
+        if (ingredient.length === 0) return;
+        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
+        if(response.error) {
+            setCheckProduct(false);
+        } else {
+            console.log(response.data)
+            setCheckProduct(response.data);
         }
-    };
+    }
     const fetchOwnRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my");
 
@@ -77,6 +100,16 @@ const AccountPage = () => {
             setLikedRecipes([]);
         }
     }
+    const handleAddProduct = async () =>{
+        setLimit((prev) => prev + 10);
+        const response = await axios.get("http://localhost:8080/api/product?input=" + ingredient +
+            "&limit=" + limit);
+        if(response){
+            setOfferedProducts(response.data);
+        }else{
+            setOwnRecipes([]);
+        }
+    }
 
     const onToggleLike = async (id)=>{
         await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
@@ -88,7 +121,13 @@ const AccountPage = () => {
         fetchOwnRecipes();
         fetchLikedRecipes();
     }, []);
-    console.log(likedRecipes);
+    useEffect(() => {
+        checkExistingProduct();
+    }, [ingredient])
+    useEffect(()=>{
+        if (ingredient===""){
+            setCheckProduct(true); setLimit(10);}
+    }, [ingredient, limit])
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -109,6 +148,32 @@ const AccountPage = () => {
         );
 
     }, [navigation]);
+    const OfferedRow = ({offered}) =>{
+        return (
+            <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                <TableCell align="center">
+                    <Image className="popup-product-photo" src={offered.imgUrl} style={{width : '60px', height:"60px"}}></Image>
+                </TableCell>
+                <TableCell align="left">{offered.name} </TableCell>
+                <TableCell align="center">
+                    <div className={'control-product-number'}>
+                        {/*<Button*/}
+                        {/*    className={'add-to-list-button minus-button'}><RemoveIcon/></Button>*/}
+                        {offered.weight}
+                        {/*<Button className={'add-to-list-button'}><AddIcon/></Button>*/}
+                    </div>
+                </TableCell>
+                <TableCell align="center">
+                    <Image
+                        src={storeImages[offered.store]}
+                        className={'shop-image'}></Image></TableCell>
+                <TableCell align="center">{offered.price} грн</TableCell>
+                <TableCell align="center">
+                    <Button className={'add-to-list-button'}><AddIcon/></Button>
+                </TableCell>
+            </TableRow>
+        );
+    }
     return (
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
@@ -229,14 +294,28 @@ const AccountPage = () => {
                                         fullWidth
                                         id="standard-basic"
                                         label="Введіть назву продукту"
+                                        value={ingredient}
+                                        error={!checkProduct}
+                                        helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
+                                        onChange={(e) => setIngredient(e.target.value)}
+                                        onBlur={()=>{
+                                            if(ingredient==='')setCheckProduct(true);
+                                        }}
                                         variant="standard"
                                     />
+                                    <button className="add-ingredient-button"
+                                            disabled={!validateAddProduct()}
+                                            onClick={handleAddProduct}
+                                        >
+                                        <SearchIcon/>
+                                    </button>
                                 </div>
                                 <div className={'proposal-table-container'}>
-                                    <TableContainer component={Paper}>
-                                        <Table sx={{minWidth: 650}} aria-label="simple table">
+                                    <TableContainer component={Paper} style={{maxHeight:"900px"}}>
+                                        <Table aria-label="simple table">
                                             <TableHead>
                                                 <TableRow>
+                                                    <TableCell align="center"></TableCell>
                                                     <TableCell align="center">Назва продукту</TableCell>
                                                     <TableCell align="center">Кількість</TableCell>
                                                     <TableCell align="center">Магазин</TableCell>
@@ -245,104 +324,21 @@ const AccountPage = () => {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">Помідори</TableCell>
-                                                    <TableCell align="center">
-                                                        <div className={'control-product-number'}>
-                                                            <Button
-                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
-                                                            1 шт
-                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">Помідори</TableCell>
-                                                    <TableCell align="center">
-                                                        <div className={'control-product-number'}>
-                                                            <Button
-                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
-                                                            1 шт
-                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">Помідори</TableCell>
-                                                    <TableCell align="center">
-                                                        <div className={'control-product-number'}>
-                                                            <Button
-                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
-                                                            1 шт
-                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">Помідори</TableCell>
-                                                    <TableCell align="center">
-                                                        <div className={'control-product-number'}>
-                                                            <Button
-                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
-                                                            1 шт
-                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">Помідори</TableCell>
-                                                    <TableCell align="center">
-                                                        <div className={'control-product-number'}>
-                                                            <Button
-                                                                className={'add-to-list-button minus-button'}><RemoveIcon/></Button>
-                                                            1 шт
-                                                            <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><AddIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
+                                                {
+                                                    offeredProducts.map((offered)=>(
+                                                        <OfferedRow key={offered.id} offered={offered}/>
+                                                    ))
+                                                }
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
+                                    <button
+                                        className="add-ingredient-button"
+                                        onClick={() => {handleAddProduct();}}
+                                        disabled={limit === 100||ingredient===''}
+                                    >
+                                        Показати ще
+                                    </button>
                                 </div>
                             </div>
                             <div className={'product-list-container'}>

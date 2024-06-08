@@ -216,6 +216,14 @@
 /*}*/
 .input-table-container{
     margin-top: 20px;
+    white-space: nowrap;
+}
+.input-table-container button{
+    margin-top: 14px;
+
+}
+.input-table-container .MuiFormControl-root{
+    width: 89%;
 }
 /*#panel1-header{*/
 /*    padding: 0;*/
@@ -228,18 +236,15 @@
 .input-table-container .MuiInput-underline:after {
     border-bottom-color: #3D6827;
 }
-/*.proposal-table-container{*/
-/*    max-width: 700px;*/
-/*}*/
-/*.proposal-table-container .MuiTable-root{*/
-/*    min-width: 687px;*/
-/*}*/
+
 .proposal-table-container .MuiTableCell-root{
     color: #3D6827;
     font-family: "Gentium Plus", serif;
     font-size: 1.2rem;
     background-color: #E2F0D2;
-
+}
+.proposal-table-container .MuiTableCell-body{
+    padding: 10px;
 }
 .proposal-table-container .MuiTableHead-root .MuiTableCell-root,
 .main-product-list-container .MuiTableHead-root .MuiTableCell-root,
@@ -273,10 +278,14 @@
 }
 
 .proposal-table-container .MuiTableContainer-root, .main-product-list-container .MuiTableContainer-root {
-    margin: 30px 0;
+    margin: 30px 0 0 0;
     border-radius: 20px;
     transition: ease 0.5s;
     box-shadow: none;
+}
+.proposal-table-container .add-ingredient-button{
+   width: 30%;
+    margin-left: 35%;
 }
 
 .control-product-number {
@@ -305,7 +314,6 @@
     min-height: 250px;
     /*padding-top: 7px;*/
 }
-
 .main-product-list-container {
     background-color: #F9FAEE;
     /*height: 100%;*/
@@ -321,6 +329,9 @@
         margin-left: 10%;
         /*align-items: center;*/
         /*justify-items: center;*/
+    }
+    .proposal-table-container .MuiTableCell-root{
+        max-width: 1160px;
     }
     .main-product-list-container{
         margin: 5% 0;
@@ -363,6 +374,9 @@
 @media (max-width: 440px) {
     #panel1-header{
         margin-left: 0;
+    }
+    .input-table-container{
+        white-space: wrap;
     }
 
 }

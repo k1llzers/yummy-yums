@@ -22,6 +22,10 @@ public class UserService extends BaseService<UserEntity, UserCreateUpdateDto, In
         return mapper.toResponseDto(SecurityContextAccessor.getUser());
     }
 
+    public byte[] getPhoto(Integer id) {
+        return ImageService.getPhoto(getById(id));
+    }
+
     public UserEntity getByEmail(String email) {
         return ((UserRepository) repository).findByEmail(email).orElseThrow(
                 () -> new NoSuchEntityException("Can`t find user by email: " + email)

@@ -39,4 +39,9 @@ public class UserController {
     public ResponseEntity<UserResponse> getMyselfInfo() {
         return ResponseEntity.ok(service.getMyselfInfo());
     }
+
+    @GetMapping("/get-user-image/{id}")
+    public ResponseEntity<byte[]> getUserImage(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getPhoto(id));
+    }
 }

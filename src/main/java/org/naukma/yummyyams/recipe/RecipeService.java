@@ -10,6 +10,7 @@ import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
+import org.naukma.yummyyams.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.Set;
 @Transactional(propagation = Propagation.REQUIRED)
 public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateDto, Integer> {
     private final EntityManager em;
+    private final UserService userService;
 
     public List<RecipeShortResponseDto> getAll(Integer categoryId, String name, Set<String> products) {
         return ((RecipeMapper) mapper).toShortResponseList(findRecipeByCategoryNameAndProducts(categoryId, name, products));
@@ -37,6 +39,10 @@ public class RecipeService extends BaseService<RecipeEntity, RecipeCreateUpdateD
 
     public List<RecipeShortResponseDto> getMyRecipes() {
         return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthor(SecurityContextAccessor.getUser()));
+    }
+
+    public List<RecipeShortResponseDto> getRecipesByUserId(Integer userId) {
+        return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthor(userService.getById(userId)));
     }
 
     public List<RecipeShortResponseDto> getMyLikes() {

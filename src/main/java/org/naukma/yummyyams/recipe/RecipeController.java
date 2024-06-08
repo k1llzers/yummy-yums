@@ -52,6 +52,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.getMyRecipes());
     }
 
+    @GetMapping("/get-by-user/{id}")
+    public ResponseEntity<List<RecipeShortResponseDto>> getRecipesByUserId(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getRecipesByUserId(id));
+    }
+
     @GetMapping("/get-my-liked")
     public ResponseEntity<List<RecipeShortResponseDto>> getMyLikedRecipes() {
         return ResponseEntity.ok(service.getMyLikes());

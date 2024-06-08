@@ -1,0 +1,30 @@
+.error-page-main-container {
+    height: 100vh;
+    background-color: #F9FAEE;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-page-title {
+    font-family: "Sassy Frass", cursive;
+    font-size: 150px;
+    color: #3D6827;
+    text-align: center;
+    margin: 0;
+}
+
+.error-page-link {
+    font-family: "Gentium Plus", serif;
+    color: #5d804c;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.error-page-link:hover {
+    color: #3D6827;
+}

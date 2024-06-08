@@ -10,6 +10,6 @@ public class SecurityContextAccessor {
     }
 
     public static Boolean isAuthenticated() {
-        return SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+        return !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
     }
 }

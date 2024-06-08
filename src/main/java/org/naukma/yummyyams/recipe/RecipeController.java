@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class RecipeController {
     }
 
     @PutMapping
-    public ResponseEntity<Boolean> update(@RequestBody RecipeCreateUpdateDto body) {
-        return ResponseEntity.ok(service.update(body));
+    public ResponseEntity<Boolean> update(@RequestPart RecipeCreateUpdateDto recipe,  @RequestPart MultipartFile photo) {
+        return ResponseEntity.ok(service.update(recipe, photo));
     }
 
     @PutMapping("/approve/{id}")
@@ -52,6 +53,13 @@ public class RecipeController {
     @GetMapping("/{id}")
     public ResponseEntity<RecipeResponseDto> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getResponseDto(id));
+    }
+
+    @GetMapping("/get-recipe-image/{id}")
+    public ResponseEntity<Resource> getRecipePhoto(@PathVariable Integer id) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(service.getPhoto(id));
     }
 
     @GetMapping("/get-my")

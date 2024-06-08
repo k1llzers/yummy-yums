@@ -4,6 +4,7 @@ import org.naukma.yummyyams.base.GettableById;
 import org.naukma.yummyyams.base.Storagable;
 import org.naukma.yummyyams.security.exception.IdNotNullException;
 import org.naukma.yummyyams.utils.ImageService;
+import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,5 +29,10 @@ public abstract class StoragableService<E extends Storagable<I>, V extends Getta
         if (photo != null)
             ImageService.saveImage(photo, entity);
         return true;
+    }
+
+    @Transactional
+    public Resource getPhoto(I id) {
+        return ImageService.getPhoto(getById(id));
     }
 }

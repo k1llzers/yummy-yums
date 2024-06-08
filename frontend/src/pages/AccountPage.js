@@ -25,6 +25,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import CreateFamilyPopup from "../styles/CreateFamilyPopup";
+import EditFamilyPopup from "../components/EditFamilyPopup";
 
 
 const AccountPage = () => {
@@ -50,6 +52,8 @@ const AccountPage = () => {
     const [accountLikesCount, setAccountLikesCount] = useState(0);
     const [accountRecipesCount, setAccountRecipesCount] = useState(0);
     const [openEditProfilePopup, setOpenEditProfilePopup] = useState(false);
+    const [openCreateFamilyPopup, setOpenCreateFamilyPopup] = useState(false);
+    const [openEditFamilyPopup, setOpenEditFamilyPopup] = useState(false);
     const [offeredProducts, setOfferedProducts] = useState([]);
     const [limit, setLimit] = useState(0);
     const fetchPersonalInfo = async () => {
@@ -177,6 +181,8 @@ const AccountPage = () => {
     return (
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup}/>
+            <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup}/>
+            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card" id={'account-card'}>
@@ -241,12 +247,14 @@ const AccountPage = () => {
                             </div>
 
                         </div>
-                        <button className="create-family-button">
+                        <button className="create-family-button"
+                                onClick={() => setOpenCreateFamilyPopup(true)}>
                             Створити сімʼю
                         </button>
                     </div>
                     <div className={'edit-family-buttons'}>
-                        <EditIcon/>
+                        <EditIcon
+                            onClick={() => setOpenEditFamilyPopup(true)}/>
                     </div>
                 </div>
             </div>

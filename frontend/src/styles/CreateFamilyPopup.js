@@ -9,12 +9,39 @@ import SearchIconWrapper from "../styled components/SearchIconWrapper";
 import SearchIcon from "@mui/icons-material/Search";
 import StyledInputBase from "../styled components/StyledInputBase";
 import '../styles/EditFamilyPopup.css'
+import useSlot from "@mui/material/utils/useSlot";
+import {useState} from "react";
+import axios from "axios";
 
-const CreateFamilyPopup = () => {
+const CreateFamilyPopup = ({open, setOpen}) => {
+    const [inputFamilyName, setInputFamilyName] = useState("");
+    const [inputNameUser, setInputNameUser] = useState("");
+    const [checkUser, setCheckUser]=useState("");
+    const clearFields= ()=>{
+        setInputNameUser("");
+        setInputFamilyName("")
+    }
+    const checkExistingUser = async () => {
+        if (inputNameUser.length === 0) return;
+        // const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
+        // if(response.error) {
+        //     setCheckUser(false);
+        // } else {
+        //     console.log(response.data)
+        //     setCheckUser(response.data);
+        // }
+    }
+    const validateCreatingFamily = () =>{
+        return inputFamilyName!=='';
+    }
     return (
-        <Dialog open={true} maxWidth="md" fullWidth>
+        <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
                 <IconButton
+                    onClick={()=>{
+                        clearFields();
+                        setOpen(false);
+                    }}
                     aria-label="close"
                     sx={{
                         position: 'absolute',
@@ -30,6 +57,9 @@ const CreateFamilyPopup = () => {
                         fullWidth
                         id="standard-basic"
                         label="Введіть назву сімʼї"
+                        onChange={(event)=>{
+                            setInputFamilyName(event.target.value);
+                        }}
                         variant="standard"
                     />
                     <div id={'add-members-label'}>
@@ -42,33 +72,95 @@ const CreateFamilyPopup = () => {
                                     <SearchIcon sx={{color: '#3D6827'}}/>
                                 </SearchIconWrapper>
                                 <StyledInputBase
-                                    placeholder="Імʼя нового члена"
+                                    placeholder="Імʼя або e-mail нового члена"
                                     inputProps={{'aria-label': 'search'}}
+                                    // value{inputNameUser}
+                                    // error={!checkUser}
+                                    // helperText={!checkUser ? "Такого користувача не існує" : ""}
                                 />
                             </Search>
-                            <div className={'family-page-members'}>
-                                <button className="family-page-members-item">
+                            <div className={'family-create-members '}>
+                                <div className="family-page-members-item family-create-members-item">
                                     <div className={'single-family-member-account'}>
                                         <Image className="family-member-card-image"
                                                src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
                                         Анатолій Журба
                                     </div>
-                                </button>
-                                <button className="family-page-members-item">
+                                    <div className={"button-family"}>
+                                        <button className="create-family-form-button">
+                                            Переглянути профіль
+                                        </button>
+                                        <button className="create-family-form-button">
+                                            Надіслати запит
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="family-page-members-item family-create-members-item">
                                     <div className={'single-family-member-account'}>
                                         <Image className="family-member-card-image"
                                                src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
                                         Анатолій Журба
                                     </div>
-                                </button>
+                                    <div className={"button-family"}>
+                                        <button className="create-family-form-button">
+                                            Переглянути профіль
+                                        </button>
+                                        <button className="create-family-form-button">
+                                            Надіслати запит
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="family-page-members-item family-create-members-item">
+                                    <div className={'single-family-member-account'}>
+                                        <Image className="family-member-card-image"
+                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                        Анатолій Журба
+                                    </div>
+                                    <div className={"button-family"}>
+                                        <button className="create-family-form-button">
+                                            Переглянути профіль
+                                        </button>
+                                        <button className="create-family-form-button">
+                                            Надіслати запит
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="family-page-members-item family-create-members-item">
+                                    <div className={'single-family-member-account'}>
+                                        <Image className="family-member-card-image"
+                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                        Анатолій Журба
+                                    </div>
+                                    <div className={"button-family"}>
+                                        <button className="create-family-form-button">
+                                            Переглянути профіль
+                                        </button>
+                                        <button className="create-family-form-button">
+                                            Надіслати запит
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="family-page-members-item family-create-members-item">
+                                    <div className={'single-family-member-account'}>
+                                        <Image className="family-member-card-image"
+                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                        Анатолій Журба
+                                    </div>
+                                    <div className={"button-family"}>
+                                        <button className="create-family-form-button">
+                                            Переглянути профіль
+                                        </button>
+                                        <button className="create-family-form-button">
+                                            Надіслати запит
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <button className="edit-family-form-button">
-                            Надіслати запит
-                        </button>
                     </div>
                     <div id={'save-new-family-container'} className={'edit-family-bottom-buttons'}>
-                        <button id={'save-new-family-button'} className="edit-family-form-button">
+                        <button id={'save-new-family-button'} className="edit-family-form-button"
+                        disabled={!validateCreatingFamily()}>
                             Зберегти зміни
                         </button>
                     </div>

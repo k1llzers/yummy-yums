@@ -1,25 +1,26 @@
 import '../styles/RecipePage.css';
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import Image from 'react-bootstrap/Image';
-import PlaceIcon from '@mui/icons-material/Place';
 import AddProductsPopup from "../components/AddProductsPopup";
 import Comment from "../components/Comment";
 import TextField from "@mui/material/TextField";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {useEffect, useState} from "react";
 import {useAuth} from "../provider/authProvider";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const RecipePage = () => {
-    const {role} = useAuth();
-    const id = useParams();
+    const {role, id} = useAuth();
+    const recipeId = useParams();
     const [openAddProductsPopup, setOpenProductsPopup] = useState(false);
     const [chosenProduct, setChosenProduct] = useState("");
     const [newComment, setNewComment] = useState("");
 
+    const defaultRecipePhoto = "https://i.pinimg.com/564x/07/7f/d7/077fd782b16b4fb5d96d5fcd74703039.jpg";
+    const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+
+    const [myId, setMyId] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [instruction, setInstruction] = useState("");
@@ -29,9 +30,11 @@ const RecipePage = () => {
     const [category, setCategory] = useState({});
     const [countOfLikes, setCountOfLikes] = useState(0);
     const [liked, setLiked] = useState(false);
+    const [recipePhoto, setRecipePhoto] = useState(defaultRecipePhoto);
+    const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
 
     const fetchRecipe = async () => {
-        const response = await axios.get("http://localhost:8080/api/recipe/" + id.id);
+        const response = await axios.get("http://localhost:8080/api/recipe/" + recipeId.id);
         setTitle(response.data.name);
         setDescription(response.data.description);
         setInstruction(response.data.instruction);
@@ -43,24 +46,50 @@ const RecipePage = () => {
         setLiked(response.data.iliked);
     }
 
+    const fetchRecipePhoto = async () => {
+        if (!recipeId) return
+        await axios.get("http://localhost:8080/api/recipe/get-recipe-image/" + recipeId.id, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            setRecipePhoto(URL.createObjectURL(response.data));
+        });
+    }
+
+    const fetchUserPhoto = async () => {
+        if (!author) return;
+        await axios.get("http://localhost:8080/api/user/get-user-image/" + author.id, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            setUserPhoto(URL.createObjectURL(response.data));
+        });
+    }
+
     const addComment = async () => {
         setNewComment("");
         await axios.post("http://localhost:8080/api/comment", {
             comment: newComment,
-            recipeId: id.id
+            recipeId: recipeId.id
         });
         fetchRecipe();
     }
 
     useEffect(() => {
         fetchRecipe();
+        setMyId(id);
+        fetchRecipePhoto();
     }, [])
+
+    useEffect(() => {
+        fetchUserPhoto();
+    }, [author]);
 
     const handleLike = async () => {
         if (!liked) {
-            await axios.put("http://localhost:8080/api/recipe/like/" + id.id)
+            await axios.put("http://localhost:8080/api/recipe/like/" + recipeId.id)
         } else {
-            await axios.put("http://localhost:8080/api/recipe/unlike/" + id.id)
+            await axios.put("http://localhost:8080/api/recipe/unlike/" + recipeId.id)
         }
         await fetchRecipe();
     }
@@ -74,9 +103,10 @@ const RecipePage = () => {
                         <div className="name-and-description-container">
                             <div className="recipe-author-info">
                                 <Image roundedCircle className="recipe-author-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
+                                       src={userPhoto}/>
                                 <div className="recipe-author-text-info">
-                                    <p className="recipe-text-info-item">{author.pib}</p>
+                                    {myId == author.id ? <Link className="card-title-a" to="/account"><p className="recipe-text-info-item">{author.pib}</p></Link>
+                                    : <Link className="card-title-a" to={`/user/${author.id}`}><p className="recipe-text-info-item">{author.pib}</p></Link>}
                                 </div>
                             </div>
                             <p className="recipe-name-label">{title}</p>
@@ -86,14 +116,15 @@ const RecipePage = () => {
                                 <button
                                     className="recipe-page-like-button"
                                     onClick={handleLike}
+                                    disabled={!role}
                                 >
                                     {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
                                 </button>
                             </div>
                             <p className="recipe-page-description">{description}</p>
                         </div>
-                        <Image className="recipe-page-img-left" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
-                        <Image className="recipe-page-img-right" src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg"></Image>
+                        <Image className="recipe-page-img-left" src={recipePhoto}></Image>
+                        <Image className="recipe-page-img-right" src={recipePhoto}></Image>
                         <div className="recipe-page-ingredients">
                             <span className="recipe-page-ingredients-label">Інгредієнти: </span>
                             {Object.entries(ingredients).map(([product, quantity]) => (
@@ -119,7 +150,6 @@ const RecipePage = () => {
                                 id="standard-basic"
                                 label="Ваш коментар"
                                 variant="standard"
-                                multiline
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                             />
@@ -130,7 +160,7 @@ const RecipePage = () => {
                             >Надіслати</button>
                         </div>}
                         {comments.map((comment) => (
-                            <Comment commentObject={comment} commentShift={0} recipeId={id.id} updateRecipe={fetchRecipe}/>
+                            <Comment commentObject={comment} commentShift={0} recipeId={recipeId.id} updateRecipe={fetchRecipe}/>
                         ))}
                     </div>
                 </div>

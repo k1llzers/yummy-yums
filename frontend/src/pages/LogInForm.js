@@ -10,7 +10,7 @@ import {useState} from "react";
 import axios from "axios";
 
 const LogInForm = ({openLogin, setOpenLogin}) => {
-    const {setToken, setRole} = useAuth();
+    const {setToken, setRole, setId} = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
@@ -29,6 +29,7 @@ const LogInForm = ({openLogin, setOpenLogin}) => {
         } else {
             setToken(response.data.token);
             setRole(response.data.role);
+            setId(response.data.id);
             setOpenLogin(false);
             clearFields();
         }

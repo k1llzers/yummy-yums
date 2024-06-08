@@ -11,6 +11,7 @@
     width: 120px;
     height: 120px;
     border-radius: 30px;
+    object-fit: cover;
 }
 
 .card-container {
@@ -51,7 +52,7 @@
 }
 
 .recipe-info {
-    margin: 5px 0 0 0;
+    margin: 5px 12px 0 0;
     font-size: 19px;
 }
 
@@ -89,6 +90,7 @@
     .recipe-info {
         width: 100%;
         text-align: center;
+        margin: 0;
     }
 
     .recipe-card-text-info {

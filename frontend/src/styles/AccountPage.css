@@ -43,6 +43,7 @@
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .account-title {
@@ -175,7 +176,7 @@
 }
 .tab-content {
     background-color: #C1D7AE;
-    min-height: 185px;
+    min-height: 209px;
     align-content: center;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{

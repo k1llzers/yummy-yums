@@ -53,12 +53,15 @@
     padding: 5px 10px;
 }
 
-.comment-reply-button:hover {
-    background-color: #E2F0D2;
-}
-
 .comment-reply-button:disabled {
     color: #C1D7AE;
+}
+
+.comment-delete-button {
+    background-color: transparent;
+    border: none;
+    width: 50px;
+    color: #3D6827;
 }
 
 .MuiAccordion-gutters{

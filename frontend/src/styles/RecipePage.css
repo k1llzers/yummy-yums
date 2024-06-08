@@ -28,6 +28,7 @@
 .recipe-author-image {
     width: 2.5rem;
     aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
 .recipe-text-info-item {
@@ -89,7 +90,7 @@
     object-fit: cover;
     border-radius: 20px;
     grid-area: 2 / 3 / 4 / 4;
-    max-height: 450px;
+    max-height: 427px;
 }
 
 .name-and-description-container {
@@ -337,10 +338,6 @@
     border-radius: 20px;
     transition: ease 0.5s;
     padding: 5px 10px;
-}
-
-.recipe-page-add-comment-button:hover {
-    background-color: #E2F0D2;
 }
 
 .recipe-page-add-comment-button:disabled {

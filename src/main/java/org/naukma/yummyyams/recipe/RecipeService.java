@@ -45,7 +45,7 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
     }
 
     public List<RecipeShortResponseDto> getRecipesByUserId(Integer userId) {
-        return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthor(userService.getById(userId)));
+        return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByAuthorAndStatus(userService.getById(userId), RecipeStatus.APPROVE));
     }
 
     public List<RecipeShortResponseDto> getMyLikes() {

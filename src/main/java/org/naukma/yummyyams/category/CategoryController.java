@@ -42,4 +42,9 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponseDto>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
+
+    @GetMapping("/can-be-deleted/{id}")
+    public ResponseEntity<Boolean> canBeDeleted(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.canBeDeleted(id));
+    }
 }

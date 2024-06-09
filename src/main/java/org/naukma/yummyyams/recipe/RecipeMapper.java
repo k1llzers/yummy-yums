@@ -26,7 +26,6 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
-    @Mapping(target = "approve", expression = "java(false)")
     @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
     @Mapping(target = "author", expression = "java(SecurityContextAccessor.getUser())")
     public abstract RecipeEntity mergeCreate(RecipeCreateUpdateDto dto);

@@ -1,9 +1,10 @@
-package org.naukma.yummyyams.product;
+package org.naukma.yummyyams.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.naukma.yummyyams.product.Store;
 
 @Data
 @NoArgsConstructor

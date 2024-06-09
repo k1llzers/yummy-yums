@@ -104,7 +104,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }
 
    const validateAddProduct = () => {
-       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient] && checkProduct;
+       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient] && checkProduct.canBeAdded;
    }
 
     const handleAddProduct = () => {
@@ -185,8 +185,8 @@ const CreateRecipeForm = ({open, setOpen}) => {
                         id="standard-basic"
                         label="Введіть інгредієнт"
                         value={ingredient}
-                        error={!checkProduct}
-                        helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
+                        error={!checkProduct.canBeAdded}
+                        helperText={!checkProduct.canBeAdded ? "Такого продукту немає в базі" + (ingredient? ", можливо ви мали на увазі: " + checkProduct.tooltip : "") : ""}
                         onChange={(e) => setIngredient(e.target.value)}
                         variant="standard"
                         multiline

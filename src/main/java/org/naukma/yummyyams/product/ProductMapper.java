@@ -1,6 +1,7 @@
 package org.naukma.yummyyams.product;
 
 import org.naukma.yummyyams.mapper.MapperConfig;
+import org.naukma.yummyyams.product.dto.ProductDto;
 
 import java.util.List;
 

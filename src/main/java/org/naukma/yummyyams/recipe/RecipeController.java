@@ -2,6 +2,7 @@ package org.naukma.yummyyams.recipe;
 
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
+import org.naukma.yummyyams.recipe.dto.RecipeRequestDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.springframework.core.io.Resource;
@@ -81,6 +82,11 @@ public class RecipeController {
     public ResponseEntity<List<String>> getAllProductsForScope(@RequestParam(required = false) String name,
                                                                @RequestParam(required = false) Integer categoryId) {
         return ResponseEntity.ok(service.getProductsForScope(categoryId, name));
+    }
+
+    @GetMapping("/get-requests")
+    public ResponseEntity<List<RecipeRequestDto>> getRecipesRequest() {
+        return ResponseEntity.ok(service.getRecipesRequest());
     }
 
     @GetMapping

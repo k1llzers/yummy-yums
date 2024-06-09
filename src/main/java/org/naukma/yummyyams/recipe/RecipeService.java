@@ -8,6 +8,7 @@ import org.naukma.yummyyams.base.service.StoragableService;
 import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
+import org.naukma.yummyyams.recipe.dto.RecipeRequestDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserService;
@@ -48,6 +49,10 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
 
     public List<RecipeShortResponseDto> getMyLikes() {
         return ((RecipeMapper) mapper).toShortResponseList(((RecipeRepository)repository).findAllByLikesContains(SecurityContextAccessor.getUser()));
+    }
+
+    public List<RecipeRequestDto> getRecipesRequest() {
+        return ((RecipeMapper) mapper).toRecipeRequestList(((RecipeRepository)repository).findAllByApproveFalse());
     }
 
     public Integer likeRecipe(Integer id) {

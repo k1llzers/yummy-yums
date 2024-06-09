@@ -9,6 +9,7 @@ import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.category.CategoryService;
 import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
+import org.naukma.yummyyams.recipe.dto.RecipeRequestDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
@@ -42,6 +43,8 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     public abstract RecipeResponseDto toResponseDto(RecipeEntity entity);
 
     public abstract List<RecipeShortResponseDto> toShortResponseList(List<RecipeEntity> entities);
+
+    public abstract List<RecipeRequestDto> toRecipeRequestList(List<RecipeEntity> entities);
 
     @Mapping(target = "countOfLikes", expression = "java(entity.getLikes().size())")
     @Mapping(target = "countOfComments", expression = "java(entity.getComments().size())")

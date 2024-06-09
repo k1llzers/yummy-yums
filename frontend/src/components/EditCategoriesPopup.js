@@ -45,8 +45,8 @@ const EditCategoriesPopup = ({open, setOpen}) => {
     }
 
     useEffect(() => {
-        fetchCategories();
-    }, []);
+        if (open) fetchCategories();
+    }, [open]);
 
     return (
         <Dialog open={open} maxWidth="md" fullWidth>

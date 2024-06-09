@@ -41,8 +41,8 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }
 
    useEffect(() => {
-       fetchCategories();
-   }, []);
+       if (open) fetchCategories();
+   }, [open]);
 
    useEffect(() => {
        clearTimeout(recipeTimer)

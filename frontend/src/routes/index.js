@@ -13,27 +13,34 @@ import LogOut from "../pages/LogOut";
 import { useParams } from "react-router-dom";
 import UserAccountPage from "../pages/UserAccountPage";
 import ErrorPage from "../pages/ErrorPage";
+import ManagerAccountPage from "../pages/ManagerAccountPage";
+import EditCategoriesPopup from "../components/EditCategoriesPopup";
 
-const AppLayout = ({ setOpenCreateRecipe }) => (
+const AppLayout = ({ setOpenCreateRecipe, setOpenUpdateCategories }) => (
     <>
-        <NavBar setOpenCreateRecipe={setOpenCreateRecipe} />
+        <NavBar setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories}/>
         <Outlet />
-        <Footer setOpenCreateRecipe={setOpenCreateRecipe} />
+        <Footer setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories}/>
     </>
 );
 
 const Routes = () => {
     const { token, role, id } = useAuth();
     const [openCreateRecipe, setOpenCreateRecipe] = useState(false);
+    const [openUpdateCategories, setOpenUpdateCategories] = useState(false);
 
     const routesForAuthenticatedOnly = [
         {
             path: "/",
-            element: <ProtectedRoute setOpenCreateRecipe={setOpenCreateRecipe} />,
+            element: <ProtectedRoute setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories}/>,
             children: [
                 {
                     path: "/account",
                     element: <AccountPage />,
+                },
+                {
+                    path: "/manager",
+                    element: <ManagerAccountPage/>
                 },
                 {
                     path: "/logout",
@@ -46,7 +53,7 @@ const Routes = () => {
     const routesForAllUsers = [
         {
             path: "/",
-            element: <AppLayout setOpenCreateRecipe={setOpenCreateRecipe} />,
+            element: <AppLayout setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories} />,
             children: [
                 {
                     path: "/",
@@ -81,10 +88,13 @@ const Routes = () => {
         ...routes404
     ]);
 
+    console.log(openUpdateCategories)
+
     return (
         <>
             <RouterProvider router={router} />
             <CreateRecipeForm open={openCreateRecipe} setOpen={setOpenCreateRecipe} />
+            <EditCategoriesPopup open={openUpdateCategories} setOpen={setOpenUpdateCategories}/>
         </>
     );
 };

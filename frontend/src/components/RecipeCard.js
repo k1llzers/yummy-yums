@@ -10,6 +10,7 @@ import axios from "axios";
 
 const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
 
+    const {role} = useAuth();
     const defaultRecipePhoto = "https://i.pinimg.com/564x/07/7f/d7/077fd782b16b4fb5d96d5fcd74703039.jpg";
 
     const [liked, setLiked] = useState(isLiked);
@@ -68,6 +69,7 @@ const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, is
                             <button
                                     className="recipe-card-like-button"
                                     onClick={handleLike}
+                                    disabled={!role || role === 'MANAGER'}
                             >
                                 {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
                             </button>

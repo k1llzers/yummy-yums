@@ -243,6 +243,10 @@
     background-color: #E2F0D2;
 }
 
+.recipe-page-ingredient-item:disabled {
+    background-color: transparent;
+}
+
 .recipe-page-instructions-container {
     width: 100%;
     margin-top: 70px;

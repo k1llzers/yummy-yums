@@ -8,11 +8,8 @@ import {useAuth} from "../provider/authProvider";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import Image from "react-bootstrap/Image";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-function ExpandMoreIcon() {
-    return null;
-}
 
-const NavBar = ({setOpenCreateRecipe}) => {
+const NavBar = ({setOpenCreateRecipe, setOpenUpdateCategories}) => {
     const {role} = useAuth();
 
     return (
@@ -23,9 +20,15 @@ const NavBar = ({setOpenCreateRecipe}) => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto" style={{marginLeft: "15px", alignItems:"center"}}>
                         <Nav.Link href="/all-recipes" style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus", color: "#3D6827"}}>Рецепти</Nav.Link>
-                        {role && <Nav.Link href="/account" style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus",  color: "#3D6827"}}>Мій профіль</Nav.Link>}
-                        {role && <Nav.Link onClick={() => setOpenCreateRecipe(true)} style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus", color: "#3D6827"}}>Створити рецепт</Nav.Link>}
-                        {role && <Nav.Link id={"locations"} style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus", color: "#3D6827"}}>
+                        {role && <Nav.Link href={role === 'USER' ? "/account" : "/manager"} style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus",  color: "#3D6827"}}>Мій профіль</Nav.Link>}
+                        {role && <Nav.Link
+                            onClick={() => {
+                                role === 'USER' ? setOpenCreateRecipe(true) : setOpenUpdateCategories(true)
+                            }}
+                            style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus", color: "#3D6827"}}>
+                            {role === 'USER' ? "Створити рецепт" : "Редагувати категорії"}
+                        </Nav.Link>}
+                        {role === 'USER' && <Nav.Link id={"locations"} style={{fontSize: "25px", margin: "0 20px", fontFamily: "Gentium Plus", color: "#3D6827"}}>
                             <Accordion style={{fontSize: "25px",fontFamily: "Gentium Plus",  color: "#3D6827", backgroundColor: "rgb(226, 240, 210)", boxShadow:"none", textAlign:"center"}}>
                                 <AccordionSummary
                                     aria-controls="panel1-content"

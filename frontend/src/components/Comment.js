@@ -67,7 +67,7 @@ const Comment = ({commentObject, commentShift, recipeId, updateRecipe}) => {
                 </div>
                 {myId == comment.user.id && <button className="comment-delete-button" onClick={deleteComment}><DeleteOutlineIcon/></button>}
             </div>
-            {role && <div className="comment-reply-container">
+            {role === 'USER' && <div className="comment-reply-container">
             <TextField
                     sx={{margin: 0}}
                     id="standard-basic"

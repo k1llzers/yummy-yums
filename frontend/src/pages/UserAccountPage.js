@@ -18,12 +18,15 @@ const UserAccountPage = () => {
             country: "Ukraine"
         }
     });
+    const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+
+    const id = useParams();
     const [userRecipes, setUserRecipes] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountLikesCount, setAccountLikesCount] = useState(0);
     const [accountRecipesCount, setAccountRecipesCount] = useState(0);
-    const id = useParams();
+    const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
 
     const fetchUserInfo = async () => {
         const response = await axios.get("http://localhost:8080/api/user/" + id.id);
@@ -51,7 +54,20 @@ const UserAccountPage = () => {
         fetchUserRecipes();
     }, []);
 
+    useEffect(() => {
+        fetchPhoto();
+    }, [id]);
 
+
+    const fetchPhoto = async () => {
+        if (!id) return
+        await axios.get("http://localhost:8080/api/user/get-user-image/" + id.id, {
+            responseType: "blob"
+        }).then((response) => {
+            if(response.data.type === 'application/json') return;
+            setAccountPhoto(URL.createObjectURL(response.data));
+        });
+    }
 
     return (
         <div className={'main-container'}>
@@ -62,7 +78,7 @@ const UserAccountPage = () => {
                             <div className="card-container">
                                 <div className="account-name">
                                     <Image className="account-card-image"
-                                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSouz4bFZt20u2XHT4zM-7vP4OV_lZ1nT0JlQ&s"/>
+                                           src={accountPhoto}/>
                                     <div className="account-card-text-info">
                                         <p className="account-title">{accountName}</p>
                                         <p className="account-info">
@@ -79,7 +95,6 @@ const UserAccountPage = () => {
                                             <p className="account-info info-likes"><FavoriteBorderIcon
                                                 style={{height: '30px'}}/> {accountLikesCount} лайків</p>
                                         </div>
-                                        {/*<div className="recipe-likes"></div>*/}
                                     </div>
                                 </div>
                             </div>

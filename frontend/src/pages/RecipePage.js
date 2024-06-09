@@ -116,7 +116,7 @@ const RecipePage = () => {
                                 <button
                                     className="recipe-page-like-button"
                                     onClick={handleLike}
-                                    disabled={!role}
+                                    disabled={!role || role === 'MANAGER'}
                                 >
                                     {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
                                 </button>
@@ -131,6 +131,7 @@ const RecipePage = () => {
                                 <button key={product}
                                         className="recipe-page-ingredient-item"
                                         onClick={() => {setChosenProduct(product); setOpenProductsPopup(true)}}
+                                        disabled={role !== 'USER'}
                                 >
                                     {`${product} ${quantity}`}
                                 </button>
@@ -145,7 +146,7 @@ const RecipePage = () => {
                     </div>
                     <div className="recipe-page-comments-container">
                         <p className="recipe-page-comments-label">Коментарі</p>
-                        {role && <div className="add-comment-container">
+                        {role === 'USER' && <div className="add-comment-container">
                             <TextField
                                 id="standard-basic"
                                 label="Ваш коментар"

@@ -3,7 +3,7 @@ import { useAuth } from "../provider/authProvider";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
-export const ProtectedRoute = ({ setOpenCreateRecipe }) => {
+export const ProtectedRoute = ({ setOpenCreateRecipe, setOpenUpdateCategories }) => {
     const { token } = useAuth();
 
     if (!token) {
@@ -12,9 +12,9 @@ export const ProtectedRoute = ({ setOpenCreateRecipe }) => {
 
     return (
         <>
-            <NavBar setOpenCreateRecipe={setOpenCreateRecipe} />
+            <NavBar setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories}/>
             <Outlet />
-            <Footer setOpenCreateRecipe={setOpenCreateRecipe} />
+            <Footer setOpenCreateRecipe={setOpenCreateRecipe} setOpenUpdateCategories={setOpenUpdateCategories}/>
         </>
     );
 };

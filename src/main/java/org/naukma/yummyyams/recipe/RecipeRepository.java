@@ -1,5 +1,6 @@
 package org.naukma.yummyyams.recipe;
 
+import org.naukma.yummyyams.recipe.dto.RecipeStatus;
 import org.naukma.yummyyams.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -9,13 +10,13 @@ import java.util.List;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer>, JpaSpecificationExecutor<RecipeEntity> {
-    Long countByAuthorAndApproveTrue(UserEntity author);
+    Long countByAuthorAndStatus(UserEntity author, RecipeStatus status);
 
-    List<RecipeEntity> findAllByAuthorAndApproveTrue(UserEntity author);
+    List<RecipeEntity> findAllByAuthorAndStatus(UserEntity author, RecipeStatus status);
 
     List<RecipeEntity> findAllByAuthor(UserEntity author);
 
-    List<RecipeEntity> findAllByApproveFalse();
+    List<RecipeEntity> findAllByStatus(RecipeStatus status);
 
     List<RecipeEntity> findAllByLikesContains(UserEntity author);
 }

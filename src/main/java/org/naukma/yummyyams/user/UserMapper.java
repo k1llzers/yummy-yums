@@ -4,6 +4,7 @@ import org.mapstruct.*;
 import org.naukma.yummyyams.base.Mapper;
 import org.naukma.yummyyams.mapper.MapperConfig;
 import org.naukma.yummyyams.recipe.RecipeRepository;
+import org.naukma.yummyyams.recipe.dto.RecipeStatus;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
 import org.naukma.yummyyams.user.dto.UserResponse;
 import org.naukma.yummyyams.user.dto.UserShortResponse;
@@ -41,11 +42,11 @@ public abstract class UserMapper implements Mapper<UserEntity, UserCreateUpdateD
     public abstract List<UserShortResponse> toShortResponseDtoList(List<UserEntity> entities);
 
     protected Long getCountOfRecipes(UserEntity entity) {
-        return recipeRepository.countByAuthorAndApproveTrue(entity);
+        return recipeRepository.countByAuthorAndStatus(entity, RecipeStatus.APPROVE);
     }
 
     protected Long getCountOfLikesOnRecipes(UserEntity entity) {
-        return recipeRepository.findAllByAuthorAndApproveTrue(entity).stream()
+        return recipeRepository.findAllByAuthorAndStatus(entity, RecipeStatus.APPROVE).stream()
                 .mapToLong(recipe -> recipe.getLikes().size())
                 .sum();
     }

@@ -10,6 +10,7 @@ import org.naukma.yummyyams.category.CategoryEntity_;
 import org.naukma.yummyyams.recipe.dto.RecipeCreateUpdateDto;
 import org.naukma.yummyyams.recipe.dto.RecipeRequestDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
+import org.naukma.yummyyams.recipe.dto.RecipeStatus;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserService;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
     }
 
     public List<RecipeRequestDto> getRecipesRequest() {
-        return ((RecipeMapper) mapper).toRecipeRequestList(((RecipeRepository)repository).findAllByApproveFalse());
+        return ((RecipeMapper) mapper).toRecipeRequestList(((RecipeRepository)repository).findAllByStatus(RecipeStatus.IN_PROGRESS));
     }
 
     public Integer likeRecipe(Integer id) {
@@ -71,7 +72,7 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
 
     public Boolean approveRecipe(Integer id) {
         RecipeEntity toApprove = getById(id);
-        toApprove.setApprove(true);
+        toApprove.setStatus(RecipeStatus.APPROVE);
         repository.save(toApprove);
         return true;
     }
@@ -81,7 +82,7 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);
         Root<RecipeEntity> recipe = cq.from(RecipeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(cb.isTrue(recipe.get(RecipeEntity_.approve)));
+        predicates.add(cb.equal(recipe.get(RecipeEntity_.status), RecipeStatus.APPROVE));
         if (categoryId != null) {
             Join<RecipeEntity, CategoryEntity> category = recipe.join(RecipeEntity_.category, JoinType.LEFT);
             predicates.add(cb.equal(category.get(CategoryEntity_.id), categoryId));

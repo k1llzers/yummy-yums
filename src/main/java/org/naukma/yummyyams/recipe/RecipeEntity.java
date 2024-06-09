@@ -4,6 +4,8 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ import lombok.Setter;
 import org.naukma.yummyyams.base.Storagable;
 import org.naukma.yummyyams.category.CategoryEntity;
 import org.naukma.yummyyams.comment.CommentEntity;
+import org.naukma.yummyyams.recipe.dto.RecipeStatus;
 import org.naukma.yummyyams.user.UserEntity;
 
 import java.util.ArrayList;
@@ -82,6 +85,11 @@ public class RecipeEntity implements Storagable<Integer> {
 
     @Column(name = "approve")
     private Boolean approve;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    private RecipeStatus status;
+
 
     @Override
     public String getFolder() {

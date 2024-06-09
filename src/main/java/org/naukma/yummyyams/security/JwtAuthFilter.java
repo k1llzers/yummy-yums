@@ -31,7 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             token = authHeader.substring(7);
             try {
                 username = jwtService.extractUsername(token);
-            } catch (ExpiredJwtException ex) {
+            } catch (Exception ex) {
                 response.setStatus(401);
                 return;
             }

@@ -53,6 +53,11 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
         return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
     }
 
+    public Map<ProductDto, Integer> getFamilyList(Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        return ((FamilyMapper) mapper).toProductListResponse(family.getProducts());
+    }
+
     public Boolean sendRequest(Integer familyId, String userEmail) {
         FamilyEntity familyToRequest = getById(familyId);
         UserEntity toRequest = userService.getByEmail(userEmail);

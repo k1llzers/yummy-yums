@@ -75,4 +75,9 @@ public class FamilyController {
     public ResponseEntity<List<FamilyRequestDto>> getMyRequests() {
         return ResponseEntity.ok(service.getMyRequests());
     }
+
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Map<ProductDto, Integer>> getFamilyList(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getFamilyList(id));
+    }
 }

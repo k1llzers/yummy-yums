@@ -9,6 +9,8 @@ import {useEffect, useState} from "react";
 import RecipeCard from "../components/RecipeCard";
 import axios from "axios";
 
+let timer;
+
 const AllRecipesPage = () => {
     const [categories, setCategories] = useState([]);
     const [recipes, setRecipes] = useState([]);
@@ -65,7 +67,10 @@ const AllRecipesPage = () => {
     }, []);
 
     useEffect(() => {
-        fetchRecipes();
+        clearTimeout(timer)
+        timer = setTimeout(() =>
+            fetchRecipes(), 300
+        )
     }, [category, selectedProducts, titleSearch])
 
     return (

@@ -27,6 +27,7 @@ import {useNavigate} from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import CreateFamilyPopup from "../styles/CreateFamilyPopup";
 import EditFamilyPopup from "../components/EditFamilyPopup";
+import SingleAccount from "../components/SingleAccount";
 
 
 const AccountPage = () => {
@@ -47,9 +48,12 @@ const AccountPage = () => {
     const [ingredient, setIngredient] = useState("");
     const [checkProduct, setCheckProduct] = useState(true)
     const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedList, setSelectedList] = useState("Мій список");
+    const [selectedFamilyParticipants, setSelectedFamilyParticipants] = useState([]);
     const [ownRecipes, setOwnRecipes] = useState([]);
     const [likedRecipes, setLikedRecipes] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
+    const [families, setFamilies] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
@@ -134,6 +138,14 @@ const AccountPage = () => {
             setLikedRecipes([]);
         }
     }
+    const fetchFamilies = async () => {
+        const response = await axios.get("http://localhost:8080/api/family/my-families");
+        if (response) {
+            setFamilies(response.data)
+        } else {
+            setFamilies([])
+        }
+    }
     const handleAddProduct = async () => {
         setLimit((prev) => prev + 10);
         const response = await axios.get("http://localhost:8080/api/product?input=" + ingredient +
@@ -148,21 +160,32 @@ const AccountPage = () => {
     const onToggleLike = async (id) => {
         await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
         fetchLikedRecipes();
+        fetchOwnRecipes();
     }
     const onToggleResponse = async (id, accepted) =>{
         accepted ? await axios.put("http://localhost:8080/api/family/confirm-request/" + id) : await axios.put("http://localhost:8080/api/family/cancel-request/" + id)
         fetchFriendRequests();
+        fetchFamilies();
     }
 
     useEffect(() => {
         fetchPersonalInfo();
+        fetchFamilies();
         fetchOwnRecipes();
         fetchLikedRecipes();
         fetchFriendRequests();
     }, []);
     useEffect(() => {
         checkExistingProduct();
-    }, [ingredient])
+    }, [ingredient]);
+
+    useEffect(() => {
+        const selectedFamily = families.find(family => family.name === selectedList);
+        if (selectedFamily) {
+            setSelectedFamilyParticipants(selectedFamily.participants || []);
+        }
+    }, [selectedList, families]);
+
     useEffect(() => {
         if (ingredient === "") {
             setCheckProduct(true);
@@ -219,7 +242,7 @@ const AccountPage = () => {
     return (
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
-            <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup}/>
+            <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup} toogleFamily={fetchFamilies}/>
             <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
@@ -261,29 +284,30 @@ const AccountPage = () => {
                 </div>
                 <div className={'family-info-container'}>
                     <div className={'all-family-info-container'}>
-                        <select className="form-select form-select-family" aria-label="Default select example">
-                            <option selected>Оберіть сімʼю</option>
-                            <option value="1">Цікава сімейка</option>
-                            <option value="2">Дівчатка</option>
-                            <option value="3">Три недопрограміста</option>
+                        <select className="form-select form-select-family" aria-label="Default select example"
+                                value={selectedList}
+                                onChange={(event)=>setSelectedList(event.target.value)}
+                        >
+
+                            {families.map((family)=>(
+                                <option
+                                    key={family.id}
+                                    id={family.id}
+                                    value={family.name}
+                                    selected={family.name === "Мій список"}
+                                >
+                                    {family.name}
+                                </option>
+                            ))}
+
                         </select>
                         <div className={'selected-family-info'}>
-                            <div className={'single-account'}>
-                                <Image className="friend-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                            <div className={'single-account'}>
-                                <Image className="friend-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Артемій Петрович
-                            </div>
-                            <div className={'single-account'}>
-                                <Image className="friend-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Галина Антонівна
-                            </div>
-
+                            {selectedFamilyParticipants.map(participant => (
+                                <SingleAccount
+                                    key={participant.id}
+                                    id={participant.id}
+                                    pib={participant.pib} />
+                            ))}
                         </div>
                         <button className="create-family-button"
                                 onClick={() => setOpenCreateFamilyPopup(true)}>
@@ -292,7 +316,15 @@ const AccountPage = () => {
                     </div>
                     <div className={'edit-family-buttons'}>
                         <EditIcon
-                            onClick={() => setOpenEditFamilyPopup(true)}/>
+                            aria-disabled={selectedList === "Мій список"}
+                            onClick={() => {
+                                if (selectedList !== "Мій список") {
+                                    setOpenEditFamilyPopup(true);
+                                }
+                            }}
+                            style={{ pointerEvents: selectedList === "Мій список" ? 'none' : 'auto' ,
+                                color: selectedList === "Мій список" ? '#C1D7AE' : '#3D6827'}}/>
+
                     </div>
                 </div>
             </div>

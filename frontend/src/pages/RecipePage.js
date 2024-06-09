@@ -99,7 +99,7 @@ const RecipePage = () => {
     return (
         <>
             <div className="recipe-main-container">
-                <AddProductsPopup open={openAddProductsPopup} setOpen={setOpenProductsPopup} product={chosenProduct}/>
+                {role === 'USER' && <AddProductsPopup open={openAddProductsPopup} setOpen={setOpenProductsPopup} product={chosenProduct}/>}
                 <div className="recipe-inner-container">
                     <div className="recipe-page-main-info-container">
                         <div className="name-and-description-container">

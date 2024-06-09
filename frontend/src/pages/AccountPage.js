@@ -334,6 +334,7 @@ const AccountPage = () => {
                                     isLiked={recipe.iliked}
                                     status={recipe.status}
                                     updateMyRecipes={fetchOwnRecipes}
+                                    showStatus={true}
                                 />
                             ))}
                         </div>

@@ -9,12 +9,13 @@ import SimpleRecipeCard from "../components/SimpleRecipeCard";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
+import {useAuth} from "../provider/authProvider";
 
 
 const UserAccountPage = () => {
     const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
 
-    const id = useParams();
+    const userId = useParams();
     const [userRecipes, setUserRecipes] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
@@ -23,7 +24,7 @@ const UserAccountPage = () => {
     const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
 
     const fetchUserInfo = async () => {
-        const response = await axios.get("http://localhost:8080/api/user/" + id.id);
+        const response = await axios.get("http://localhost:8080/api/user/" + userId.id);
         if (response) {
             setAccountName(response.data.surname + " " + response.data.name);
             setAccountEmail(response.data.email);
@@ -35,7 +36,7 @@ const UserAccountPage = () => {
     }
 
     const fetchUserRecipes = async () => {
-        const response = await axios.get("http://localhost:8080/api/recipe/get-by-user/" + id.id);
+        const response = await axios.get("http://localhost:8080/api/recipe/get-by-user/" + userId.id);
         if (response) {
             setUserRecipes(response.data);
         } else {
@@ -50,12 +51,12 @@ const UserAccountPage = () => {
 
     useEffect(() => {
         fetchPhoto();
-    }, [id]);
+    }, [userId]);
 
 
     const fetchPhoto = async () => {
-        if (!id) return
-        await axios.get("http://localhost:8080/api/user/get-user-image/" + id.id, {
+        if (!userId) return
+        await axios.get("http://localhost:8080/api/user/get-user-image/" + userId.id, {
             responseType: "blob"
         }).then((response) => {
             if(response.data.type === 'application/json') return;
@@ -107,6 +108,7 @@ const UserAccountPage = () => {
                                     likes={recipe.countOfLikes}
                                     comments={recipe.countOfComments}
                                     isLiked={recipe.iliked}
+                                    showStatus={false}
                                 />
                             ))}
                         </div>

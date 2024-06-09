@@ -20,11 +20,18 @@ const AddProductsPopup = ({open, setOpen, product}) => {
     const [products, setProducts] = useState([]);
     const [limit, setLimit] = useState(10);
 
+    const [families, setFamilies] = useState([]);
+    const [selectedFamily, setSelectedFamily] = useState("");
+
     const storeImages = {
         "SILPO" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png",
         "ATB" : "https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656",
         "NOVUS" : "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
     }
+
+    useEffect(() => {
+        fetchFamilies();
+    }, []);
 
     useEffect(() => {
         setProductInput(product);
@@ -40,8 +47,13 @@ const AddProductsPopup = ({open, setOpen, product}) => {
         setProducts(response.data);
     }
 
+    const fetchFamilies = async () => {
+        const response = await axios.get("http://localhost:8080/api/family/my-families");
+        setFamilies(response.data);
+    }
+
     const addProductToList = async (id) => {
-        // const response = await axios.
+        await axios.put("http://localhost:8080/api/family/add-product/" + id + "/" + selectedFamily);
     }
 
     const Row = ({product}) => {
@@ -60,7 +72,10 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                 </TableCell>
                 <TableCell align="center">{product.price} грн</TableCell>
                 <TableCell align="center">
-                    <Button onClick={() => addProductToList(product.id)}><AddIcon/></Button>
+                    <Button
+                        onClick={() => addProductToList(product.id)}
+                        disabled={!selectedFamily}
+                    ><AddIcon/></Button>
                 </TableCell>
             </TableRow>
         )
@@ -75,10 +90,17 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                     <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
+                        value={selectedFamily}
+                        onChange={(e) => setSelectedFamily(e.target.value)}
                     >
-                        <MenuItem value={10}>Лялялял</MenuItem>
-                        <MenuItem value={20}>Лялялял</MenuItem>
-                        <MenuItem value={30}>Лялялял</MenuItem>
+                        {
+                            families.map((family) => (
+                                <MenuItem
+                                    key={family.id}
+                                    value={family.id}
+                                >{family.name}</MenuItem>
+                            ))
+                        }
                     </Select>
                 </FormControl>
                 <TableContainer component={Paper}>
@@ -88,6 +110,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
                             setOpen(false);
                             setProducts([]);
                             setLimit(10);
+                            setSelectedFamily("");
                         }}
                         sx={{
                             position: 'absolute',

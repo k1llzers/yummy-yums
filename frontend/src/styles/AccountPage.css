@@ -1,6 +1,6 @@
 .main-container {
     background-color: rgba(249, 250, 238, 1);
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .top-container {
@@ -179,7 +179,7 @@
     background-color: #C1D7AE;
     /*min-height: 209px;*/
     /*align-content: center;*/
-    height: 70vh;
+    min-height: 70vh;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;
@@ -288,11 +288,18 @@
 }
 .proposal-table-container .add-ingredient-button{
    width: 30%;
-    margin-left: 35%;
+    margin-bottom: 20px;
+    /*margin-left: 35%;*/
 }
 
 .control-product-number {
     white-space: nowrap;
+}
+
+.proposal-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .add-to-list-button.MuiButton-root {

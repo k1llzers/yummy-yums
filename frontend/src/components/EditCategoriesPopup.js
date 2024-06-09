@@ -1,4 +1,4 @@
-import {DialogContent, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {Button, DialogContent, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
@@ -88,13 +88,13 @@ const EditCategoriesPopup = ({open, setOpen}) => {
                                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                            <TableCell align="center">{category.name}</TableCell>
                                            <TableCell align="center">
-                                               <button
+                                               <Button
                                                    className="comment-delete-button"
                                                    onClick={() => deleteCategory(category.id)}
                                                    disabled={!category.canBeDeleted}
                                                >
                                                    <DeleteOutlineIcon/>
-                                               </button>
+                                               </Button>
                                            </TableCell>
                                        </TableRow>
                                    ))

@@ -12,7 +12,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
-const SimpleRecipeCard = ({id, title, likes, comments, isLiked, status, updateMyRecipes}) => {
+const SimpleRecipeCard = ({id, title, likes, comments, isLiked, status, updateMyRecipes, showStatus}) => {
 
     const defaultRecipePhoto = "https://i.pinimg.com/564x/07/7f/d7/077fd782b16b4fb5d96d5fcd74703039.jpg";
     const [photo, setPhoto] = useState(defaultRecipePhoto);
@@ -44,31 +44,33 @@ const SimpleRecipeCard = ({id, title, likes, comments, isLiked, status, updateMy
                         <Image className="simple-card-image" src={photo} />
                         <Link className="simple-card-link simple-card-title" to={`/recipe/${id}`}>{title}</Link>
                     </div>
-                    {status === 'APPROVE' ?
-                        <span className="recipe-status" style={{color: '#3D6827'}}>
+                    {showStatus && <div>
+                        {status === 'APPROVE' ?
+                            <span className="recipe-status" style={{color: '#3D6827'}}>
                             Затверджено
                             <VerifiedIcon fontSize="small" sx={{marginLeft: '5px'}}/>
                         </span> : status === 'IN_PROGRESS' ?
-                            <span className="recipe-status" style={{color: '#b1a848'}}>
+                                <span className="recipe-status" style={{color: '#b1a848'}}>
                                 В процесі
                                 <AutorenewIcon fontSize="small" sx={{marginLeft: '5px'}}/>
                             </span> :
-                            <span className="recipe-status" style={{color: '#974040'}}>
+                                <span className="recipe-status" style={{color: '#974040'}}>
                                 Відхилено
                                 <CancelIcon fontSize="small" sx={{marginLeft: '5px'}}/>
                             </span>
-                    }
+                        }
+                    </div>}
                     <div className="simple-recipe-likes">
                         <span className="simple-likes-item">{likes} {isLiked ? <FavoriteIcon/> :
                             <FavoriteBorderIcon/>}</span>
                         <span className="simple-likes-item">{comments} <ChatBubbleOutlineIcon/></span>
-                        <button
+                        {showStatus && <button
                             className="comment-delete-button simple-likes-item"
                             style={{fontSize: '1.5rem', padding: 0}}
                             onClick={deleteRecipe}
                         >
                             <DeleteOutlineIcon/>
-                        </button>
+                        </button>}
                     </div>
                 </div>
             </Card.Body>

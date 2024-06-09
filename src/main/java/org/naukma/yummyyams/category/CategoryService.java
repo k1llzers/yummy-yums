@@ -19,4 +19,8 @@ public class CategoryService extends BaseService<CategoryEntity, CategoryCreateU
     public List<CategoryResponseDto> getAll() {
         return ((CategoryMapper) mapper).toResponseDtoList(getAllEntities());
     }
+
+    public Boolean canBeDeleted(Integer id) {
+        return ((CategoryRepository) repository).canBeDeleted(id);
+    }
 }

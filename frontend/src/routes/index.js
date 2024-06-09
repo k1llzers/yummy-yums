@@ -88,7 +88,6 @@ const Routes = () => {
         ...routes404
     ]);
 
-    console.log(openUpdateCategories)
 
     return (
         <>

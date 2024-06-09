@@ -14,7 +14,6 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 
 const EditCategoriesPopup = ({open, setOpen}) => {
-    console.log(open)
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState("");
 

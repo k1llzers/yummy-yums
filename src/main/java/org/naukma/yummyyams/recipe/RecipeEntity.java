@@ -85,7 +85,7 @@ public class RecipeEntity implements Storagable<Integer> {
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
-    private RecipeStatus status;
+    private RecipeStatus status = RecipeStatus.IN_PROGRESS;
 
 
     @Override

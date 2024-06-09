@@ -13,7 +13,6 @@ import org.naukma.yummyyams.recipe.dto.RecipeRequestDto;
 import org.naukma.yummyyams.recipe.dto.RecipeResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
-import org.naukma.yummyyams.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -28,12 +27,14 @@ public abstract class RecipeMapper implements Mapper<RecipeEntity, RecipeCreateU
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
     @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
     @Mapping(target = "author", expression = "java(SecurityContextAccessor.getUser())")
+    @Mapping(target = "status", ignore = true)
     public abstract RecipeEntity mergeCreate(RecipeCreateUpdateDto dto);
 
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "category", expression = "java(getCategoryById(dto.getCategoryId()))")
     @Mapping(target = "ingredients", expression = "java(dto.getProductToCountMap().keySet())")
+    @Mapping(target = "status", ignore = true)
     public abstract void mergeUpdate(@MappingTarget RecipeEntity entity, RecipeCreateUpdateDto dto);
 
     @Override

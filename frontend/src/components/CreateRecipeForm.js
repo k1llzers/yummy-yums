@@ -19,7 +19,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
    const [categories, setCategories] = useState([]);
    const [ingredient, setIngredient] = useState("");
    const [number, setNumber] = useState("");
-   const [checkProduct, setCheckProduct] = useState(true)
+   const [checkProduct, setCheckProduct] = useState({canBeAdded: true})
 
    const [category, setCategory] = useState("");
    const [title, setTitle] = useState("");
@@ -96,7 +96,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
        if (ingredient.length === 0) return;
        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
        if(response.error) {
-           setCheckProduct(false);
+           setCheckProduct({});
        } else {
            console.log(response.data)
            setCheckProduct(response.data);

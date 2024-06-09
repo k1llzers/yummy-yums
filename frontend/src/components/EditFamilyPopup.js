@@ -17,8 +17,9 @@ const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
     const [familyName, setFamilyName] = useState("");
     const [currentParticipants, setCurrentParticipants] = useState([]);
     const [usersForRequest, setUsersForRequest] = useState([]);
-    console.log("family name "+familyName)
+
     const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+
     const checkExistingUser = async (curName) => {
         if (curName.length === 0) return;
         try {

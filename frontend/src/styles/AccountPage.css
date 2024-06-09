@@ -321,10 +321,6 @@
     background-color: #E2F0D2;
 }
 
-.minus-button {
-    color: rgba(127, 165, 105, 0.74);
-}
-
 .shop-image {
     width: 50px;
     height: auto;
@@ -347,10 +343,10 @@
     /*height: 100%;*/
     border-radius: 30px;
     padding: 10px 0;
-    margin: 16% 0;
+    margin: 4% 0;
     text-align: center;
 }
-@media (max-width: 1450px) {
+@media (max-width: 1650px) {
     .own-product-list {
         flex-direction: column;
         width: 80%;

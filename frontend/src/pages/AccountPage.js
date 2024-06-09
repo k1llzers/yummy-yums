@@ -29,6 +29,7 @@ import CreateFamilyPopup from "../styles/CreateFamilyPopup";
 import EditFamilyPopup from "../components/EditFamilyPopup";
 import SingleAccount from "../components/SingleAccount";
 import {useAuth} from "../provider/authProvider";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 
 const AccountPage = () => {
@@ -67,6 +68,7 @@ const AccountPage = () => {
     const [openCreateFamilyPopup, setOpenCreateFamilyPopup] = useState(false);
     const [openEditFamilyPopup, setOpenEditFamilyPopup] = useState(false);
     const [offeredProducts, setOfferedProducts] = useState([]);
+    const [productsList, setProductsList] = useState([]);
     const [limit, setLimit] = useState(0);
 
     const fetchPersonalInfo = async () => {
@@ -172,7 +174,18 @@ const AccountPage = () => {
     }
 
     const fetchListProducts = async () => {
+        if (currentFamily === 0) return
+        const response = await axios.get(`http://localhost:8080/api/family/list/${currentFamily}`)
+        if (response.data) {
+            setProductsList(processProductList(response.data))
+        }
+    }
 
+    const processProductList = (list) => {
+        return Object.entries(list).map(([serializedProduct, count]) => {
+            const product = JSON.parse(serializedProduct);
+            return { product, count };
+        }).sort((a, b) => a.product.id - b.product.id);
     }
 
     useEffect(() => {
@@ -196,11 +209,22 @@ const AccountPage = () => {
     }, [selectedList, families]);
 
     useEffect(() => {
+        fetchListProducts()
+    }, [currentFamily]);
+
+    useEffect(() => {
         if (ingredient === "") {
             setCheckProduct(true);
             setLimit(10);
         }
     }, [ingredient, limit])
+
+    const addProductToList = async (id) => {
+        const response = await axios.put("http://localhost:8080/api/family/increase-count/" + id + "/" + currentFamily);
+        if (response.data) {
+            setProductsList(processProductList(response.data))
+        }
+    }
 
     const OfferedRow = ({offered}) => {
         return (
@@ -212,10 +236,7 @@ const AccountPage = () => {
                 <TableCell align="left">{offered.name} </TableCell>
                 <TableCell align="center">
                     <div className={'control-product-number'}>
-                        {/*<Button*/}
-                        {/*    className={'add-to-list-button minus-button'}><RemoveIcon/></Button>*/}
                         {offered.weight}
-                        {/*<Button className={'add-to-list-button'}><AddIcon/></Button>*/}
                     </div>
                 </TableCell>
                 <TableCell align="center">
@@ -224,33 +245,47 @@ const AccountPage = () => {
                         className={'shop-image'}></Image></TableCell>
                 <TableCell align="center">{offered.price} грн</TableCell>
                 <TableCell align="center">
-                    <Button className={'add-to-list-button'}><AddIcon/></Button>
+                    <Button onClick={() => addProductToList(offered.id)} className={'add-to-list-button'}><AddIcon/></Button>
                 </TableCell>
             </TableRow>
         );
     }
 
     const ListRow = ({item}) => {
+        const handleDelete = async () => {
+            const response = await axios.put(`http://localhost:8080/api/family/delete-product/${item.product.id}/${currentFamily}`)
+            if (response.data) {
+                setProductsList(processProductList(response.data))
+            }
+        }
+
+        const handleDecrease = async () => {
+            const response = await axios.put(`http://localhost:8080/api/family/decrease-count/${item.product.id}/${currentFamily}`)
+            if (response.data) {
+                setProductsList(processProductList(response.data))
+            }
+        }
+
         return (
             <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell align="center">
-                    Помідориbbbbb bbbbbbbbb bbbbbbb bbbbbbbb
+                    {item.product.name}
                 </TableCell>
                 <TableCell align="center">
-                    1 шт
+                    {item.product.weight}
                 </TableCell>
-                <TableCell align="center">
-                    <button className={'add-to-list-button minus-button'}><RemoveIcon/></button>
-                    1
-                    <button className={'add-to-list-button'}><AddIcon/></button>
+                <TableCell align="center" sx={{whiteSpace: "nowrap"}}>
+                    <button onClick={handleDecrease} className={'add-to-list-button'}><RemoveIcon/></button>
+                    {item.count}
+                    <button onClick={() => addProductToList(item.product.id)} className={'add-to-list-button'}><AddIcon/></button>
                 </TableCell>
                 <TableCell align="center">
                     <Image
-                        src={'https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png'}
+                        src={storeImages[item.product.store]}
                         className={'shop-image'}></Image></TableCell>
-                <TableCell align="center">20 грн</TableCell>
+                <TableCell align="center">{(item.product.price * item.count).toFixed(2)} грн</TableCell>
                 <TableCell align="center">
-                    <Button className={'add-to-list-button'}><RemoveIcon/></Button>
+                    <Button onClick={handleDelete} className={'add-to-list-button'}><DeleteOutlineIcon/></Button>
                 </TableCell>
             </TableRow>
         )
@@ -450,7 +485,7 @@ const AccountPage = () => {
                             </div>
                             <div className={'product-list-container'}>
                                 <div className={'main-product-list-container'}>
-                                    <span className={'product-list-title'}>Мій список</span>
+                                    <span className={'product-list-title'}>{selectedList}</span>
                                     <TableContainer component={Paper} sx={{backgroundColor: '#F9FAEE', padding: '0 15px'}}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
                                             <TableHead>
@@ -464,27 +499,9 @@ const AccountPage = () => {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">
-                                                        Помідориbbbbb bbbbbbbbb bbbbbbb bbbbbbbb
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        1 шт
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <button className={'add-to-list-button minus-button'}><RemoveIcon/></button>
-                                                        1
-                                                        <button className={'add-to-list-button'}><AddIcon/></button>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
+                                                {productsList.map((product) => (
+                                                    <ListRow item={product}/>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>

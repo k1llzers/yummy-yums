@@ -53,7 +53,7 @@ const AddProductsPopup = ({open, setOpen, product}) => {
     }
 
     const addProductToList = async (id) => {
-        await axios.put("http://localhost:8080/api/family/add-product/" + id + "/" + selectedFamily);
+        await axios.put("http://localhost:8080/api/family/increase-count/" + id + "/" + selectedFamily);
     }
 
     const Row = ({product}) => {

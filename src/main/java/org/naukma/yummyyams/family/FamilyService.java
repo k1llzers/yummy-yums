@@ -2,7 +2,6 @@ package org.naukma.yummyyams.family;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.BaseService;
 import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
@@ -44,7 +43,7 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
         return repository.save(createdUserList).getId();
     }
 
-    public Map<ProductDto, Integer> addToList(Integer productId, Integer familyId) {
+    public Map<ProductDto, Integer> increaseCount(Integer productId, Integer familyId) {
         FamilyEntity family = getById(familyId);
         Map<ProductEntity, Integer> familyProducts = family.getProducts();
         ProductEntity product = productService.getById(productId);
@@ -53,7 +52,7 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
         return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
     }
 
-    public Map<ProductDto, Integer> removeFromList(Integer productId, Integer familyId) {
+    public Map<ProductDto, Integer> decreaseCount(Integer productId, Integer familyId) {
         FamilyEntity family = getById(familyId);
         Map<ProductEntity, Integer> familyProducts = family.getProducts();
         ProductEntity product = productService.getById(productId);
@@ -62,6 +61,15 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
             familyProducts.remove(product);
         else
             familyProducts.put(product, count);
+        repository.save(family);
+        return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
+    }
+
+    public Map<ProductDto, Integer> deleteFromList(Integer productId, Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        Map<ProductEntity, Integer> familyProducts = family.getProducts();
+        ProductEntity product = productService.getById(productId);
+        familyProducts.remove(product);
         repository.save(family);
         return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
     }

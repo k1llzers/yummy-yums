@@ -51,14 +51,19 @@ public class FamilyController {
         return ResponseEntity.ok(service.cancelRequest(familyId));
     }
 
-    @PutMapping("/add-product/{productId}/{familyId}")
-    public ResponseEntity<Map<ProductDto, Integer>> addProduct(@PathVariable Integer familyId, @PathVariable Integer productId) {
-        return ResponseEntity.ok(service.addToList(productId, familyId));
+    @PutMapping("/increase-count/{productId}/{familyId}")
+    public ResponseEntity<Map<ProductDto, Integer>> increaseCount(@PathVariable Integer familyId, @PathVariable Integer productId) {
+        return ResponseEntity.ok(service.increaseCount(productId, familyId));
     }
 
-    @PutMapping("/remove-product/{productId}/{familyId}")
+    @PutMapping("/decrease-count/{productId}/{familyId}")
+    public ResponseEntity<Map<ProductDto, Integer>> decreaseCount(@PathVariable Integer familyId, @PathVariable Integer productId) {
+        return ResponseEntity.ok(service.decreaseCount(productId, familyId));
+    }
+
+    @PutMapping("/delete-product/{productId}/{familyId}")
     public ResponseEntity<Map<ProductDto, Integer>> removeProduct(@PathVariable Integer familyId, @PathVariable Integer productId) {
-        return ResponseEntity.ok(service.removeFromList(productId, familyId));
+        return ResponseEntity.ok(service.deleteFromList(productId, familyId));
     }
 
     @DeleteMapping("/{id}")

@@ -15,6 +15,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+let recipeTimer
+
 const CreateRecipeForm = ({open, setOpen}) => {
    const [categories, setCategories] = useState([]);
    const [ingredient, setIngredient] = useState("");
@@ -43,7 +45,8 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }, []);
 
    useEffect(() => {
-       checkExistingProduct();
+       clearTimeout(recipeTimer)
+       recipeTimer = setTimeout(() => checkExistingProduct(), 300)
    }, [ingredient])
 
    const handleSubmitRecipe = async () => {

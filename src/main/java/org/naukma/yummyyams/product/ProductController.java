@@ -26,8 +26,8 @@ public class ProductController {
         return ResponseEntity.ok(service.getProductsBySimilarity(input, limit));
     }
 
-    @GetMapping("/can-be-added-to-recipe/{input}")
-    public ResponseEntity<CanBeAddedToRecipeDto> canBeAddedToRecipe(@PathVariable String input) {
+    @GetMapping("/can-be-added-to-recipe")
+    public ResponseEntity<CanBeAddedToRecipeDto> canBeAddedToRecipe(@RequestParam String input) {
         return ResponseEntity.ok(service.canBeAddedToRecipe(input));
     }
 }

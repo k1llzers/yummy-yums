@@ -1,6 +1,8 @@
 package org.naukma.yummyyams.family;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.BaseService;
 import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
@@ -21,8 +23,13 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateDto, Integer> {
     private static final String MY_LIST_NAME = "Мій список";
-    
+
     private final UserService userService;
+
+    @PostConstruct
+    public void init() {
+        userService.setFamilyService(this);
+    }
 
     public Integer createMySelfList(UserEntity user) {
         FamilyEntity createdUserList = FamilyEntity.builder()

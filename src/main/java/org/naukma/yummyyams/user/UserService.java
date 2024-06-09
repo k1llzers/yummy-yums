@@ -1,6 +1,7 @@
 package org.naukma.yummyyams.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.StoragableService;
 import org.naukma.yummyyams.family.FamilyService;
@@ -21,7 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class UserService extends StoragableService<UserEntity, UserCreateUpdateDto, Integer> {
-    private final FamilyService familyService;
+    @Setter
+    private FamilyService familyService;
 
     public UserResponse getMyselfInfo() {
         return mapper.toResponseDto(SecurityContextAccessor.getUser());

@@ -1,7 +1,7 @@
 CREATE TABLE comment(
     id SERIAL PRIMARY KEY,
     comment VARCHAR NOT NULL,
-    recipe_id INTEGER REFERENCES recipe(id),
+    recipe_id INTEGER REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE,
     user_id INTEGER REFERENCES users(id),
-    reply_to_id INTEGER REFERENCES comment(id)
+    reply_to_id INTEGER REFERENCES comment(id) ON DELETE CASCADE ON UPDATE CASCADE
 )

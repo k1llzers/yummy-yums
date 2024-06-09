@@ -4,7 +4,7 @@ CREATE TABLE family(
 );
 
 CREATE TABLE family_user(
-    family_id INTEGER NOT NULL REFERENCES family(id),
+    family_id INTEGER NOT NULL REFERENCES family(id) ON DELETE CASCADE ON UPDATE CASCADE,
     user_id INTEGER NOT NULL REFERENCES users(id),
     PRIMARY KEY (family_id, user_id)
 )

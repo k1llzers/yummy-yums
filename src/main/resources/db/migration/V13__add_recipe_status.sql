@@ -1,1 +1,0 @@
-ALTER TABLE recipe ADD COLUMN status smallint not null default 1;

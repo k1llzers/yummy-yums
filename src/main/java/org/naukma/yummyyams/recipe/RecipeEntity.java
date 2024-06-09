@@ -83,9 +83,6 @@ public class RecipeEntity implements Storagable<Integer> {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private CategoryEntity category;
 
-    @Column(name = "approve")
-    private Boolean approve;
-
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private RecipeStatus status;

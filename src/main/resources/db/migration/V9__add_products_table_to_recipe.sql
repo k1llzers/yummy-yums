@@ -1,4 +1,4 @@
 CREATE TABLE recipe_product(
-    recipe_id INTEGER REFERENCES recipe(id),
+    recipe_id INTEGER REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE,
     product VARCHAR NOT NULL
 )

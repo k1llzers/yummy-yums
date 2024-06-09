@@ -9,8 +9,30 @@ import SearchIconWrapper from "../styled components/SearchIconWrapper";
 import SearchIcon from "@mui/icons-material/Search";
 import StyledInputBase from "../styled components/StyledInputBase";
 import '../styles/EditFamilyPopup.css'
+import {useEffect, useState} from "react";
+import axios from "axios";
 
-const EditFamilyPopup = ({open, setOpen}) => {
+const EditFamilyPopup = ({open, setOpen, familyId}) => {
+    const [currentFamily, setCurrentFamily] = useState({"id": 0,
+        "name": "",
+        "participants": []});
+    const [familyName, setFamilyName] = useState(currentFamily.name);
+    console.log("family name "+familyId)
+    const fetchCurrentFamily = async ()=>{
+        const response = await axios.get("http://localhost:8080/api/family/"+familyId);
+        if (response) {
+            setCurrentFamily(response.data)
+        } else {
+            setCurrentFamily({
+                "id": 0,
+                "name": "",
+                "participants": []
+            })
+        }
+    }
+    useEffect(() => {
+        fetchCurrentFamily();
+    }, [familyId]);
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
@@ -34,6 +56,8 @@ const EditFamilyPopup = ({open, setOpen}) => {
                         fullWidth
                         id="standard-basic"
                         label="Редагуйте назву сімʼї"
+                        value={familyName}
+                        onChange={(event)=>setFamilyName(event.target.value)}
                         variant="standard"
                     />
                         <label className={'members-label'}>Члени сімʼї:</label>

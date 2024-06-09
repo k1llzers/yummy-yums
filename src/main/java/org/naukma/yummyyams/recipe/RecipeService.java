@@ -71,8 +71,16 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
     }
 
     public Boolean approveRecipe(Integer id) {
+        return setNewStatus(id, RecipeStatus.APPROVE);
+    }
+
+    public Boolean rejectRecipe(Integer id) {
+        return setNewStatus(id, RecipeStatus.REJECTED);
+    }
+
+    private Boolean setNewStatus(Integer id, RecipeStatus status) {
         RecipeEntity toApprove = getById(id);
-        toApprove.setStatus(RecipeStatus.APPROVE);
+        toApprove.setStatus(status);
         repository.save(toApprove);
         return true;
     }

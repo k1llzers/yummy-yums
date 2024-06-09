@@ -3,6 +3,7 @@ package org.naukma.yummyyams.user;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.base.EntityNotFoundMessage;
 import org.naukma.yummyyams.base.service.StoragableService;
+import org.naukma.yummyyams.family.FamilyService;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.naukma.yummyyams.user.dto.UserCreateUpdateDto;
@@ -11,6 +12,7 @@ import org.naukma.yummyyams.user.dto.UserShortResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,8 +21,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class UserService extends StoragableService<UserEntity, UserCreateUpdateDto, Integer> {
+    private final FamilyService familyService;
+
     public UserResponse getMyselfInfo() {
         return mapper.toResponseDto(SecurityContextAccessor.getUser());
+    }
+
+    @Override
+    public Integer createReturnId(UserCreateUpdateDto view, MultipartFile photo) {
+        UserEntity createdUser = createReturnEntity(view, photo);
+        familyService.createMySelfList(createdUser);
+        return createdUser.getId();
     }
 
     public UserEntity getByEmail(String email) {

@@ -10,13 +10,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 public abstract class StoragableService<E extends Storagable<I>, V extends GettableById<I>, I> extends BaseService<E, V, I> {
     @Transactional
-    public I create(V view, MultipartFile photo) {
+    public I createReturnId(V view, MultipartFile photo) {
+        return createReturnEntity(view, photo).getId();
+    }
+
+    @Transactional
+    public E createReturnEntity(V view, MultipartFile photo) {
         E entity = mapper.mergeCreate(view);
         preCreate(entity, view);
         E saved = repository.save(entity);
         if (photo != null)
             ImageService.saveImage(photo, entity);
-        return saved.getId();
+        return saved;
     }
 
     @Transactional

@@ -22,10 +22,16 @@ public abstract class BaseService<E extends GettableById<I>, V extends GettableB
 
     @Override
     @Transactional
-    public I create(V view) {
+    public I createReturnId(V view) {
+        return createReturnEntity(view).getId();
+    }
+
+    @Override
+    @Transactional
+    public E createReturnEntity(V view) {
         E entity = mapper.mergeCreate(view);
         preCreate(entity, view);
-        return repository.save(entity).getId();
+        return repository.save(entity);
     }
 
     @Override

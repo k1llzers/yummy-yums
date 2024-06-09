@@ -23,7 +23,7 @@ public class RecipeController {
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Integer> create(@RequestPart RecipeCreateUpdateDto recipe,  @RequestPart MultipartFile photo) {
-        return ResponseEntity.ok(service.create(recipe, photo));
+        return ResponseEntity.ok(service.createReturnId(recipe, photo));
     }
 
     @PutMapping

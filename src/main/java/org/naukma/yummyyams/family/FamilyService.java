@@ -20,7 +20,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateDto, Integer> {
+    private static final String MY_LIST_NAME = "Мій список";
+    
     private final UserService userService;
+
+    public Integer createMySelfList(UserEntity user) {
+        FamilyEntity createdUserList = FamilyEntity.builder()
+                .name(MY_LIST_NAME)
+                .participants(List.of(user))
+                .build();
+        return repository.save(createdUserList).getId();
+    }
 
     public Boolean sendRequest(Integer familyId, String userEmail) {
         FamilyEntity familyToRequest = getById(familyId);

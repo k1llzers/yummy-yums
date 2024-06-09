@@ -49,7 +49,6 @@ const AccountPage = () => {
     const {role, id} = useAuth();
     const [myId, setMyId] = useState("");
     const [ingredient, setIngredient] = useState("");
-    const [checkProduct, setCheckProduct] = useState(true)
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedList, setSelectedList] = useState("Мій список");
     const [selectedFamilyParticipants, setSelectedFamilyParticipants] = useState([]);
@@ -105,19 +104,6 @@ const AccountPage = () => {
     //         fetchLikedRecipes();
     //     }
     // };
-    const validateAddProduct = () => {
-        return ingredient.length > 0 && checkProduct;
-    }
-    const checkExistingProduct = async () => {
-        if (ingredient.length === 0) return;
-        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe?input=" + ingredient);
-        if (response.error) {
-            setCheckProduct(false);
-        } else {
-            console.log(response.data)
-            setCheckProduct(response.data);
-        }
-    }
     const fetchOwnRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my");
         if (response) {
@@ -196,9 +182,6 @@ const AccountPage = () => {
         fetchLikedRecipes();
         fetchFriendRequests();
     }, []);
-    useEffect(() => {
-        checkExistingProduct();
-    }, [ingredient]);
 
     useEffect(() => {
         const selectedFamily = families.find(family => family.name === selectedList);
@@ -214,7 +197,6 @@ const AccountPage = () => {
 
     useEffect(() => {
         if (ingredient === "") {
-            setCheckProduct(true);
             setLimit(10);
         }
     }, [ingredient, limit])
@@ -430,21 +412,16 @@ const AccountPage = () => {
                                         id="standard-basic"
                                         label="Введіть назву продукту"
                                         value={ingredient}
-                                        error={!checkProduct}
-                                        helperText={!checkProduct ? "Такого продукту немає в базі" : ""}
                                         onChange={(e) => {
                                             const current=e.target.value;
                                             setIngredient(current)
                                             if(current==='')setOfferedProducts([]);
                                         }
                                         }
-                                        onBlur={() => {
-                                            if (ingredient === '') setCheckProduct(true);
-                                        }}
                                         variant="standard"
                                     />
                                     <button className="add-ingredient-button"
-                                            disabled={!validateAddProduct()}
+                                            disabled={ingredient === ''}
                                             onClick={handleAddProduct}
                                     >
                                         <SearchIcon/>

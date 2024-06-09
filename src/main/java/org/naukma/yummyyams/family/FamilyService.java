@@ -8,6 +8,9 @@ import org.naukma.yummyyams.base.service.BaseService;
 import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
 import org.naukma.yummyyams.family.dto.FamilyRequestDto;
 import org.naukma.yummyyams.family.dto.FamilyResponseDto;
+import org.naukma.yummyyams.product.ProductEntity;
+import org.naukma.yummyyams.product.ProductService;
+import org.naukma.yummyyams.product.dto.ProductDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserEntity;
 import org.naukma.yummyyams.user.UserService;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @EntityNotFoundMessage(errorMessage = "Can`t find family by id")
 @Service
@@ -25,6 +29,7 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
     private static final String MY_LIST_NAME = "Мій список";
 
     private final UserService userService;
+    private final ProductService productService;
 
     @PostConstruct
     public void init() {
@@ -37,6 +42,33 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
                 .participants(List.of(user))
                 .build();
         return repository.save(createdUserList).getId();
+    }
+
+    public Map<ProductDto, Integer> addToList(Integer productId, Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        Map<ProductEntity, Integer> familyProducts = family.getProducts();
+        ProductEntity product = productService.getById(productId);
+        familyProducts.put(product, familyProducts.getOrDefault(product, 0) + 1);
+        repository.save(family);
+        return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
+    }
+
+    public Map<ProductDto, Integer> removeFromList(Integer productId, Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        Map<ProductEntity, Integer> familyProducts = family.getProducts();
+        ProductEntity product = productService.getById(productId);
+        Integer count = familyProducts.get(product) - 1;
+        if (count <= 0)
+            familyProducts.remove(product);
+        else
+            familyProducts.put(product, count);
+        repository.save(family);
+        return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
+    }
+
+    public Map<ProductDto, Integer> getFamilyList(Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        return ((FamilyMapper) mapper).toProductListResponse(family.getProducts());
     }
 
     public Boolean sendRequest(Integer familyId, String userEmail) {

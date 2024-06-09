@@ -29,6 +29,7 @@ const RecipePage = () => {
     const [author, setAuthor] = useState({});
     const [category, setCategory] = useState({});
     const [countOfLikes, setCountOfLikes] = useState(0);
+    const [status, setStatus] = useState('IN_PROGRESS');
     const [liked, setLiked] = useState(false);
     const [recipePhoto, setRecipePhoto] = useState(defaultRecipePhoto);
     const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
@@ -44,6 +45,7 @@ const RecipePage = () => {
         setCategory(response.data.category);
         setCountOfLikes(response.data.countOfLikes);
         setLiked(response.data.iliked);
+        setStatus(response.data.status);
     }
 
     const fetchRecipePhoto = async () => {
@@ -111,7 +113,7 @@ const RecipePage = () => {
                             </div>
                             <p className="recipe-name-label">{title}</p>
                             <p className="recipe-page-category"><span className="recipe-page-category-label">Категорія: </span>{category.name}</p>
-                            <div className="recipe-likes-info">
+                            {status === 'APPROVE' && <div className="recipe-likes-info">
                                 <span>{countOfLikes} </span>
                                 <button
                                     className="recipe-page-like-button"
@@ -120,7 +122,7 @@ const RecipePage = () => {
                                 >
                                     {liked ? <FavoriteIcon fontSize="large"/> : <FavoriteBorderIcon fontSize="large"/>}
                                 </button>
-                            </div>
+                            </div>}
                             <p className="recipe-page-description">{description}</p>
                         </div>
                         <Image className="recipe-page-img-left" src={recipePhoto}></Image>
@@ -144,7 +146,7 @@ const RecipePage = () => {
                             {instruction}
                         </p>
                     </div>
-                    <div className="recipe-page-comments-container">
+                    {status === 'APPROVE' && <div className="recipe-page-comments-container">
                         <p className="recipe-page-comments-label">Коментарі</p>
                         {role === 'USER' && <div className="add-comment-container">
                             <TextField
@@ -163,7 +165,7 @@ const RecipePage = () => {
                         {comments.map((comment) => (
                             <Comment commentObject={comment} commentShift={0} recipeId={recipeId.id} updateRecipe={fetchRecipe}/>
                         ))}
-                    </div>
+                    </div>}
                 </div>
             </div>
         </>

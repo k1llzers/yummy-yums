@@ -19,8 +19,6 @@ const AllRecipesPage = () => {
     const [category, setCategory] = useState(0);
     const [titleSearch, setTitleSearch] = useState("");
 
-    const [loading, setLoading] = useState(false);
-
     const productsOptions = products.map((product, index) => ({ title: product }));
     const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -33,13 +31,11 @@ const AllRecipesPage = () => {
         }
     }
 
-
     const fetchRecipes = async () => {
         const name = titleSearch.length > 0 ? "name=" + titleSearch : "";
         const categoryId = category > 0 ? "&categoryId=" + category : "";
         const ingredients = selectedProducts.length > 0 ? "&ingredients=" + selectedProducts.map(product => product.title).join(',') : "";
         setRecipes([]);
-        setLoading(true);
         let response;
         try {
             response = await axios.get("http://localhost:8080/api/recipe?" + name + categoryId + ingredients);
@@ -47,8 +43,6 @@ const AllRecipesPage = () => {
         } catch (error) {
             console.error("Error fetching recipes", error);
             setRecipes([]);
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -139,19 +133,16 @@ const AllRecipesPage = () => {
                     />
                 </div>
                 <div className="all-recipes-cards-container">
-                    {loading ? "" : (recipes.map((recipe) => (
-                                <RecipeCard
-                                    key={recipe.id}
-                                    id={recipe.id}
-                                    title={recipe.name}
-                                    author={recipe.author.pib}
-                                    authorId={recipe.author.id}
-                                    numberOfLikes={recipe.countOfLikes}
-                                    ingredients={recipe.ingredients}
-                                    isLiked={recipe.iliked}
-                                />
-                        ))
-                    )}
+                    {recipes.map((recipe) =>
+                        <RecipeCard
+                            key={recipe.id}
+                            id={recipe.id}
+                            title={recipe.name}
+                            author={recipe.author.pib}
+                            numberOfLikes={recipe.countOfLikes}
+                            ingredients={recipe.ingredients}
+                            isLiked={recipe.iliked}
+                        />)}
                 </div>
             </div>
         </div>

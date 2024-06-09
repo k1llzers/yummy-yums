@@ -3,6 +3,7 @@ package org.naukma.yummyyams.product;
 import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.product.dto.CanBeAddedToRecipeDto;
 import org.naukma.yummyyams.product.dto.ProductDto;
+import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,5 +29,11 @@ public class ProductService {
             mostPopular = productRepository.findMostSimilar(input);
         }
         return new CanBeAddedToRecipeDto(canBeAddedToRecipe, mostPopular);
+    }
+
+    public ProductEntity getById(Integer id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new NoSuchEntityException("Не знайдено продукту з таким id")
+                );
     }
 }

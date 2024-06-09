@@ -53,7 +53,7 @@ public class YummyYamsApplication {
             List<Callable<Set<ProductEntity>>> tasks = new ArrayList<>();
 //            tasks.add(silpoService::getFirstListProducts);
 //            tasks.add(silpoService::getSecondListProducts);
-//            tasks.add(atbService::getProducts);
+            tasks.add(atbService::getProducts);
             tasks.add(novusService::getProducts);
 
             try {

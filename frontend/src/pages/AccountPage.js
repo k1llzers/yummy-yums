@@ -108,7 +108,7 @@ const AccountPage = () => {
     }
     const checkExistingProduct = async () => {
         if (ingredient.length === 0) return;
-        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
+        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe?input=" + ingredient);
         if (response.error) {
             setCheckProduct(false);
         } else {
@@ -118,7 +118,6 @@ const AccountPage = () => {
     }
     const fetchOwnRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my");
-
         if (response) {
             setOwnRecipes(response.data);
         } else {
@@ -333,6 +332,8 @@ const AccountPage = () => {
                                     likes={recipe.countOfLikes}
                                     comments={recipe.countOfComments}
                                     isLiked={recipe.iliked}
+                                    status={recipe.status}
+                                    updateMyRecipes={fetchOwnRecipes}
                                 />
                             ))}
                         </div>

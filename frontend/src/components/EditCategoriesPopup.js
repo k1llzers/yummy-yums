@@ -12,16 +12,17 @@ import TableBody from "@mui/material/TableBody";
 import Dialog from "@mui/material/Dialog";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const EditCategoriesPopup = ({open, setOpen}) => {
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState("");
 
     const fetchCategories = async () => {
-        const response = await axios.get("http://localhost:8080/api/category");
+        const response = await axios.get("http://localhost:8080/api/category/with-can-be-deleted");
         if (response) {
             setCategories(response.data)
-        }else {
+        } else {
             setCategories([])
         }
     }
@@ -34,6 +35,12 @@ const EditCategoriesPopup = ({open, setOpen}) => {
         await axios.post("http://localhost:8080/api/category", {
             name: newCategory
         });
+        fetchCategories();
+        setNewCategory("");
+    }
+
+    const deleteCategory = async (id) => {
+        await axios.delete("http://localhost:8080/api/category/" + id);
         fetchCategories();
     }
 
@@ -67,11 +74,12 @@ const EditCategoriesPopup = ({open, setOpen}) => {
                         onChange={(e) => setNewCategory(e.target.value)}
                         variant="standard"
                     />
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
+                    <TableContainer component={Paper} sx={{width: '70%'}}>
+                        <Table sx={{ minWidth: 250, maxWidth: '70%'}} size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">Всі категорії</TableCell>
+                                    <TableCell align="center" style={{fontSize: '1.2rem'}}>Всі категорії</TableCell>
+                                    <TableCell align="center"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody sx={{backgroundColor: '#F9FAEE'}}>
@@ -79,6 +87,15 @@ const EditCategoriesPopup = ({open, setOpen}) => {
                                    categories.map((category) => (
                                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                            <TableCell align="center">{category.name}</TableCell>
+                                           <TableCell align="center">
+                                               <button
+                                                   className="comment-delete-button"
+                                                   onClick={() => deleteCategory(category.id)}
+                                                   disabled={!category.canBeDeleted}
+                                               >
+                                                   <DeleteOutlineIcon/>
+                                               </button>
+                                           </TableCell>
                                        </TableRow>
                                    ))
                                 }

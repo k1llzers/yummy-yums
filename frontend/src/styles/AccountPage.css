@@ -1,5 +1,6 @@
 .main-container {
     background-color: rgba(249, 250, 238, 1);
+    height: 100vh;
 }
 
 .top-container {
@@ -176,8 +177,9 @@
 }
 .tab-content {
     background-color: #C1D7AE;
-    min-height: 209px;
-    align-content: center;
+    /*min-height: 209px;*/
+    /*align-content: center;*/
+    height: 70vh;
 }
 .MuiButtonBase_root .MuiAccordionSummary-content{
     margin: 0;

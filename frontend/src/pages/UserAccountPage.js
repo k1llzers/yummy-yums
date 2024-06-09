@@ -12,12 +12,6 @@ import {useParams} from "react-router-dom";
 
 
 const UserAccountPage = () => {
-    const [weather, setWeather] = useState({
-        location: {
-            name: "Kyiv",
-            country: "Ukraine"
-        }
-    });
     const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
 
     const id = useParams();
@@ -83,9 +77,6 @@ const UserAccountPage = () => {
                                         <p className="account-title">{accountName}</p>
                                         <p className="account-info">
                                             {accountEmail}
-                                        </p>
-                                        <p className="account-info">
-                                            {weather.location.name}, {weather.location.country}
                                         </p>
                                         <div className={'with-icon'}>
                                             <p className="account-info">

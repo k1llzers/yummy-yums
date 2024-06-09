@@ -23,6 +23,11 @@
     justify-content: space-between;
 }
 
+.recipe-status {
+    font-family: "Gentium Plus", serif;
+    font-size: 1.2rem;
+}
+
 .simple-card-title {
     margin: 0 10px 0 20px;
     font-family: "Gentium Plus", serif;
@@ -69,5 +74,16 @@
 
     .simple-card-title {
         margin:0;
+    }
+
+    .simple-recipe-likes {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .simple-likes-item {
+        margin: 5px;
     }
 }

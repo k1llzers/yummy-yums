@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FamilyResponseDto {
+public class  FamilyResponseDto {
     private Integer id;
     private String name;
     private List<UserShortResponse> participants;

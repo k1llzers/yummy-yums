@@ -49,6 +49,7 @@ const AccountPage = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const [ownRecipes, setOwnRecipes] = useState([]);
     const [likedRecipes, setLikedRecipes] = useState([]);
+    const [friendRequests, setFriendRequests] = useState([]);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
@@ -117,6 +118,14 @@ const AccountPage = () => {
             setOwnRecipes([]);
         }
     }
+    const fetchFriendRequests = async () => {
+        const response = await axios.get("http://localhost:8080/api/family/my-requests");
+        if (response) {
+            setFriendRequests(response.data);
+        } else {
+            setFriendRequests([]);
+        }
+    }
     const fetchLikedRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my-liked")
         if (response) {
@@ -140,11 +149,16 @@ const AccountPage = () => {
         await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
         fetchLikedRecipes();
     }
+    const onToggleResponse = async (id, accepted) =>{
+        accepted ? await axios.put("http://localhost:8080/api/family/confirm-request/" + id) : await axios.put("http://localhost:8080/api/family/cancel-request/" + id)
+        fetchFriendRequests();
+    }
 
     useEffect(() => {
         fetchPersonalInfo();
         fetchOwnRecipes();
         fetchLikedRecipes();
+        fetchFriendRequests();
     }, []);
     useEffect(() => {
         checkExistingProduct();
@@ -495,26 +509,15 @@ const AccountPage = () => {
                     </Tab>
                     <Tab eventKey="friend-requests" title="Запити">
                         <div className={'friend-request-card'}>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
+                            {friendRequests.map((req) => (
+                                <FriendRequestCard
+                                    key={req.id}
+                                    id={req.id}
+                                    reqName={req.name}
+                                    participants={req.participants}
+                                    toggleResponse={onToggleResponse}
+                                />
+                                ))}
                         </div>
                     </Tab>
                 </Tabs>

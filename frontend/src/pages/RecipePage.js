@@ -59,7 +59,7 @@ const RecipePage = () => {
     }
 
     const fetchUserPhoto = async () => {
-        if (!author) return;
+        if (!author || !author.id) return;
         await axios.get("http://localhost:8080/api/user/get-user-image/" + author.id, {
             responseType: "blob"
         }).then((response) => {

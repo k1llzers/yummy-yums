@@ -56,6 +56,11 @@ public class FamilyController {
         return ResponseEntity.ok(service.addToList(productId, familyId));
     }
 
+    @PutMapping("/remove-product/{productId}/{familyId}")
+    public ResponseEntity<Map<ProductDto, Integer>> removeProduct(@PathVariable Integer familyId, @PathVariable Integer productId) {
+        return ResponseEntity.ok(service.removeFromList(productId, familyId));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(service.delete(id));

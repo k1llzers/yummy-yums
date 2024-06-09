@@ -53,6 +53,19 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
         return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
     }
 
+    public Map<ProductDto, Integer> removeFromList(Integer productId, Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        Map<ProductEntity, Integer> familyProducts = family.getProducts();
+        ProductEntity product = productService.getById(productId);
+        Integer count = familyProducts.get(product) - 1;
+        if (count <= 0)
+            familyProducts.remove(product);
+        else
+            familyProducts.put(product, count);
+        repository.save(family);
+        return ((FamilyMapper) mapper).toProductListResponse(familyProducts);
+    }
+
     public Map<ProductDto, Integer> getFamilyList(Integer familyId) {
         FamilyEntity family = getById(familyId);
         return ((FamilyMapper) mapper).toProductListResponse(family.getProducts());

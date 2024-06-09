@@ -260,7 +260,7 @@
     font-family: "Gentium Plus", serif;
     font-size: 1.2rem;
     background-color: #F9FAEE;
-    padding: 0;
+    padding: 10px 5px;
 }
 .main-product-list-container .product-list-title{
     color: #3D6827;
@@ -305,6 +305,24 @@
 .add-to-list-button.MuiButton-root {
     border-radius: 15px;
     color: #3D6827;
+    padding: 0;
+}
+
+.add-to-list-button {
+    border-radius: 15px;
+    color: #3D6827;
+    background-color: transparent;
+    border: none;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.add-to-list-button:hover {
+    background-color: #E2F0D2;
+}
+
+.minus-button {
+    color: rgba(127, 165, 105, 0.74);
 }
 
 .shop-image {
@@ -332,7 +350,7 @@
     margin: 16% 0;
     text-align: center;
 }
-@media (max-width: 1400px) {
+@media (max-width: 1450px) {
     .own-product-list {
         flex-direction: column;
         width: 80%;

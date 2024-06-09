@@ -171,6 +171,10 @@ const AccountPage = () => {
         fetchFamilies();
     }
 
+    const fetchListProducts = async () => {
+
+    }
+
     useEffect(() => {
         setMyId(id);
         fetchPersonalInfo();
@@ -225,6 +229,33 @@ const AccountPage = () => {
             </TableRow>
         );
     }
+
+    const ListRow = ({item}) => {
+        return (
+            <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                <TableCell align="center">
+                    Помідориbbbbb bbbbbbbbb bbbbbbb bbbbbbbb
+                </TableCell>
+                <TableCell align="center">
+                    1 шт
+                </TableCell>
+                <TableCell align="center">
+                    <button className={'add-to-list-button minus-button'}><RemoveIcon/></button>
+                    1
+                    <button className={'add-to-list-button'}><AddIcon/></button>
+                </TableCell>
+                <TableCell align="center">
+                    <Image
+                        src={'https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png'}
+                        className={'shop-image'}></Image></TableCell>
+                <TableCell align="center">20 грн</TableCell>
+                <TableCell align="center">
+                    <Button className={'add-to-list-button'}><RemoveIcon/></Button>
+                </TableCell>
+            </TableRow>
+        )
+    }
+
     return (
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
@@ -420,11 +451,12 @@ const AccountPage = () => {
                             <div className={'product-list-container'}>
                                 <div className={'main-product-list-container'}>
                                     <span className={'product-list-title'}>Мій список</span>
-                                    <TableContainer component={Paper}>
+                                    <TableContainer component={Paper} sx={{backgroundColor: '#F9FAEE', padding: '0 15px'}}>
                                         <Table sx={{minWidth: 650}} aria-label="simple table">
                                             <TableHead>
-                                                <TableRow sx={{'& td, & th': {width: 140}}}>
+                                                <TableRow sx={{'& td, & th': {width: 150}}}>
                                                     <TableCell align="center">Назва</TableCell>
+                                                    <TableCell align="center">Розмірність</TableCell>
                                                     <TableCell align="center">К-сть</TableCell>
                                                     <TableCell align="center">Магазин</TableCell>
                                                     <TableCell align="center">Ціна</TableCell>
@@ -434,89 +466,19 @@ const AccountPage = () => {
                                             <TableBody>
                                                 <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                                     <TableCell align="center">
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="flexCheckDefault1"/>
-                                                        Помідори
+                                                        Помідориbbbbb bbbbbbbbb bbbbbbb bbbbbbbb
                                                     </TableCell>
                                                     <TableCell align="center">
                                                         1 шт
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <button className={'add-to-list-button minus-button'}><RemoveIcon/></button>
+                                                        1
+                                                        <button className={'add-to-list-button'}><AddIcon/></button>
                                                     </TableCell>
                                                     <TableCell align="center">
                                                         <Image
                                                             src={'https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">
-
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="flexCheckDefault2"/>
-                                                        Помідори
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        1 шт
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://cdn.picodi.com/ua/files/shop-description/a/atbmarket/atb-logo.png?v=6656'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="flexCheckDefault3"/>
-                                                        Помідори
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        1 шт
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="flexCheckDefault4"/>
-                                                        Помідори
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        1 шт
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
-                                                            className={'shop-image'}></Image></TableCell>
-                                                    <TableCell align="center">20 грн</TableCell>
-                                                    <TableCell align="center">
-                                                        <Button className={'add-to-list-button'}><RemoveIcon/></Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                    <TableCell align="center">
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="flexCheckDefault5"/>
-                                                        Помідори
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        1 шт
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <Image
-                                                            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Silpo_outline_logo.svg/2560px-Silpo_outline_logo.svg.png'}
                                                             className={'shop-image'}></Image></TableCell>
                                                     <TableCell align="center">20 грн</TableCell>
                                                     <TableCell align="center">

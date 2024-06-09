@@ -192,26 +192,7 @@ const AccountPage = () => {
             setLimit(10);
         }
     }, [ingredient, limit])
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const {latitude, longitude} = position.coords;
-                fetch(`https://api.weatherapi.com/v1/forecast.json?key=f99baae0ef1a4d1187a94526231511&q=${latitude},${longitude}&days=5&aqi=no&alerts=yes`)
-                    .then((info) => info.json())
-                    .then((data) => {
-                        setWeather(data);
-                    })
-                    .catch((error) => {
-                        console.error("Exception: ", error);
-                    });
 
-            },
-            (error) => {
-                console.error("Error getting location:", error);
-            }
-        );
-
-    }, [navigation]);
     const OfferedRow = ({offered}) => {
         return (
             <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>

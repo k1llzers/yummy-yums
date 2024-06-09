@@ -1,6 +1,8 @@
 package org.naukma.yummyyams.product;
 
 import lombok.RequiredArgsConstructor;
+import org.naukma.yummyyams.product.dto.CanBeAddedToRecipeDto;
+import org.naukma.yummyyams.product.dto.ProductDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,12 @@ public class ProductService {
         return productMapper.toProductListDto(allOrderBySimilarity);
     }
 
-    public Boolean canBeAddedToRecipe(String input) {
-        return productRepository.canBeAddedToRecipe(input);
+    public CanBeAddedToRecipeDto canBeAddedToRecipe(String input) {
+        Boolean canBeAddedToRecipe = productRepository.canBeAddedToRecipe(input);
+        String mostPopular = null;
+        if (!canBeAddedToRecipe) {
+            mostPopular = productRepository.findMostSimilar(input);
+        }
+        return new CanBeAddedToRecipeDto(canBeAddedToRecipe, mostPopular);
     }
 }

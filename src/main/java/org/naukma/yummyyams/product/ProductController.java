@@ -1,6 +1,8 @@
 package org.naukma.yummyyams.product;
 
 import lombok.RequiredArgsConstructor;
+import org.naukma.yummyyams.product.dto.CanBeAddedToRecipeDto;
+import org.naukma.yummyyams.product.dto.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/can-be-added-to-recipe/{input}")
-    public ResponseEntity<Boolean> canBeAddedToRecipe(@PathVariable String input) {
+    public ResponseEntity<CanBeAddedToRecipeDto> canBeAddedToRecipe(@PathVariable String input) {
         return ResponseEntity.ok(service.canBeAddedToRecipe(input));
     }
 }

@@ -1,5 +1,3 @@
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import '../styles/AllRecipesPage.css'
 import SearchIcon from '@mui/icons-material/Search';
 import SearchIconWrapper from "../styled components/SearchIconWrapper";
@@ -9,8 +7,9 @@ import {Autocomplete, Chip, FormControl, InputLabel, MenuItem, Select} from "@mu
 import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
 import RecipeCard from "../components/RecipeCard";
-import {useAuth} from "../provider/authProvider";
 import axios from "axios";
+
+let timer;
 
 const AllRecipesPage = () => {
     const [categories, setCategories] = useState([]);
@@ -19,6 +18,8 @@ const AllRecipesPage = () => {
 
     const [category, setCategory] = useState(0);
     const [titleSearch, setTitleSearch] = useState("");
+
+    const [loading, setLoading] = useState(false);
 
     const productsOptions = products.map((product, index) => ({ title: product }));
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -32,12 +33,23 @@ const AllRecipesPage = () => {
         }
     }
 
+
     const fetchRecipes = async () => {
         const name = titleSearch.length > 0 ? "name=" + titleSearch : "";
         const categoryId = category > 0 ? "&categoryId=" + category : "";
         const ingredients = selectedProducts.length > 0 ? "&ingredients=" + selectedProducts.map(product => product.title).join(',') : "";
-        const response = await axios.get("http://localhost:8080/api/recipe?" + name + categoryId + ingredients);
-        setRecipes(response.data);
+        setRecipes([]);
+        setLoading(true);
+        let response;
+        try {
+            response = await axios.get("http://localhost:8080/api/recipe?" + name + categoryId + ingredients);
+            setRecipes(response.data);
+        } catch (error) {
+            console.error("Error fetching recipes", error);
+            setRecipes([]);
+        } finally {
+            setLoading(false)
+        }
     }
 
     const fetchProducts = async () => {
@@ -55,7 +67,10 @@ const AllRecipesPage = () => {
     }, []);
 
     useEffect(() => {
-        fetchRecipes();
+        clearTimeout(timer)
+        timer = setTimeout(() =>
+            fetchRecipes(), 300
+        )
     }, [category, selectedProducts, titleSearch])
 
     return (
@@ -124,18 +139,19 @@ const AllRecipesPage = () => {
                     />
                 </div>
                 <div className="all-recipes-cards-container">
-                    {recipes.map((recipe) => (
-                        <RecipeCard
-                            key={recipe.id}
-                            id={recipe.id}
-                            title={recipe.name}
-                            author={recipe.author.pib}
-                            authorId={recipe.author.id}
-                            numberOfLikes={recipe.countOfLikes}
-                            ingredients={recipe.ingredients}
-                            isLiked={recipe.iliked}
-                        />
-                    ))}
+                    {loading ? "" : (recipes.map((recipe) => (
+                                <RecipeCard
+                                    key={recipe.id}
+                                    id={recipe.id}
+                                    title={recipe.name}
+                                    author={recipe.author.pib}
+                                    authorId={recipe.author.id}
+                                    numberOfLikes={recipe.countOfLikes}
+                                    ingredients={recipe.ingredients}
+                                    isLiked={recipe.iliked}
+                                />
+                        ))
+                    )}
                 </div>
             </div>
         </div>

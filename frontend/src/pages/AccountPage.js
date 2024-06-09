@@ -522,10 +522,8 @@ const AccountPage = () => {
                     </Tab>
                 </Tabs>
             </div>
-            {/*<Footer/>*/}
         </div>
 
-    )
-        ;
+    );
 }
 export default AccountPage;

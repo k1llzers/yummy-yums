@@ -9,7 +9,7 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 import Divider from '@mui/material/Divider';
 import '../styles/Footer.css';
 import {useAuth} from "../provider/authProvider";
-const Footer  = ({setOpenCreateRecipe}) =>{
+const Footer  = ({setOpenCreateRecipe, setOpenUpdateCategories}) =>{
     const {role} = useAuth();
 
     return (
@@ -31,10 +31,12 @@ const Footer  = ({setOpenCreateRecipe}) =>{
                                         <Nav.Link href="/all-recipes" style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Рецепти</Nav.Link>
                                     </li>
                                     {role && <li>
-                                        <Nav.Link href="/account" style={{fontSize: "20px", fontFamily: "Forum",  color: "#3D6827"}}>Мій профіль</Nav.Link>
+                                        <Nav.Link href={role === 'USER' ? "/account" : "/manager"} style={{fontSize: "20px", fontFamily: "Forum",  color: "#3D6827"}}>Мій профіль</Nav.Link>
                                     </li>}
                                     {role && <li>
-                                        <Nav.Link onClick={() => setOpenCreateRecipe(true)} style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>Створити рецепт</Nav.Link>
+                                        <Nav.Link onClick={() => {role === 'USER' ? setOpenCreateRecipe(true) : setOpenUpdateCategories(true)}} style={{fontSize: "20px", fontFamily: "Forum", color: "#3D6827"}}>
+                                            {role === 'USER' ? "Створити рецепт" : "Редагувати категорії"}
+                                        </Nav.Link>
                                     </li>}
                                 </ul>
                             </Nav>

@@ -17,6 +17,7 @@ public class RecipeShortResponseDto {
     private String name;
     private UserShortResponse author;
     private Set<String> ingredients;
+    private Boolean approve;
     private Integer countOfLikes;
     private Integer countOfComments;
     private Boolean iLiked;

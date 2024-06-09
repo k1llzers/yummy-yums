@@ -14,7 +14,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
-const CreateFamilyPopup = ({open, setOpen}) => {
+const CreateFamilyPopup = ({open, setOpen, toogleFamily}) => {
     const [inputFamilyName, setInputFamilyName] = useState("");
     const [usersForRequest, setUsersForRequest] = useState([]);
     const [requests, setRequests] = useState([]);
@@ -25,6 +25,7 @@ const CreateFamilyPopup = ({open, setOpen}) => {
                 "usersId": requests
             });
         setOpen(false);
+        toogleFamily();
         clearFields();
     }
     const clearFields = () => {
@@ -77,7 +78,9 @@ const CreateFamilyPopup = ({open, setOpen}) => {
             <div className="family-page-members-item family-create-members-item">
                 <div className={'single-family-member-account'}>
                     <Image className="family-member-card-image"
-                           src={userPhoto}/>
+                           src={userPhoto}
+                           style={{objectFit:"cover"}}
+                    />
                     {user.pib}
                 </div>
                 <div className={"button-family"}>

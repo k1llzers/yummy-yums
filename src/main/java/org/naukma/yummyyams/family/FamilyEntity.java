@@ -49,14 +49,14 @@ public class FamilyEntity implements GettableById<Integer> {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> participants = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "family_product",
             joinColumns = @JoinColumn(name = "family_id"))
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "quantity")
     private Map<ProductEntity, Integer> products = new HashMap<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "family_requests",
             joinColumns = @JoinColumn(name = "family_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))

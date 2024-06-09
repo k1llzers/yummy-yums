@@ -20,7 +20,7 @@ public class CategoryService extends BaseService<CategoryEntity, CategoryCreateU
         return ((CategoryMapper) mapper).toResponseDtoList(getAllEntities());
     }
 
-    public Boolean canBeDeleted(Integer id) {
-        return ((CategoryRepository) repository).canBeDeleted(id);
+    public List<CategoryResponseDto> getAllWithCanBeDeleted() {
+        return ((CategoryRepository) repository).findWithCanBeDeleted();
     }
 }

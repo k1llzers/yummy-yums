@@ -43,8 +43,8 @@ public class CategoryController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/can-be-deleted/{id}")
-    public ResponseEntity<Boolean> canBeDeleted(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.canBeDeleted(id));
+    @GetMapping("/with-can-be-deleted")
+    public ResponseEntity<List<CategoryResponseDto>> canBeDeleted() {
+        return ResponseEntity.ok(service.getAllWithCanBeDeleted());
     }
 }

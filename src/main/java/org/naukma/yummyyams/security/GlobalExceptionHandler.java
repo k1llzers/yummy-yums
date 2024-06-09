@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.naukma.yummyyams.security.dto.ErrorResponse;
+import org.naukma.yummyyams.security.exception.NoImageException;
 import org.naukma.yummyyams.security.exception.NoSuchEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
         return ResponseEntity.ok(new ErrorResponse("Не вірний email або пароль", HttpStatus.CONFLICT.value()));
+    }
+
+    @ExceptionHandler({NoImageException.class})
+    public ResponseEntity<ErrorResponse> handleNoImageException(NoImageException e) {
+        return ResponseEntity.ok(new ErrorResponse("Неможливо звантажити фото", HttpStatus.NO_CONTENT.value()));
     }
 
     @ExceptionHandler(Exception.class)

@@ -3,6 +3,7 @@ package org.naukma.yummyyams.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.naukma.yummyyams.base.Storagable;
+import org.naukma.yummyyams.security.exception.NoImageException;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +44,7 @@ public class ImageService {
     @SneakyThrows
     public static  <T extends Storagable> Resource getPhoto(T toGet) {
         Path getPath = basePath.resolve(toGet.getFolder()  + toGet.getId().toString() + ".jpg");
+        if (!Files.exists(getPath)) throw new NoImageException();
         return new ByteArrayResource(Files.readAllBytes(getPath));
     }
 }

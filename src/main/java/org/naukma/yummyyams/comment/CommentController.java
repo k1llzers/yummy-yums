@@ -23,7 +23,7 @@ public class CommentController {
 
     @PostMapping()
     public ResponseEntity<Integer> create(@RequestBody CommentCreateUpdateDto body) {
-        return ResponseEntity.ok(commentService.create(body));
+        return ResponseEntity.ok(commentService.createReturnId(body));
     }
 
     @PutMapping()

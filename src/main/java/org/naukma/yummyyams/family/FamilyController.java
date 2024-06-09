@@ -26,7 +26,7 @@ public class FamilyController {
 
     @PostMapping
     public ResponseEntity<Integer> create(@RequestBody FamilyCreateUpdateDto body) {
-        return ResponseEntity.ok(service.create(body));
+        return ResponseEntity.ok(service.createReturnId(body));
     }
 
     @PutMapping

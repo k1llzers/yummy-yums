@@ -25,7 +25,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Integer> create(@RequestBody CategoryCreateUpdateDto body) {
-        return ResponseEntity.ok(service.create(body));
+        return ResponseEntity.ok(service.createReturnId(body));
     }
 
     @PutMapping

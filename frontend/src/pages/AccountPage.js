@@ -54,6 +54,7 @@ const AccountPage = () => {
     const [likedRecipes, setLikedRecipes] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
     const [families, setFamilies] = useState([]);
+    const [currentFamily, setCurrentFamily] = useState(0);
     const [accountName, setAccountName] = useState("");
     const [accountEmail, setAccountEmail] = useState("");
     const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
@@ -161,6 +162,7 @@ const AccountPage = () => {
         await axios.put("http://localhost:8080/api/recipe/unlike/" + id);
         fetchLikedRecipes();
         fetchOwnRecipes();
+        fetchPersonalInfo();
     }
     const onToggleResponse = async (id, accepted) =>{
         accepted ? await axios.put("http://localhost:8080/api/family/confirm-request/" + id) : await axios.put("http://localhost:8080/api/family/cancel-request/" + id)
@@ -183,6 +185,7 @@ const AccountPage = () => {
         const selectedFamily = families.find(family => family.name === selectedList);
         if (selectedFamily) {
             setSelectedFamilyParticipants(selectedFamily.participants || []);
+            setCurrentFamily(selectedFamily.id);
         }
     }, [selectedList, families]);
 
@@ -243,7 +246,7 @@ const AccountPage = () => {
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
             <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup} toogleFamily={fetchFamilies}/>
-            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup}/>
+            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup} familyId={currentFamily}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card" id={'account-card'}>

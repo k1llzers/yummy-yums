@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from "axios";
 
-const RecipeCard = ({id, title, author, authorId, numberOfLikes, ingredients, isLiked}) => {
+const RecipeCard = ({id, title, author, numberOfLikes, ingredients, isLiked}) => {
 
     const {role} = useAuth();
     const defaultRecipePhoto = "https://i.pinimg.com/564x/07/7f/d7/077fd782b16b4fb5d96d5fcd74703039.jpg";

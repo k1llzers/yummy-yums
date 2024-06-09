@@ -89,6 +89,9 @@
     margin-bottom: 30px;
     border-radius: 10px;
     transition: ease 0.5s;
+    background-color: #F9FAEE;
+    display: flex;
+    justify-content: center;
 }
 
 .create-recipe-dialog .MuiFormLabel-root.Mui-focused {

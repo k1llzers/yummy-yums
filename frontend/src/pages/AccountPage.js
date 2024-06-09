@@ -116,7 +116,6 @@ const AccountPage = () => {
     }
     const fetchOwnRecipes = async () => {
         const response = await axios.get("http://localhost:8080/api/recipe/get-my");
-
         if (response) {
             setOwnRecipes(response.data);
         } else {
@@ -328,6 +327,8 @@ const AccountPage = () => {
                                     likes={recipe.countOfLikes}
                                     comments={recipe.countOfComments}
                                     isLiked={recipe.iliked}
+                                    status={recipe.status}
+                                    updateMyRecipes={fetchOwnRecipes}
                                 />
                             ))}
                         </div>

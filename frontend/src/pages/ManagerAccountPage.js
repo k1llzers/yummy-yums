@@ -2,9 +2,9 @@ import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import FriendRequestCard from "../components/FriendRequestCard";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import RecipeRequestCard from "../components/RecipeRequestCard";
 
 const ManagerAccountPage = () => {
     const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
@@ -13,6 +13,7 @@ const ManagerAccountPage = () => {
     const [accountEmail, setAccountEmail] = useState("");
     const [accountPhoto, setAccountPhoto] = useState(defaultPhoto);
     const [accountId, setAccountId] = useState("");
+    const [requests, setRequests] = useState([]);
 
 
     const fetchPersonalInfo = async () => {
@@ -36,8 +37,14 @@ const ManagerAccountPage = () => {
         });
     }
 
+    const fetchRequests = async () => {
+        const response = await axios.get("http://localhost:8080/api/recipe/get-requests");
+        setRequests(response.data);
+    }
+
     useEffect(() => {
         fetchPersonalInfo();
+        fetchRequests();
     }, []);
 
     useEffect(() => {
@@ -69,26 +76,18 @@ const ManagerAccountPage = () => {
                     id="controlled-tab-example"
                 ><Tab eventKey="friend-requests" title="Запити">
                         <div className={'friend-request-card'}>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
-                            <FriendRequestCard/>
+                            {
+                                requests.map((request) => (
+                                    <RecipeRequestCard
+                                        key={request.id}
+                                        id={request.id}
+                                        title={request.name}
+                                        author={request.author}
+                                        description={request.description}
+                                        updateRequests={fetchRequests}
+                                    />
+                                ))
+                            }
                         </div>
                 </Tab>
                 </Tabs>

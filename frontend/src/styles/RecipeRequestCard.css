@@ -1,0 +1,33 @@
+.recipe-request-card-container {
+    width: 100%;
+    background-color: #F9FAEE;
+    border-radius: 30px;
+    border: solid 2px #3D6827;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recipe-request-info {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 30px 20px 30px;
+}
+
+.recipe-request-title {
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.recipe-request-info-item {
+    font-size: 1.2rem;
+    font-family: "Gentium Plus", serif;
+    color: #3D6827;
+    margin: 0 0 10px 0;
+}
+
+.recipe-request-info-title {
+    font-weight: bold;
+}

@@ -64,6 +64,10 @@
     color: #3D6827;
 }
 
+.comment-delete-button:disabled {
+    color: #C1D7AE;
+}
+
 .MuiAccordion-gutters{
     background-color: transparent;
     border: none;

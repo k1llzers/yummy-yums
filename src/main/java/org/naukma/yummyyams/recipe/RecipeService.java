@@ -81,7 +81,7 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
         CriteriaQuery<RecipeEntity> cq = cb.createQuery(RecipeEntity.class);
         Root<RecipeEntity> recipe = cq.from(RecipeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-//        predicates.add(cb.isTrue(recipe.get(RecipeEntity_.approve))); TODO: uncomment when it is possible
+        predicates.add(cb.isTrue(recipe.get(RecipeEntity_.approve)));
         if (categoryId != null) {
             Join<RecipeEntity, CategoryEntity> category = recipe.join(RecipeEntity_.category, JoinType.LEFT);
             predicates.add(cb.equal(category.get(CategoryEntity_.id), categoryId));

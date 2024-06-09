@@ -28,6 +28,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CreateFamilyPopup from "../styles/CreateFamilyPopup";
 import EditFamilyPopup from "../components/EditFamilyPopup";
 import SingleAccount from "../components/SingleAccount";
+import {useAuth} from "../provider/authProvider";
 
 
 const AccountPage = () => {
@@ -44,7 +45,8 @@ const AccountPage = () => {
         "NOVUS": "https://upload.wikimedia.org/wikipedia/uk/thumb/f/ff/Novus_Ukraina_logo.svg/1200px-Novus_Ukraina_logo.svg.png"
     }
     const defaultPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
-
+    const {role, id} = useAuth();
+    const [myId, setMyId] = useState("");
     const [ingredient, setIngredient] = useState("");
     const [checkProduct, setCheckProduct] = useState(true)
     const [selectedTab, setSelectedTab] = useState(0);
@@ -171,6 +173,7 @@ const AccountPage = () => {
     }
 
     useEffect(() => {
+        setMyId(id);
         fetchPersonalInfo();
         fetchFamilies();
         fetchOwnRecipes();
@@ -227,7 +230,7 @@ const AccountPage = () => {
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
             <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup} toogleFamily={fetchFamilies}/>
-            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup} familyId={currentFamily}/>
+            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup} familyId={currentFamily} myId={myId}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card" id={'account-card'}>
@@ -290,7 +293,9 @@ const AccountPage = () => {
                                 <SingleAccount
                                     key={participant.id}
                                     id={participant.id}
-                                    pib={participant.pib} />
+                                    pib={participant.pib}
+                                    myId={myId}
+                                />
                             ))}
                         </div>
                         <button className="create-family-button"

@@ -12,16 +12,79 @@ import '../styles/EditFamilyPopup.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-const EditFamilyPopup = ({open, setOpen, familyId}) => {
-    const [currentFamily, setCurrentFamily] = useState({"id": 0,
-        "name": "",
-        "participants": []});
-    const [familyName, setFamilyName] = useState(currentFamily.name);
-    console.log("family name "+familyId)
-    const fetchCurrentFamily = async ()=>{
-        const response = await axios.get("http://localhost:8080/api/family/"+familyId);
+const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
+    const [currentFamily, setCurrentFamily] = useState({});
+    const [familyName, setFamilyName] = useState("");
+    const [currentParticipants, setCurrentParticipants] = useState([]);
+    const [usersForRequest, setUsersForRequest] = useState([]);
+    console.log("family name "+familyName)
+    const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+    const checkExistingUser = async (curName) => {
+        if (curName.length === 0) return;
+        try {
+            const response = await axios.get(`http://localhost:8080/api/user/by-restrict/${curName}`);
+
+            if (response.data && Array.isArray(response.data)) {
+                const filteredUsers = response.data.filter(user =>
+                    !currentParticipants.some(participant => participant.id === user.id)
+                );
+                setUsersForRequest(filteredUsers);
+            } else {
+                setUsersForRequest([]);
+            }
+        } catch (error) {
+            console.error("Error fetching users:", error);
+            setUsersForRequest([]);
+        }
+    }
+    const FamilyMemberButton = ({id, pib})=>{
+        const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
+        const fetchUserPhoto = async () => {
+            if (!id) return;
+            await axios.get("http://localhost:8080/api/user/get-user-image/" +id, {
+                responseType: "blob"
+            }).then((response) => {
+                if(response.data.type === 'application/json') return;
+                setUserPhoto(URL.createObjectURL(response.data));
+            });
+        }
+        useEffect(() => {
+            fetchUserPhoto();
+        }, [id]);
+        return (
+            <button className="family-page-members-item">
+                <div className={'single-family-member-account'}>
+                    <Image className="family-member-card-image"
+                           src={userPhoto}
+                           style={{objectFit:"cover"}}
+                    />
+                    {myId == id ? <a
+                        className="card-title-a"
+                        href={``}
+                        style={{color:"#3D6827"
+
+                        }}
+                    >
+                        {pib}
+                    </a> : <a
+                        className="card-title-a"
+                        href={`/user/${id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{color:"#3D6827"}}
+                    >
+                        {pib}
+                    </a>}
+                </div>
+            </button>
+        );
+    }
+    const fetchCurrentFamily = async () => {
+        const response = await axios.get("http://localhost:8080/api/family/" + familyId);
         if (response) {
             setCurrentFamily(response.data)
+            setFamilyName(response.data.name)
+            setCurrentParticipants(response.data.participants || []);
         } else {
             setCurrentFamily({
                 "id": 0,
@@ -29,6 +92,10 @@ const EditFamilyPopup = ({open, setOpen, familyId}) => {
                 "participants": []
             })
         }
+    }
+    const clearFields = () => {
+        setFamilyName(currentFamily.name);
+        // setCurrentParticipants([]);
     }
     useEffect(() => {
         fetchCurrentFamily();
@@ -45,7 +112,7 @@ const EditFamilyPopup = ({open, setOpen, familyId}) => {
                         color: (theme) => theme.palette.grey[500],
                     }}
                     onClick={()=>{
-                        // clearFields();
+                        clearFields();
                         setOpen(false);
                     }}
                 >
@@ -62,49 +129,13 @@ const EditFamilyPopup = ({open, setOpen, familyId}) => {
                     />
                         <label className={'members-label'}>Члени сімʼї:</label>
                     <div className="family-page-members" id={'family-member-list'}>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                        </button>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                        </button>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                        </button>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-
-                        </button>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                        </button>
-                        <button className="family-page-members-item">
-                            <div className={'single-family-member-account'}>
-                                <Image className="family-member-card-image"
-                                       src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                Анатолій Журба
-                            </div>
-                        </button>
+                        {currentParticipants && currentParticipants.map((user) => (
+                            <FamilyMemberButton
+                                key={user.id}
+                                id={user.id}
+                                pib={user.pib}
+                            />
+                        ))}
                     </div>
                     <div className={'add-new-members-container'}>
                         <div>
@@ -113,8 +144,13 @@ const EditFamilyPopup = ({open, setOpen, familyId}) => {
                                     <SearchIcon sx={{color: '#3D6827'}}/>
                                 </SearchIconWrapper>
                                 <StyledInputBase
-                                    placeholder="Імʼя нового члена"
+                                    placeholder="Імʼя або e-mail нового члена"
                                     inputProps={{'aria-label': 'search'}}
+                                    onChange={(event) => {
+                                        const nameCurrent = event.target.value;
+                                        if (nameCurrent==='')setUsersForRequest([])
+                                        else checkExistingUser(nameCurrent);
+                                    }}
                                 />
                             </Search>
                             <div className={'family-page-members family-create-members '}>

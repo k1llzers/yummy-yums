@@ -147,7 +147,6 @@ const CreateFamilyPopup = ({open, setOpen, toogleFamily}) => {
                                     inputProps={{'aria-label': 'search'}}
                                     onChange={(event) => {
                                         const nameCurrent = event.target.value;
-                                        console.log("current name " + nameCurrent)
                                         if (nameCurrent==='')setUsersForRequest([])
                                         else checkExistingUser(nameCurrent);
                                     }}

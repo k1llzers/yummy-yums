@@ -106,7 +106,7 @@ const AccountPage = () => {
     }
     const checkExistingProduct = async () => {
         if (ingredient.length === 0) return;
-        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe/" + ingredient);
+        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe?input=" + ingredient);
         if (response.error) {
             setCheckProduct(false);
         } else {

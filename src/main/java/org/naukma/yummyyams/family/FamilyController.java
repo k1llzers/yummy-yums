@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
 import org.naukma.yummyyams.family.dto.FamilyRequestDto;
 import org.naukma.yummyyams.family.dto.FamilyResponseDto;
+import org.naukma.yummyyams.product.dto.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/family")
@@ -47,6 +49,11 @@ public class FamilyController {
     @PutMapping("/cancel-request/{familyId}")
     public ResponseEntity<Boolean> rejectRequest(@PathVariable Integer familyId) {
         return ResponseEntity.ok(service.cancelRequest(familyId));
+    }
+
+    @PutMapping("/add-product/{productId}/{familyId}")
+    public ResponseEntity<Map<ProductDto, Integer>> addProduct(@PathVariable Integer familyId, @PathVariable Integer productId) {
+        return ResponseEntity.ok(service.addToList(productId, familyId));
     }
 
     @DeleteMapping("/{id}")

@@ -9,6 +9,9 @@ import org.naukma.yummyyams.family.dto.FamilyCreateUpdateDto;
 import org.naukma.yummyyams.family.dto.FamilyRequestDto;
 import org.naukma.yummyyams.family.dto.FamilyResponseDto;
 import org.naukma.yummyyams.mapper.MapperConfig;
+import org.naukma.yummyyams.product.ProductEntity;
+import org.naukma.yummyyams.product.ProductMapper;
+import org.naukma.yummyyams.product.dto.ProductDto;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserEntity;
 import org.naukma.yummyyams.user.UserMapper;
@@ -16,9 +19,10 @@ import org.naukma.yummyyams.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@org.mapstruct.Mapper(config = MapperConfig.class, uses = {UserMapper.class}, imports = {SecurityContextAccessor.class})
+@org.mapstruct.Mapper(config = MapperConfig.class, uses = {UserMapper.class, ProductMapper.class}, imports = {SecurityContextAccessor.class})
 public abstract class FamilyMapper implements Mapper<FamilyEntity, FamilyCreateUpdateDto> {
     @Autowired
     protected UserService userService;
@@ -41,6 +45,8 @@ public abstract class FamilyMapper implements Mapper<FamilyEntity, FamilyCreateU
     public abstract List<FamilyResponseDto> toResponseDtoList(List<FamilyEntity> entity);
 
     public abstract List<FamilyRequestDto> toFamilyRequestDtoList(List<FamilyEntity> entity);
+
+    public abstract Map<ProductDto, Integer> toProductListResponse(Map<ProductEntity, Integer> list);
 
     protected List<UserEntity> mapUsersIdToUsersEntity(List<Integer> usersId) {
         return usersId.stream()

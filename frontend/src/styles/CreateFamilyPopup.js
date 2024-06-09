@@ -18,15 +18,25 @@ const CreateFamilyPopup = ({open, setOpen}) => {
     const [inputFamilyName, setInputFamilyName] = useState("");
     const [usersForRequest, setUsersForRequest] = useState([]);
     const [requests, setRequests] = useState([]);
+    const handleSubmitFamily = async ()=>{
+        await axios.post("http://localhost:8080/api/family",
+            {
+                "name":inputFamilyName,
+                "usersId": requests
+            });
+        setOpen(false);
+        clearFields();
+    }
     const clearFields = () => {
         setInputFamilyName("");
         setRequests([]);
+        setUsersForRequest([]);
     }
     const checkExistingUser = async (curName) => {
         if (curName.length === 0) return;
         const response = await axios.get("http://localhost:8080/api/user/by-restrict/" + curName);
         if (response.error) {
-            setRequests([]);
+            setUsersForRequest([]);
         } else {
             console.log("input name user : " + curName);
             setUsersForRequest(response.data);
@@ -35,31 +45,39 @@ const CreateFamilyPopup = ({open, setOpen}) => {
     const validateCreatingFamily = () => {
         return inputFamilyName !== '';
     }
-    const handleRequestToggle = (id) => {
+    const handleRequestToggle = (userId) => {
         setRequests((prevRequests) => {
-            if (prevRequests.includes(id)) {
-                return prevRequests.filter(requestId => requestId !== id);
+            if (prevRequests.includes(userId)) {
+                console.log(requests);
+                return prevRequests.filter(requestId => requestId !== userId);
             } else {
-                return [...prevRequests, id];
+                console.log(requests);
+                return [...prevRequests, userId];
             }
         });
     };
-    const fetchPhoto = async (userId) => {
-        if (!userId) return
-        await axios.get("http://localhost:8080/api/user/get-user-image/" + userId, {
-            responseType: "blob"
-        }).then((response) => {
-            if(response.data.type === 'application/json') return;
-            return(URL.createObjectURL(response.data));
-        });
-    }
-    const isRequested = (userId)=>{ return requests.includes(userId);}
+    const isRequested = (userId)=>{return requests.includes(userId);}
     const OfferedUser = ({user}) => {
+        const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+        const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
+        const fetchUserPhoto = async () => {
+            if (!user) return;
+            await axios.get("http://localhost:8080/api/user/get-user-image/" + user.id, {
+                responseType: "blob"
+            }).then((response) => {
+                if(response.data.type === 'application/json') return;
+                setUserPhoto(URL.createObjectURL(response.data));
+            });
+        }
+        useEffect(() => {
+            fetchUserPhoto();
+        }, [user]);
+
         return (
             <div className="family-page-members-item family-create-members-item">
                 <div className={'single-family-member-account'}>
                     <Image className="family-member-card-image"
-                           src={user.photo}/>
+                           src={userPhoto}/>
                     {user.pib}
                 </div>
                 <div className={"button-family"}>
@@ -136,7 +154,6 @@ const CreateFamilyPopup = ({open, setOpen}) => {
                                 {usersForRequest.map((propose)=>(
                                     <OfferedUser
                                         key={propose.id}
-                                        photo={fetchPhoto(propose.id)}
                                         user={propose}
                                     />
                                 ))}
@@ -145,7 +162,9 @@ const CreateFamilyPopup = ({open, setOpen}) => {
                     </div>
                     <div id={'save-new-family-container'} className={'edit-family-bottom-buttons'}>
                         <button id={'save-new-family-button'} className="edit-family-form-button"
-                                disabled={!validateCreatingFamily()}>
+                                disabled={!validateCreatingFamily()}
+                                onClick={handleSubmitFamily}
+                        >
                             Зберегти зміни
                         </button>
                     </div>

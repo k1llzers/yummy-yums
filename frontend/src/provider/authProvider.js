@@ -42,6 +42,7 @@ const AuthProvider =  ({children}) => {
         const token = localStorage.getItem("token")
         if (token && !config.skipAuth)
             config.headers.Authorization = 'Bearer ' + token;
+        // config.url = config.url.replace("http://localhost:8080", "https://yummy-yums.onrender.com")
         return config;
     });
 

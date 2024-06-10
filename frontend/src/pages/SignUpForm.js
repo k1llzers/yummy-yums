@@ -57,7 +57,7 @@ const SignUpForm = ({open, setOpen}) => {
 
     const validateSignUp = () => {
         return emailRegex.test(email) && password === repeatedPassword &&
-            name.length > 0 && surname.length > 0 && password.length > 0 && repeatedPassword.length > 0;
+            name.trim().length > 0 && surname.trim().length > 0 && password.trim().length > 0 && repeatedPassword.trim().length > 0;
     }
 
     const clearFields = () => {
@@ -143,7 +143,7 @@ const SignUpForm = ({open, setOpen}) => {
                         variant="standard"
                         type="password"
                         required
-                        disabled={password.length === 0}
+                        disabled={password.trim().length === 0}
                         error={passwordError}
                         helperText={passwordError ? "Паролі повинні збігатись" : ""}
                         value={repeatedPassword}

@@ -91,12 +91,12 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }
 
    const validateSubmitRecipe = () => {
-       return title.length > 0 && description.length > 0 && instruction.length > 0
+       return title.trim().length > 0 && description.trim().length > 0 && instruction.trim().length > 0
            && Object.keys(ingredients).length > 0 && category > 0 && photo;
    }
 
    const checkExistingProduct = async () => {
-       if (ingredient.length === 0) return;
+       if (ingredient.trim().length === 0) return;
        const response = await axios.get("http://localhost:8080/api/product/can-be-added-to-recipe?input=" + ingredient);
        if(response.error) {
            setCheckProduct({});
@@ -107,7 +107,7 @@ const CreateRecipeForm = ({open, setOpen}) => {
    }
 
    const validateAddProduct = () => {
-       return ingredient.length > 0 && number.length > 0 && !ingredients[ingredient] && checkProduct.canBeAdded;
+       return ingredient.trim().length > 0 && number.trim().length > 0 && !ingredients[ingredient] && checkProduct.canBeAdded;
    }
 
     const handleAddProduct = () => {

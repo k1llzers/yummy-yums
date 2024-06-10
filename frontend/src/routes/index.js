@@ -9,8 +9,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import CreateRecipeForm from "../components/CreateRecipeForm";
-import LogOut from "../pages/LogOut";
-import { useParams } from "react-router-dom";
+import Logout from "../pages/LogOut";
 import UserAccountPage from "../pages/UserAccountPage";
 import ErrorPage from "../pages/ErrorPage";
 import ManagerAccountPage from "../pages/ManagerAccountPage";
@@ -44,7 +43,7 @@ const Routes = () => {
                 },
                 {
                     path: "/logout",
-                    element: <LogOut />,
+                    element: <Logout />,
                 }
             ]
         }

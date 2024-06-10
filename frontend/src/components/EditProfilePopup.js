@@ -96,7 +96,7 @@ const EditProfilePopup = ({open, setOpen, updatePersonalInfo}) => {
         }));
     };
     const validateEditingAccount = () =>{
-        return checkEqualPasswords();
+        return checkEqualPasswords() || tempAccount.tempAccName.trim().length === 0 || tempAccount.tempAccSurname.trim().length === 0;
     }
     useEffect(() => {
         getStaticInfo();

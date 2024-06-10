@@ -102,7 +102,7 @@ const EditCategoriesPopup = ({open, setOpen}) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <button className="create-recipe-button" disabled={newCategory.length === 0 || validateCategory()} onClick={addCategory}>
+                    <button className="create-recipe-button" disabled={newCategory.trim().length === 0 || validateCategory()} onClick={addCategory}>
                         Додати категорію
                     </button>
                 </div>

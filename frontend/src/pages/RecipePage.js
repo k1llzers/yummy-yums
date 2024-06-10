@@ -158,7 +158,7 @@ const RecipePage = () => {
                             />
                             <button
                                 className="recipe-page-add-comment-button"
-                                disabled={newComment.length === 0}
+                                disabled={newComment.trim().length === 0}
                                 onClick={addComment}
                             >Надіслати</button>
                         </div>}

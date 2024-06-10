@@ -36,7 +36,7 @@ const LogInForm = ({openLogin, setOpenLogin}) => {
     }
 
     const validateLogIn = () => {
-        return emailRegex.test(email) && email.length > 0 && password.length > 0;
+        return emailRegex.test(email) && email.trim().length > 0 && password.trim().length > 0;
     }
 
     const clearFields = () => {

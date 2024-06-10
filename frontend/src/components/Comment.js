@@ -78,7 +78,7 @@ const Comment = ({commentObject, commentShift, recipeId, updateRecipe}) => {
                 />
                 <button
                     className="comment-reply-button"
-                    disabled={newReply.length === 0}
+                    disabled={newReply.trim().length === 0}
                     onClick={addReply}
                 >Відповісти</button>
             </div>}

@@ -305,7 +305,11 @@
 .add-to-list-button.MuiButton-root {
     border-radius: 15px;
     color: #3D6827;
-    padding: 0;
+    background-color: transparent;
+    border: none;
+    margin: 0 10px;
+    text-align: center;
+    padding: 5px;
 }
 
 .add-to-list-button {
@@ -315,6 +319,7 @@
     border: none;
     margin: 0 10px;
     text-align: center;
+    padding-bottom: 4px;
 }
 
 .add-to-list-button:hover {

@@ -8,7 +8,7 @@ import '../styles/EditProfilePopup.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-const EditProfilePopup = ({open, setOpen, updatePersonalInfo}) => {
+const EditProfilePopup = ({open, setOpen, updatePersonalInfo, updatePersonalPhoto}) => {
     const [passwordError, setPasswordError] = useState(false);
     const [staticAccount, setStaticAccount] = useState({
         staticAccName: "",
@@ -68,6 +68,7 @@ const EditProfilePopup = ({open, setOpen, updatePersonalInfo}) => {
             .finally(() => {
                 setOpen(false);
                 updatePersonalInfo();
+                updatePersonalPhoto();
                 getStaticInfo();
                 clearFields();
             });

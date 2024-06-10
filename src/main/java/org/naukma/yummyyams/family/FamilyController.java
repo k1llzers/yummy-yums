@@ -36,6 +36,11 @@ public class FamilyController {
         return ResponseEntity.ok(service.update(body));
     }
 
+    @PutMapping("/leave/{familyId}")
+    public ResponseEntity<Boolean> leaveFromFamily(@PathVariable Integer familyId) {
+        return ResponseEntity.ok(service.leaveFromFamily(familyId));
+    }
+
     @PutMapping("/send-request/{familyId}/{userEmail}")
     public ResponseEntity<Boolean> sendRequestToFamily(@PathVariable Integer familyId, @PathVariable String userEmail) {
         return ResponseEntity.ok(service.sendRequest(familyId, userEmail));

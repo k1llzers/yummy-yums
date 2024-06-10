@@ -79,6 +79,17 @@ public class FamilyService extends BaseService<FamilyEntity, FamilyCreateUpdateD
         return ((FamilyMapper) mapper).toProductListResponse(family.getProducts());
     }
 
+    public Boolean leaveFromFamily(Integer familyId) {
+        FamilyEntity family = getById(familyId);
+        List<UserEntity> participants = family.getParticipants();
+        participants.remove(SecurityContextAccessor.getUser());
+        if (participants.isEmpty())
+            repository.delete(family);
+        else
+            repository.save(family);
+        return true;
+    }
+
     public Boolean sendRequest(Integer familyId, String userEmail) {
         FamilyEntity familyToRequest = getById(familyId);
         UserEntity toRequest = userService.getByEmail(userEmail);

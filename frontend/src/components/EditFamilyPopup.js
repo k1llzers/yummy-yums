@@ -12,10 +12,13 @@ import '../styles/EditFamilyPopup.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
+const EditFamilyPopup = ({open, setOpen, familyId, myId, toggleFamily, changeList}) => {
     const [currentFamily, setCurrentFamily] = useState({});
+    const [requests, setRequests] = useState([]);
     const [familyName, setFamilyName] = useState("");
     const [currentParticipants, setCurrentParticipants] = useState([]);
+    const [confirmRequests, setConfirmRequests] = useState([]);
+
     const [usersForRequest, setUsersForRequest] = useState([]);
 
     const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
@@ -80,12 +83,29 @@ const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
             </button>
         );
     }
+    const handleEditingFamily = async (toChange) =>{
+        //не забути змінити сonfirmRequests, бо працюватиме некоректно в разі якщо на інпуті не змінюватиметься сімя і імя нормально встановити тільлки після клер філдс
+        toChange? await axios.put("http://localhost:8080/api/family",
+            {
+                "id":familyId,
+                "name":familyName,
+                "usersId": requests
+            }): await axios.put("http://localhost:8080/api/family/leave/"+familyId);
+        setConfirmRequests(requests);
+        setUsersForRequest([]);
+        toggleFamily();
+        changeList();
+        setOpen(false)
+    }
     const fetchCurrentFamily = async () => {
         const response = await axios.get("http://localhost:8080/api/family/" + familyId);
         if (response) {
             setCurrentFamily(response.data)
             setFamilyName(response.data.name)
             setCurrentParticipants(response.data.participants || []);
+            const requestIds = (response.data.requests || []).map(request => request.id);
+            setRequests(requestIds);
+            setConfirmRequests(requestIds);
         } else {
             setCurrentFamily({
                 "id": 0,
@@ -97,10 +117,69 @@ const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
     const clearFields = () => {
         setFamilyName(currentFamily.name);
         // setCurrentParticipants([]);
+        setRequests(confirmRequests);
+        setUsersForRequest([]);
     }
     useEffect(() => {
         fetchCurrentFamily();
     }, [familyId]);
+    const isRequested = (userId)=>{return requests.includes(userId);}
+    const handleRequestToggle = (userId) => {
+        setRequests((prevRequests) => {
+            if (prevRequests.includes(userId)) {
+                return prevRequests.filter(requestId => requestId !== userId);
+            } else {
+                return [...prevRequests, userId];
+            }
+        });
+    };
+    const OfferedEditUser = ({user}) => {
+        const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
+        const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
+        const fetchUserPhoto = async () => {
+            if (!user) return;
+            await axios.get("http://localhost:8080/api/user/get-user-image/" + user.id, {
+                responseType: "blob"
+            }).then((response) => {
+                if(response.data.type === 'application/json') return;
+                setUserPhoto(URL.createObjectURL(response.data));
+            });
+        }
+        useEffect(() => {
+            fetchUserPhoto();
+        }, [user]);
+
+        return (
+            <div className="family-page-members-item family-create-members-item">
+                <div className={'single-family-member-account'}>
+                    <Image className="family-member-card-image"
+                           src={userPhoto}
+                           style={{objectFit:"cover"}}
+                    />
+                    {user.pib}
+                </div>
+                <div className={"button-family"}>
+                    <button
+                        className="create-family-form-button"
+                    >
+                        <a
+                            className="card-title-a"
+                            href={`/user/${user.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Переглянути профіль
+                        </a>
+                    </button>
+                    <button className="create-family-form-button"
+                            onClick={() => handleRequestToggle(user.id)}
+                    >
+                        {isRequested(user.id) ? 'Скасувати запит' : 'Надіслати запит'}
+                    </button>
+                </div>
+            </div>
+        );
+    }
     return (
         <Dialog open={open} maxWidth="md" fullWidth>
             <DialogContent sx={{backgroundColor: '#F9FAEE'}}>
@@ -155,59 +234,25 @@ const EditFamilyPopup = ({open, setOpen, familyId, myId}) => {
                                 />
                             </Search>
                             <div className={'family-page-members family-create-members '}>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="family-page-members-item family-create-members-item">
-                                    <div className={'single-family-member-account'}>
-                                        <Image className="family-member-card-image"
-                                               src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"/>
-                                        Анатолій Журба
-                                    </div>
-                                    <div className={"button-family"}>
-                                        <button className="create-family-form-button">
-                                            Переглянути профіль
-                                        </button>
-                                        <button className="create-family-form-button">
-                                            Надіслати запит
-                                        </button>
-                                    </div>
-                                </div>
+                                {usersForRequest.map((propose)=>(
+                                    <OfferedEditUser
+                                        key={propose.id}
+                                        user={propose}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
                     <div className={'edit-family-bottom-buttons'}>
-                        <button className="edit-family-form-button">
+                        <button className="edit-family-form-button"
+                                onClick={() => handleEditingFamily(false)}
+                        >
                             Покинути сімʼю
                         </button>
-                        <button className="edit-family-form-button">
+                        <button
+                            className="edit-family-form-button"
+                            onClick={() => handleEditingFamily(true)}
+                        >
                             Зберегти зміни
                         </button>
                     </div>

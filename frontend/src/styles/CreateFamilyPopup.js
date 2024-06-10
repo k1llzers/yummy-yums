@@ -39,7 +39,6 @@ const CreateFamilyPopup = ({open, setOpen, toogleFamily}) => {
         if (response.error) {
             setUsersForRequest([]);
         } else {
-            console.log("input name user : " + curName);
             setUsersForRequest(response.data);
         }
     }
@@ -49,16 +48,14 @@ const CreateFamilyPopup = ({open, setOpen, toogleFamily}) => {
     const handleRequestToggle = (userId) => {
         setRequests((prevRequests) => {
             if (prevRequests.includes(userId)) {
-                console.log(requests);
                 return prevRequests.filter(requestId => requestId !== userId);
             } else {
-                console.log(requests);
                 return [...prevRequests, userId];
             }
         });
     };
     const isRequested = (userId)=>{return requests.includes(userId);}
-    const OfferedUser = ({user}) => {
+    const UsersToAdd = ({user}) => {
         const defaultUserPhoto = "https://i.pinimg.com/564x/77/00/70/7700709ac1285b907c498a70fbccea5e.jpg";
         const [userPhoto, setUserPhoto] = useState(defaultUserPhoto);
         const fetchUserPhoto = async () => {
@@ -154,7 +151,7 @@ const CreateFamilyPopup = ({open, setOpen, toogleFamily}) => {
                             </Search>
                             <div className={'family-create-members '}>
                                 {usersForRequest.map((propose)=>(
-                                    <OfferedUser
+                                    <UsersToAdd
                                         key={propose.id}
                                         user={propose}
                                     />

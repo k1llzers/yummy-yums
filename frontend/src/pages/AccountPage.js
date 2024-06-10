@@ -166,6 +166,9 @@ const AccountPage = () => {
             setProductsList(processProductList(response.data))
         }
     }
+    const fetchParticipants =()=>{
+        setSelectedList("Мій список");
+    }
 
     const processProductList = (list) => {
         return Object.entries(list).map(([serializedProduct, count]) => {
@@ -277,7 +280,7 @@ const AccountPage = () => {
         <div className={'main-container'}>
             <EditProfilePopup open={openEditProfilePopup} setOpen={setOpenEditProfilePopup} updatePersonalInfo={fetchPersonalInfo}/>
             <CreateFamilyPopup open={openCreateFamilyPopup} setOpen={setOpenCreateFamilyPopup} toogleFamily={fetchFamilies}/>
-            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup} familyId={currentFamily} myId={myId}/>
+            <EditFamilyPopup open={openEditFamilyPopup} setOpen={setOpenEditFamilyPopup} familyId={currentFamily} myId={myId} toggleFamily={fetchFamilies} changeList={fetchParticipants}/>
             <div className={"top-container"}>
                 <div className={'personal-info-container'}>
                     <Card body className="account-card" id={'account-card'}>

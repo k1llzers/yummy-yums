@@ -13,9 +13,11 @@ import org.naukma.yummyyams.recipe.dto.RecipeShortResponseDto;
 import org.naukma.yummyyams.recipe.dto.RecipeStatus;
 import org.naukma.yummyyams.security.SecurityContextAccessor;
 import org.naukma.yummyyams.user.UserService;
+import org.naukma.yummyyams.utils.ImageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,10 @@ public class RecipeService extends StoragableService<RecipeEntity, RecipeCreateU
                 .flatMap(recipe -> recipe.getIngredients().stream())
                 .distinct()
                 .toList();
+    }
+
+    public Boolean addPhotoToRecipe(Integer recipeId, MultipartFile photo) {
+        return ImageService.saveImage(photo, getById(recipeId));
     }
 
     public List<RecipeShortResponseDto> getMyRecipes() {

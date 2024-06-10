@@ -26,6 +26,11 @@ public class RecipeController {
         return ResponseEntity.ok(service.createReturnId(recipe, photo));
     }
 
+    @PutMapping(value = "/add-photo/{id}",consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Boolean> addPhotoToRecipe(@PathVariable Integer id,  @RequestPart MultipartFile photo) {
+        return ResponseEntity.ok(service.addPhotoToRecipe(id, photo));
+    }
+
     @PutMapping
     public ResponseEntity<Boolean> update(@RequestPart RecipeCreateUpdateDto recipe,  @RequestPart MultipartFile photo) {
         return ResponseEntity.ok(service.update(recipe, photo));

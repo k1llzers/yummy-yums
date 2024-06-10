@@ -8,6 +8,12 @@
 }
 .liked-recipe-card .card-body{
     padding: 1% 1%;
+    display: flex;
+
+}
+.liked-recipe-card .card-body .card-body{
+   display: flex;
+    align-self: center;
 }
 .recipe-card-liked .card-image {
     width: 75px;

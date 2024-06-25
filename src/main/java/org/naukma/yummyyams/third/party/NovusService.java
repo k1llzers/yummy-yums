@@ -156,5 +156,5 @@ public class NovusService implements ScrapeService {
             "https://novus.online/category/konservacia", "https://novus.online/category/pasti",
             "https://novus.online/category/iza-svidkogo-prigotuvanna", "https://novus.online/category/suhi-snidanki",
             "https://novus.online/category/borosno", "https://novus.online/category/makaronni-virobi",
-            "https://novus.online/category/krupi");
+            "https://novus.online/category/krupi", "https://novus.zakaz.ua/uk/categories/eighteen-plus/", "https://novus.zakaz.ua/uk/categories/drinks/");
 }

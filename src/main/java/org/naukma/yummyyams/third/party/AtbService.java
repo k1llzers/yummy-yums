@@ -171,5 +171,5 @@ public class AtbService implements ScrapeService {
             "https://www.atbmarket.com/catalog/315-molochni-produkti", "https://www.atbmarket.com/catalog/353-riba-i-moreprodukti",
             "https://www.atbmarket.com/catalog/325-khlibobulochni-virobi", "https://www.atbmarket.com/catalog/322-zamorozheni-produkti",
             "https://www.atbmarket.com/catalog/kava-caj", "https://www.atbmarket.com/catalog/343-m-yaso-ta-yaytsya",
-            "https://www.atbmarket.com/catalog/360-kovbasa-i-m-yasni-delikatesi");
+            "https://www.atbmarket.com/catalog/360-kovbasa-i-m-yasni-delikatesi", "https://www.atbmarket.com/catalog/294-napoi-bezalkogol-ni", "https://www.atbmarket.com/catalog/292-alkogol-i-tyutyun");
 }

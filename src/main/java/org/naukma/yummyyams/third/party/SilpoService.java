@@ -151,9 +151,9 @@ public class SilpoService {
 
     private final List<String> firstCategoriesLinks = List.of("https://shop.silpo.ua/category/frukty-ovochi-4788", "https://shop.silpo.ua/category/m-iaso-4411",
             "https://shop.silpo.ua/category/ryba-4430", "https://shop.silpo.ua/category/kovbasni-vyroby-i-m-iasni-delikatesy-4731",
-            "https://shop.silpo.ua/category/syry-1468", "https://shop.silpo.ua/category/khlib-ta-khlibobulochni-vyroby-486");
+            "https://shop.silpo.ua/category/syry-1468", "https://shop.silpo.ua/category/khlib-ta-khlibobulochni-vyroby-486", "https://shop.silpo.ua/category/napoi-52");
 
     private final List<String> secondCategoriesLinks = List.of("https://shop.silpo.ua/category/molochni-produkty-ta-iaitsia-234", "https://shop.silpo.ua/category/lavka-tradytsii-4487",
             "https://shop.silpo.ua/category/zdorove-kharchuvannia-4864", "https://shop.silpo.ua/category/bakaliia-65",
-            "https://shop.silpo.ua/category/konservy-sousy-prypravy-130", "https://shop.silpo.ua/category/kava-chai-359");
+            "https://shop.silpo.ua/category/konservy-sousy-prypravy-130", "https://shop.silpo.ua/category/kava-chai-359", "https://shop.silpo.ua/category/alkogol-22");
 }

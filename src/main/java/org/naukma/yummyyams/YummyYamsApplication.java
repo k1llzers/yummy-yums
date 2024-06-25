@@ -51,20 +51,25 @@ public class YummyYamsApplication {
             ExecutorService executor = Executors.newFixedThreadPool(4);
 
             List<Callable<Set<ProductEntity>>> tasks = new ArrayList<>();
-//            tasks.add(silpoService::getFirstListProducts);
-//            tasks.add(silpoService::getSecondListProducts);
+            tasks.add(silpoService::getFirstListProducts);
+            tasks.add(silpoService::getSecondListProducts);
             tasks.add(atbService::getProducts);
             tasks.add(novusService::getProducts);
+
+
 
             try {
                 log.info("waiting for products");
                 List<Future<Set<ProductEntity>>> results = executor.invokeAll(tasks);
                 log.info("products fetched");
+                List<ProductEntity> toSave = new ArrayList<>();
+                log.info("start saving to list");
                 for (Future<Set<ProductEntity>> result : results) {
-                    log.info("start saving");
-                    productRepository.saveAll(result.get());
-                    log.info("finish saving");
+                    toSave.addAll(result.get());
                 }
+                log.info("finish saving to list");
+                log.info("start saving to db");
+                productRepository.saveAll(toSave);
                 log.info("products saved");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
